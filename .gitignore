@@ -75,4 +75,5 @@ crashlytics-build.properties
 .idea
 
 # Blender
-.blend1
+*.blend?
+*.blend?.meta
