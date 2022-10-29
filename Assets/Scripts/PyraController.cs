@@ -37,7 +37,7 @@ public class PyraController : MonoBehaviour
 
     private void HandleShootInput()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);

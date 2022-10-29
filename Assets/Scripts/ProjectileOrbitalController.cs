@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Projectiles
 {
@@ -11,7 +10,7 @@ namespace Projectiles
         [SerializeField] public float radius = 0.3f;
         [SerializeField] public GameObject projectilePrefab;
 
-        private List<Projectile> _projectiles = new List<Projectile>();
+        private readonly List<Projectile> _projectiles = new();
 
         private void Start()
         {
@@ -19,50 +18,54 @@ namespace Projectiles
             {
                 var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 projectile.transform.parent = transform;
-                projectile.transform.localPosition = new Vector3(radius * Mathf.Cos(i * 2 * Mathf.PI / projectileCount),
-                    0.1f,
-                    radius * Mathf.Sin(i * 2 * Mathf.PI / projectileCount));
-                // Orient the projectile tangent to the circle
-                projectile.transform.rotation =
-                    Quaternion.Euler(90, -i * 360 / projectileCount - 45, 0);
 
-                _projectiles.Add(projectile.GetComponent<Projectile>());
+                var projectileScript = projectile.GetComponent<Projectile>();
+                projectileScript.Init(
+                    new Vector3(
+                        radius * Mathf.Cos(i * 2 * Mathf.PI / projectileCount),
+                        Projectile.ProjectileHeight,
+                        radius * Mathf.Sin(i * 2 * Mathf.PI / projectileCount)
+                    ),
+                    Quaternion.Euler(90, -i * 360 / projectileCount, 0),
+                    -i * 360 / projectileCount
+                );
+                _projectiles.Add(projectileScript);
             }
         }
 
         public void Shoot(Vector3 target)
         {
             var projectileIndex = GetProjectileClosestToPoint(target);
+            if (projectileIndex == -1)
+            {
+                return;
+            }
+
             _projectiles[projectileIndex].Shoot(target);
         }
 
-        void Update()
+        void FixedUpdate()
         {
             // // Get all projectiles and rotate them around the parent
             foreach (Projectile projectile in _projectiles)
             {
-                if (projectile.ShouldOrbit())
-                {
-                    projectile.transform.RotateAround(transform.position, Vector3.up, 20 * Time.deltaTime);
-                }
+                projectile.OrbitAround(transform.position);
             }
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)
         {
             // Get the children that is farthest away from the mouse
-            var projectile = transform.GetChild(0);
-            var projectileIndex = 0;
-            var minDistance = Vector3.Distance(projectile.position, hitInfoPoint);
-            for (int i = 0; i < transform.childCount; i++)
+            var projectileIndex = -1;
+            var minDistance = Mathf.Infinity;
+            for (int i = 0; i < projectileCount; i++)
             {
-                var child = transform.GetChild(i);
-                var distance = Vector3.Distance(child.position, hitInfoPoint);
+                var bulletPosition = _projectiles[i].GetBulletPosition();
+                var distance = Vector3.Distance(bulletPosition, hitInfoPoint);
                 // Ignore projectiles that have already been fired
                 if (distance < minDistance && _projectiles[i].ShouldOrbit())
                 {
                     minDistance = distance;
-                    projectile = child;
                     projectileIndex = i;
                 }
             }

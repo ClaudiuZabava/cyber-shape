@@ -7,44 +7,47 @@ namespace Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        private Vector3 _velocity;
-        private Transform _playerTransform;
-        public float speed;
-        public float respawnTime;
-        public Transform bulletTransform;
+        public static readonly float ProjectileHeight = 0.1f;
+        public Transform gapTransform;
+        Bullet _bullet;
 
-        public void Shoot(Vector3 target)
+        private void Awake()
         {
-            transform.LookAt(target);
-            // Still rotate it 90 deg to keep the orientation to the camera
-            transform.Rotate(-90, 0, 0);
-            var relativePos = target - transform.position;
-            var direction = relativePos.normalized;
-            _velocity = direction * speed;
+            _bullet = GetComponentInChildren<Bullet>();
         }
 
         public bool ShouldOrbit()
         {
-            return _velocity.magnitude == 0;
+            return _bullet.ShouldOrbit();
         }
 
-        private void Update()
+        public void Shoot(Vector3 target)
         {
-            bulletTransform.position += _velocity * Time.deltaTime;
+            _bullet.Shoot(target);
         }
 
-        private void Start()
+        public void OrbitAround(Vector3 point)
         {
-            _playerTransform = GameObject.FindWithTag(Tags.Player).transform;
+            gapTransform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+            if (ShouldOrbit())
+            {
+                _bullet.transform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+            }
         }
 
-        public IEnumerator Reload()
+        public void Init(Vector3 position, Quaternion rotation, float yAngle)
         {
-            yield return new WaitForSeconds(respawnTime);
+            _bullet.transform.localPosition = position;
+            _bullet.transform.localRotation = rotation;
+            gapTransform.localPosition = position;
+            gapTransform.localRotation = rotation;
 
-            bulletTransform.localPosition = Vector3.zero;
-            bulletTransform.localRotation = Quaternion.identity;
-            _velocity = Vector3.zero;
+            _bullet.initialYAngle = yAngle;
+        }
+
+        public Vector3 GetBulletPosition()
+        {
+            return _bullet.transform.position;
         }
     }
 }
