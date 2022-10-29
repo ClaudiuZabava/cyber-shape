@@ -1,35 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Projectile : MonoBehaviour
+namespace Projectiles
 {
-    private Vector3 firingPoint;
-
-    [SerializeField]
-    private float projectileSpeed;
-
-    [SerializeField]
-    private float maxProjectileDistance;
-
-
-    
-    private void Start()
+    public class Projectile : MonoBehaviour
     {
-        firingPoint = transform.position;
-    }
+        private Vector3 _velocity;
+        public float speed;
 
-    private void Update()
-    {
-        MoveProjectile();
-    }
-
-    private void MoveProjectile() {
-        if (Vector3.Distance(firingPoint, transform.position) > maxProjectileDistance){
-            Destroy(this.gameObject);
-        } else {
-            transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+        public void Shoot(Vector3 target)
+        {
+            transform.LookAt(target);
+            // Still rotate it 90 deg to keep the orientation to the camera
+            transform.Rotate(-90, 0, 0);
+            var relativePos = target - transform.position;
+            var direction = relativePos.normalized;
+            _velocity = direction * speed;
         }
-        transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+
+        public bool ShouldOrbit()
+        {
+            return _velocity.magnitude == 0;
+        }
+
+        private void Update()
+        {
+            transform.position += _velocity * Time.deltaTime;
+        }
     }
 }

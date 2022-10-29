@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17307952, g: 0.21632008, b: 0.29832444, a: 1}
+  m_IndirectSpecularColor: {r: 0.173079, g: 0.21631923, b: 0.29832268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 1287808795}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -899,7 +899,8 @@ GameObject:
   - component: {fileID: 1061179745028849833}
   - component: {fileID: 2981072972566508645}
   - component: {fileID: 2981072972566508646}
-  m_Layer: 0
+  - component: {fileID: 2981072972566508647}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -973,3 +974,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2981072972566508647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565824590073520508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2dfdc2e23e84bf195d181f484698d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileCount: 6
+  radius: 2
+  projectilePrefab: {fileID: 9139162334264945893, guid: 9087362fdde8344518f1adea2daedb69, type: 3}
