@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerGun
   - Floor
+  - Enemy
   layers:
   - Default
   - TransparentFX

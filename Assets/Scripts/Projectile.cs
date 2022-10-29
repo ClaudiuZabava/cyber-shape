@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,7 +8,10 @@ namespace Projectiles
     public class Projectile : MonoBehaviour
     {
         private Vector3 _velocity;
+        private Transform _playerTransform;
         public float speed;
+        public float respawnTime;
+        public Transform bulletTransform;
 
         public void Shoot(Vector3 target)
         {
@@ -26,7 +30,21 @@ namespace Projectiles
 
         private void Update()
         {
-            transform.position += _velocity * Time.deltaTime;
+            bulletTransform.position += _velocity * Time.deltaTime;
+        }
+
+        private void Start()
+        {
+            _playerTransform = GameObject.FindWithTag(Tags.Player).transform;
+        }
+
+        public IEnumerator Reload()
+        {
+            yield return new WaitForSeconds(respawnTime);
+
+            bulletTransform.localPosition = Vector3.zero;
+            bulletTransform.localRotation = Quaternion.identity;
+            _velocity = Vector3.zero;
         }
     }
 }

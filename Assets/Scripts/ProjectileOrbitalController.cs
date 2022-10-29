@@ -24,7 +24,7 @@ namespace Projectiles
                     radius * Mathf.Sin(i * 2 * Mathf.PI / projectileCount));
                 // Orient the projectile tangent to the circle
                 projectile.transform.rotation =
-                    Quaternion.Euler(90, -i * 360 / projectileCount - 30, 0);
+                    Quaternion.Euler(90, -i * 360 / projectileCount - 45, 0);
 
                 _projectiles.Add(projectile.GetComponent<Projectile>());
             }
@@ -58,7 +58,8 @@ namespace Projectiles
             {
                 var child = transform.GetChild(i);
                 var distance = Vector3.Distance(child.position, hitInfoPoint);
-                if (distance < minDistance)
+                // Ignore projectiles that have already been fired
+                if (distance < minDistance && _projectiles[i].ShouldOrbit())
                 {
                     minDistance = distance;
                     projectile = child;
