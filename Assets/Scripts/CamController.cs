@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamControll : MonoBehaviour
+public class CamController : MonoBehaviour
 {
     [SerializeField]
     private Transform target;
@@ -11,18 +11,17 @@ public class CamControll : MonoBehaviour
     private Vector3 tOffset;
 
     [SerializeField]
-    private float cspeed;
-
+    private float cSpeed;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         MoveCam();
-        
     }
 
-    void MoveCam()
+
+    private void MoveCam()
     {
-        transform.position = Vector3.Lerp(transform.position, target.position + tOffset, cspeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, target.position + tOffset, cSpeed * Time.deltaTime);
     }
 }
