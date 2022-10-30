@@ -7,24 +7,24 @@ public class Projectile : MonoBehaviour
     private Vector3 firingPoint;
 
     [SerializeField]
-    float projectileSpeed;
+    private float projectileSpeed;
 
     [SerializeField]
     private float maxProjectileDistance;
 
 
     
-    void Start()
+    private void Start()
     {
         firingPoint = transform.position;
     }
 
-    void Update()
+    private void Update()
     {
         MoveProjectile();
     }
 
-    void MoveProjectile() {
+    private void MoveProjectile() {
         if (Vector3.Distance(firingPoint, transform.position) > maxProjectileDistance){
             Destroy(this.gameObject);
         } else {

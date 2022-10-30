@@ -17,18 +17,18 @@ public class PlayerGun : MonoBehaviour
 
     private float lastTimeShot = 0;
 
-    void Start()
+    private void Start()
     {
         Instance = GetComponent<PlayerGun>();
     }
 
 
-    void Update()
+    private void Update()
     {
         RotationInput();
     }
 
-    void RotationInput()
+    private void RotationInput()
     {
         // rotim efectiv firePointul catre locul unde playerul da click. Se actualizeaza automat in functie de pozitia cursorului pe ecran.
         RaycastHit hit; 
