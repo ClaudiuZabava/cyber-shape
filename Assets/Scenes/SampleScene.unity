@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 391842223}
+  - component: {fileID: 391842225}
   - component: {fileID: 391842224}
   m_Layer: 0
   m_Name: GameManager
@@ -171,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90dd543ae3513594d9be0fb517ce6d30, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.555
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -255,6 +256,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &391842225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391842222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfab56809e9bcf147b407fee17125d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairImg: {fileID: 2800000, guid: c186448c466fad9478c38ce9c2f7b71b, type: 3}
 --- !u!1 &494612521
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2229630943731596230}
   tOffset: {x: 0, y: 20, z: -2.53}
-  cspeed: 10
+  cSpeed: 5
 --- !u!1 &1287808794
 GameObject:
   m_ObjectHideFlags: 0
