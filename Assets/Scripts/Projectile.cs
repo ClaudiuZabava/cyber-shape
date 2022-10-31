@@ -9,7 +9,7 @@ namespace Projectiles
     {
         public static readonly float ProjectileHeight = 0.1f;
         public Transform gapTransform;
-        Bullet _bullet;
+        private Bullet _bullet;
 
         private void Awake()
         {

@@ -17,7 +17,7 @@ public class PyraController : MonoBehaviour
 
     private void Start()
     {
-        _floor = GameObject.FindWithTag(Tags.FloorTag).transform;
+        _floor = GameObject.FindWithTag(Tags.Floor).transform;
         _mainCamera = Camera.main;
         _orbitalController = GetComponent<ProjectileOrbitalController>();
     }

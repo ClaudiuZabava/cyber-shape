@@ -6,9 +6,9 @@ namespace Projectiles
 {
     public class ProjectileOrbitalController : MonoBehaviour
     {
-        [SerializeField] public int projectileCount = 5;
-        [SerializeField] public float radius = 0.3f;
-        [SerializeField] public GameObject projectilePrefab;
+        public int projectileCount = 5;
+        public float radius = 0.3f;
+        public GameObject projectilePrefab;
 
         private readonly List<Projectile> _projectiles = new();
 
@@ -44,7 +44,7 @@ namespace Projectiles
             _projectiles[projectileIndex].Shoot(target);
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             // // Get all projectiles and rotate them around the parent
             foreach (Projectile projectile in _projectiles)

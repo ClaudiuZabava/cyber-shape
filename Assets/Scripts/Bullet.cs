@@ -7,7 +7,11 @@ namespace Projectiles
 {
     public class Bullet : MonoBehaviour
     {
-        Rigidbody _rigidbody;
+        private Vector3 _velocity;
+        public float speed;
+        public float respawnTime;
+        public Transform gapTransform;
+        private Rigidbody _rigidbody;
         public float initialYAngle;
 
         private void Start()
@@ -24,11 +28,6 @@ namespace Projectiles
                 StartCoroutine(Reload());
             }
         }
-
-        private Vector3 _velocity;
-        public float speed;
-        public float respawnTime;
-        public Transform gapTransform;
 
         public void Shoot(Vector3 target)
         {
@@ -52,7 +51,7 @@ namespace Projectiles
             transform.localPosition += _velocity * Time.deltaTime;
         }
 
-        IEnumerator Reload()
+        private IEnumerator Reload()
         {
             yield return new WaitForSeconds(respawnTime);
 
