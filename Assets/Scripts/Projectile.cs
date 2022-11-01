@@ -1,35 +1,53 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Projectile : MonoBehaviour
+namespace Projectiles
 {
-    private Vector3 firingPoint;
-
-    [SerializeField]
-    private float projectileSpeed;
-
-    [SerializeField]
-    private float maxProjectileDistance;
-
-
-    
-    private void Start()
+    public class Projectile : MonoBehaviour
     {
-        firingPoint = transform.position;
-    }
+        public static readonly float ProjectileHeight = 0.1f;
+        public Transform gapTransform;
+        private Bullet _bullet;
 
-    private void Update()
-    {
-        MoveProjectile();
-    }
-
-    private void MoveProjectile() {
-        if (Vector3.Distance(firingPoint, transform.position) > maxProjectileDistance){
-            Destroy(this.gameObject);
-        } else {
-            transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+        private void Awake()
+        {
+            _bullet = GetComponentInChildren<Bullet>();
         }
-        transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+
+        public bool ShouldOrbit()
+        {
+            return _bullet.ShouldOrbit();
+        }
+
+        public void Shoot(Vector3 target)
+        {
+            _bullet.Shoot(target);
+        }
+
+        public void OrbitAround(Vector3 point)
+        {
+            gapTransform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+            if (ShouldOrbit())
+            {
+                _bullet.transform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+            }
+        }
+
+        public void Init(Vector3 position, Quaternion rotation, float yAngle)
+        {
+            _bullet.transform.localPosition = position;
+            _bullet.transform.localRotation = rotation;
+            gapTransform.localPosition = position;
+            gapTransform.localRotation = rotation;
+
+            _bullet.initialYAngle = yAngle;
+        }
+
+        public Vector3 GetBulletPosition()
+        {
+            return _bullet.transform.position;
+        }
     }
 }
