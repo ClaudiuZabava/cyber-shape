@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Projectiles
@@ -9,15 +10,18 @@ namespace Projectiles
         public int projectileCount = 5;
         public float radius = 0.3f;
         public GameObject projectilePrefab;
+        private Vector3 _prevPlayerPos;
 
         private readonly List<Projectile> _projectiles = new();
 
         private void Start()
         {
+            _prevPlayerPos = transform.position;
+
             for (int i = 0; i < projectileCount; i++)
             {
                 var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-                projectile.transform.parent = transform;
+                // projectile.transform.parent = transform;
 
                 var projectileScript = projectile.GetComponent<Projectile>();
                 projectileScript.Init(
@@ -51,6 +55,19 @@ namespace Projectiles
             {
                 projectile.OrbitAround(transform.position);
             }
+
+            // Move the projectiles along with the player
+            var playerPos = transform.position;
+            var deltaPos = playerPos - _prevPlayerPos;
+            foreach (Projectile projectile in _projectiles)
+            {
+                if (projectile.ShouldOrbit())
+                {
+                    projectile.transform.position += deltaPos;
+                }
+            }
+
+            _prevPlayerPos = playerPos;
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)
