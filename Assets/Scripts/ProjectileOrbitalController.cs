@@ -17,11 +17,11 @@ namespace Projectiles
         private void Start()
         {
             _prevPlayerPos = transform.position;
-            
+
             for (int i = 0; i < projectileCount; i++)
             {
                 var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-                projectile.transform.parent = transform;
+                // projectile.transform.parent = transform;
 
                 var projectileScript = projectile.GetComponent<Projectile>();
                 projectileScript.Init(
@@ -33,7 +33,7 @@ namespace Projectiles
                     Quaternion.Euler(90, -i * 360 / projectileCount, 0),
                     -i * 360 / projectileCount
                 );
-                _projectiles.Add(projectileScript); 
+                _projectiles.Add(projectileScript);
             }
         }
 
@@ -61,7 +61,10 @@ namespace Projectiles
             var deltaPos = playerPos - _prevPlayerPos;
             foreach (Projectile projectile in _projectiles)
             {
-                projectile.transform.position += deltaPos;
+                if (projectile.ShouldOrbit())
+                {
+                    projectile.transform.position += deltaPos;
+                }
             }
 
             _prevPlayerPos = playerPos;
