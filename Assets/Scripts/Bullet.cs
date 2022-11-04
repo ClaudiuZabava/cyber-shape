@@ -13,18 +13,19 @@ namespace Projectiles
         public Transform gapTransform;
         private Rigidbody _rigidbody;
         public float initialYAngle;
+        private Projectile _parentProjectile;
 
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _parentProjectile = GetComponentInParent<Projectile>();
         }
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
-                // TODO: Hit the enemy
-
+                other.gameObject.GetComponentInParent<EnemyBody>().TakeDamage(_parentProjectile.damage);
                 StartCoroutine(Reload());
             }
         }
