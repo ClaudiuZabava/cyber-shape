@@ -5,18 +5,18 @@ namespace Projectiles
 {
     public class ProjectileOrbitalController : MonoBehaviour
     {
-        public int projectileCount = 5;
-        public float radius = 0.3f;
-        public GameObject projectilePrefab;
+        [SerializeField] private int projectileCount = 5;
+        [SerializeField] private float radius = 0.3f;
+        [SerializeField] private GameObject projectilePrefab;
+        
         private Vector3 _prevPlayerPos;
-
         private readonly List<Projectile> _projectiles = new();
 
         private void Start()
         {
             _prevPlayerPos = transform.position;
 
-            for (int i = 0; i < projectileCount; i++)
+            for (var i = 0; i < projectileCount; i++)
             {
                 var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 // projectile.transform.parent = transform;
@@ -49,7 +49,7 @@ namespace Projectiles
         private void FixedUpdate()
         {
             // // Get all projectiles and rotate them around the parent
-            foreach (Projectile projectile in _projectiles)
+            foreach (var projectile in _projectiles)
             {
                 projectile.OrbitAround(transform.position);
             }
@@ -57,7 +57,7 @@ namespace Projectiles
             // Move the projectiles along with the player
             var playerPos = transform.position;
             var deltaPos = playerPos - _prevPlayerPos;
-            foreach (Projectile projectile in _projectiles)
+            foreach (var projectile in _projectiles)
             {
                 if (projectile.ShouldOrbit())
                 {

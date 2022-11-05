@@ -4,16 +4,16 @@ namespace Enemy
 {
     public class EnemyBody : MonoBehaviour
     {
-        private Enemy enemy;
+        private Enemy _enemy;
 
-        private void Start()
+        private void Awake()
         {
-            enemy = GetComponentInParent<Enemy>();
+            _enemy = GetComponentInParent<Enemy>();
         }
 
         public void TakeDamage(int damage)
         {
-            enemy.TakeDamage(damage);
+            _enemy.TakeDamage(damage);
         }
     }
 }

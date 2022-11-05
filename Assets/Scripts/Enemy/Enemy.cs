@@ -5,15 +5,18 @@ namespace Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        public int rank = 1;
+        [SerializeField] private int rank = 1;
+        
         private EnemyHealthBar _healthBar;
-
         private int _health;
 
-        // Start is called before the first frame update
-        private void Start()
+        private void Awake()
         {
             _healthBar = GetComponentInChildren<EnemyHealthBar>();
+        }
+
+        private void Start()
+        {
             _health = ScalingUtils.GetFibonacci(rank + 1);
             _healthBar.SetMaxHealth(_health);
         }

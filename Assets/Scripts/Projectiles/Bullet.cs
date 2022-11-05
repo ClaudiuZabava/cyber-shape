@@ -7,15 +7,15 @@ namespace Projectiles
 {
     public class Bullet : MonoBehaviour
     {
+        [SerializeField] private float respawnTime;
+        [SerializeField] private Transform gapTransform;
+        [SerializeField] private float speed;
+        
         private Vector3 _velocity;
-        public float speed;
-        public float respawnTime;
-        public Transform gapTransform;
         private Rigidbody _rigidbody;
-        public float initialYAngle;
         private Projectile _parentProjectile;
 
-        private void Start()
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _parentProjectile = GetComponentInParent<Projectile>();
@@ -25,7 +25,7 @@ namespace Projectiles
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
-                other.gameObject.GetComponentInParent<EnemyBody>().TakeDamage(_parentProjectile.damage);
+                other.gameObject.GetComponentInParent<EnemyBody>().TakeDamage(_parentProjectile.Damage);
                 StartCoroutine(Reload());
             }
         }

@@ -4,8 +4,7 @@ namespace Evolution
 {
     public class Evolvable : MonoBehaviour
     {
-        [SerializeField]
-        private Stage currentStage;
+        [SerializeField] private Stage currentStage;
 
         private MeshFilter _meshFilter;
         private MeshCollider _meshCollider;

@@ -8,7 +8,7 @@ namespace Enemy
         private int _maxHealth;
         private Slider _slider;
 
-        private void Start()
+        private void Awake()
         {
             _slider = GetComponentInChildren<Slider>();
         }
