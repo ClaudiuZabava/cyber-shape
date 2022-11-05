@@ -140,11 +140,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4214218006792911544}
   - component: {fileID: 996477931859293469}
-  - component: {fileID: 996477931859293466}
   - component: {fileID: 3040145457451745751}
   - component: {fileID: 996477931859293467}
   - component: {fileID: 996477931859293464}
+  - component: {fileID: 2846068225945342563}
+  - component: {fileID: 996477931859293466}
   - component: {fileID: 996477931859293465}
+  - component: {fileID: 6163434126350315386}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -176,19 +178,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3544394890068779010}
   m_Mesh: {fileID: -7178685034035712819, guid: 483de333af80f4f74a93a04b67c658cc, type: 3}
---- !u!114 &996477931859293466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3544394890068779010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d20d4fd45c08374abcdd4972dfa4d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 12
 --- !u!23 &3040145457451745751
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -261,6 +250,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &2846068225945342563
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544394890068779010}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfb435ac1d3c946c7876ee089d1931f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &996477931859293466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544394890068779010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d20d4fd45c08374abcdd4972dfa4d9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 12
 --- !u!114 &996477931859293465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,3 +298,16 @@ MonoBehaviour:
   projectileCount: 6
   radius: 2
   projectilePrefab: {fileID: 9139162334264945893, guid: 9087362fdde8344518f1adea2daedb69, type: 3}
+--- !u!114 &6163434126350315386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544394890068779010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e64f7b482694491b5ae8203dcb6a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Stage>k__BackingField: {fileID: 0}

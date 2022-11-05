@@ -4,10 +4,13 @@ namespace Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        public static readonly float ProjectileHeight = 0.1f;
+        public const float ProjectileHeight = 0.1f;
+        
+        public int Damage { get; private set; } = 1;
+        
         public Transform gapTransform;
+
         private Bullet _bullet;
-        public int damage = 1;
 
         private void Awake()
         {
@@ -39,8 +42,6 @@ namespace Projectiles
             _bullet.transform.localRotation = rotation;
             gapTransform.localPosition = position;
             gapTransform.localRotation = rotation;
-
-            _bullet.initialYAngle = yAngle;
         }
 
         public Vector3 GetBulletPosition()

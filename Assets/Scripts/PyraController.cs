@@ -1,3 +1,4 @@
+using Constants;
 using Projectiles;
 using UnityEngine;
 
@@ -6,7 +7,6 @@ public class PyraController : MonoBehaviour
     [SerializeField] private float speed = 5.0f;
 
     private Rigidbody _rigidbody;
-    private Transform _floor;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
 
@@ -17,7 +17,6 @@ public class PyraController : MonoBehaviour
 
     private void Start()
     {
-        _floor = GameObject.FindWithTag(Tags.Floor).transform;
         _mainCamera = Camera.main;
         _orbitalController = GetComponent<ProjectileOrbitalController>();
     }
@@ -41,8 +40,7 @@ public class PyraController : MonoBehaviour
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out var hit))
             {
                 _orbitalController.Shoot(hit.point);
             }

@@ -1,17 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
-    [SerializeField]
-    Transform firingPoint;
-
-    [SerializeField]
-    GameObject projectile;
-
-    [SerializeField]
-    float firingSpeed;
+    [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float firingSpeed;
 
     public static PlayerGun Instance;
 

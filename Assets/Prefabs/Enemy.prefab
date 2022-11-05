@@ -280,7 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1370194eded604a90a197a5d6199a3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 1
 --- !u!1 &4160810938358141546
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,11 +479,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1661853541151615047}
   - component: {fileID: 3313094819113449816}
-  - component: {fileID: 3441285942608830970}
   - component: {fileID: 9037467299239777580}
   - component: {fileID: 7547725363992405414}
   - component: {fileID: 4573001150782533286}
+  - component: {fileID: 7229261490694430193}
   - component: {fileID: 989363617115325760}
+  - component: {fileID: 6881490380232270788}
   m_Layer: 0
   m_Name: Body
   m_TagString: Enemy
@@ -515,19 +515,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7677614749115930768}
   m_Mesh: {fileID: -7178685034035712819, guid: 483de333af80f4f74a93a04b67c658cc, type: 3}
---- !u!114 &3441285942608830970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7677614749115930768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d20d4fd45c08374abcdd4972dfa4d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 12
 --- !u!23 &9037467299239777580
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -600,6 +587,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &7229261490694430193
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677614749115930768}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfb435ac1d3c946c7876ee089d1931f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &989363617115325760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,6 +619,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15d8b54926b44a6b0b8427a6cf5c59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6881490380232270788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7677614749115930768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e64f7b482694491b5ae8203dcb6a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Stage>k__BackingField: {fileID: 11400000, guid: c780ddf13c78d4102bdcf43044ceaeba, type: 2}
 --- !u!1 &8638573559863365915
 GameObject:
   m_ObjectHideFlags: 0
