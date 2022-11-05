@@ -1,6 +1,6 @@
 namespace Utility
 {
-    public class ScalingUtils
+    public static class ScalingUtils
     {
         public static int GetFibonacci(int n)
         {

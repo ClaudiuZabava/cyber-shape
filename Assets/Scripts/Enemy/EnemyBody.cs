@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class EnemyBody : MonoBehaviour
+namespace Enemy
 {
-    private Enemy enemy;
-
-    private void Start()
+    public class EnemyBody : MonoBehaviour
     {
-        enemy = GetComponentInParent<Enemy>();
-    }
+        private Enemy enemy;
 
-    public void TakeDamage(int damage)
-    {
-        enemy.TakeDamage(damage);
+        private void Start()
+        {
+            enemy = GetComponentInParent<Enemy>();
+        }
+
+        public void TakeDamage(int damage)
+        {
+            enemy.TakeDamage(damage);
+        }
     }
 }
