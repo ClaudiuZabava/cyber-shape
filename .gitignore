@@ -77,3 +77,10 @@ crashlytics-build.properties
 # Blender
 *.blend?
 *.blend?.meta
+
+# macOS
+.DS_Store
+
+# Reports
+Reports/*.tex
+Reports/*.aux

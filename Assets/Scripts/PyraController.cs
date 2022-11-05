@@ -1,15 +1,24 @@
+using Constants;
+using Projectiles;
 using UnityEngine;
 
 public class PyraController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 5.0f;
+    [SerializeField] private float speed = 5.0f;
 
     private Rigidbody _rigidbody;
+    private Camera _mainCamera;
+    private ProjectileOrbitalController _orbitalController;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        _mainCamera = Camera.main;
+        _orbitalController = GetComponent<ProjectileOrbitalController>();
     }
 
     private void Update()
@@ -25,11 +34,16 @@ public class PyraController : MonoBehaviour
         _rigidbody.AddTorque(new Vector3(vertical / 3, 0, -horizontal / 3) * speed);
     }
 
-    private void HandleShootInput() 
+    private void HandleShootInput()
     {
-        if (Input.GetButton("Fire1")) 
+        if (Input.GetButtonDown("Fire1"))
         {
-            PlayerGun.Instance.Shoot();
+            // Cast a ray from the camera to see where the click intersects with the floor
+            var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out var hit))
+            {
+                _orbitalController.Shoot(hit.point);
+            }
         }
     }
 }

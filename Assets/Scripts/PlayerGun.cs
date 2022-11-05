@@ -1,34 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
-    [SerializeField]
-    Transform firingPoint;
-
-    [SerializeField]
-    GameObject projectile;
-
-    [SerializeField]
-    float firingSpeed;
+    [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float firingSpeed;
 
     public static PlayerGun Instance;
 
     private float lastTimeShot = 0;
 
-    void Start()
+    private void Start()
     {
         Instance = GetComponent<PlayerGun>();
     }
 
 
-    void Update()
+    private void Update()
     {
         RotationInput();
     }
 
-    void RotationInput()
+    private void RotationInput()
     {
         // rotim efectiv firePointul catre locul unde playerul da click. Se actualizeaza automat in functie de pozitia cursorului pe ecran.
         RaycastHit hit; 
