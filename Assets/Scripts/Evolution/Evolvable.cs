@@ -4,7 +4,7 @@ namespace Evolution
 {
     public class Evolvable : MonoBehaviour
     {
-        [SerializeField] private Stage currentStage;
+        [field: SerializeField] public Stage Stage { get; private set; }
 
         private MeshFilter _meshFilter;
         private MeshCollider _meshCollider;
@@ -33,21 +33,21 @@ namespace Evolution
 
         private void Evolve()
         {
-            if (currentStage.nextStage is null)
+            if (Stage.NextStage is null)
             {
                 return;
             }
             
-            currentStage = currentStage.nextStage;
+            Stage = Stage.NextStage;
             _animator.SetTrigger(Constants.Animations.Evolution.Triggers.Evolution);
             var animatorState = _animator.GetCurrentAnimatorStateInfo(_animator.GetLayerIndex("Base Layer"));
             Invoke(nameof(ApplyStage), animatorState.length / 4);
         }
 
         private void ApplyStage()
-        {            
-            _meshFilter.mesh = currentStage.mesh;
-            _meshCollider.sharedMesh = currentStage.mesh;
+        {     
+            _meshFilter.mesh = Stage.Mesh;
+            _meshCollider.sharedMesh = Stage.Mesh;
         }
     }
 }

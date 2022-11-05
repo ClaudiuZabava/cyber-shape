@@ -471,6 +471,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6881490380232270788, guid: c3d5a5b2fbd7a42e38a63771c6b5ef22, type: 3}
+      propertyPath: <Stage>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c780ddf13c78d4102bdcf43044ceaeba, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3d5a5b2fbd7a42e38a63771c6b5ef22, type: 3}
 --- !u!1 &963194225
@@ -874,5 +878,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6163434126350315386, guid: 77c27b5a5fe3c4ff488ce2edc8959141, type: 3}
+      propertyPath: <Stage>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c780ddf13c78d4102bdcf43044ceaeba, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77c27b5a5fe3c4ff488ce2edc8959141, type: 3}

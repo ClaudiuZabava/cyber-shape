@@ -310,4 +310,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36e64f7b482694491b5ae8203dcb6a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStage: {fileID: 11400000, guid: c780ddf13c78d4102bdcf43044ceaeba, type: 2}
+  <Stage>k__BackingField: {fileID: 0}

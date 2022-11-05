@@ -1,23 +1,25 @@
+using Evolution;
 using UnityEngine;
-using Utility;
 
 namespace Enemy
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private int rank = 1;
-        
         private EnemyHealthBar _healthBar;
+        private Evolvable _evolvable;
         private int _health;
+
+        private EnemyStageData StageData => _evolvable.Stage.EnemyData;
 
         private void Awake()
         {
             _healthBar = GetComponentInChildren<EnemyHealthBar>();
+            _evolvable = GetComponentInChildren<Evolvable>();
         }
 
         private void Start()
         {
-            _health = ScalingUtils.GetFibonacci(rank + 1);
+            _health = StageData.Health;
             _healthBar.SetMaxHealth(_health);
         }
 

@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3deee15b646742e69acccc3238dd2e91, type: 3}
   m_Name: 5 Icosphere
   m_EditorClassIdentifier: 
-  mesh: {fileID: 289301614986012343, guid: d9001b7daae234538861ad53f0181517, type: 3}
-  nextStage: {fileID: 0}
+  <Mesh>k__BackingField: {fileID: 289301614986012343, guid: d9001b7daae234538861ad53f0181517, type: 3}
+  <NextStage>k__BackingField: {fileID: 0}
+  <EnemyData>k__BackingField:
+    <Health>k__BackingField: 13
+  <PlayerData>k__BackingField:
+    <Health>k__BackingField: 13

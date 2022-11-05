@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3deee15b646742e69acccc3238dd2e91, type: 3}
   m_Name: 4 Icosahedron
   m_EditorClassIdentifier: 
-  mesh: {fileID: -7230695461121354804, guid: 6c690acb3bad042d69f51ff638a579fd, type: 3}
-  nextStage: {fileID: 11400000, guid: d0e3a1132591e4c35beaa77f184be357, type: 2}
+  <Mesh>k__BackingField: {fileID: -7230695461121354804, guid: 6c690acb3bad042d69f51ff638a579fd, type: 3}
+  <NextStage>k__BackingField: {fileID: 11400000, guid: d0e3a1132591e4c35beaa77f184be357, type: 2}
+  <EnemyData>k__BackingField:
+    <Health>k__BackingField: 8
+  <PlayerData>k__BackingField:
+    <Health>k__BackingField: 8
