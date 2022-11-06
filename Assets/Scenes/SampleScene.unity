@@ -269,6 +269,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crosshairImg: {fileID: 2800000, guid: c186448c466fad9478c38ce9c2f7b71b, type: 3}
+  enemyPrefab: {fileID: 956035031}
+  constEnemies: 7
+  maxWidth: 10
+  maxDistance: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

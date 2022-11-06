@@ -4,15 +4,10 @@ using UnityEngine;
 public class PyraController : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] private GameObject enemyPrefab;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
-    
-    private const int ConstEnemies = 7;
-    private const int MaxWidth = 10;
-    private const int MaxDistance = 5;
 
     private void Awake()
     {
@@ -23,8 +18,6 @@ public class PyraController : MonoBehaviour
     {
         _mainCamera = Camera.main;
         _orbitalController = GetComponent<ProjectileOrbitalController>();
-        
-        SpawnEnemies();
     }
 
     private void Update()
@@ -50,26 +43,6 @@ public class PyraController : MonoBehaviour
             {
                 _orbitalController.Shoot(hit.point);
             }
-        }
-    }
-
-    private Vector3 GetRandomPosition()
-    {
-        var randomPosition = new Vector3(Random.Range(-MaxWidth, MaxWidth), 0.95f, Random.Range(-MaxWidth, MaxWidth)); 
-        var distance = Vector3.Distance(transform.position, randomPosition);
-        if (distance < MaxDistance)
-        {
-            return GetRandomPosition();
-        }
-
-        return randomPosition;
-    }
-
-    private void SpawnEnemies()
-    {
-        for (var i = 0; i < ConstEnemies; i++)
-        {
-            Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
         }
     }
 }
