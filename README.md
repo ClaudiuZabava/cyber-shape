@@ -8,7 +8,7 @@ Reports are in [`./Reports/`](./Reports/).
 
 ## For developers & testers
 
-Required Unity version: 2021.3.11f1.
+Required Unity version: 2022.1.20f1.
 
 There are some `.blend` files in the project that might give you
 errors if you don't have Blender installed, so we recommend you have
