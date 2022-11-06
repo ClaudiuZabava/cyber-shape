@@ -1,7 +1,7 @@
 using Projectiles;
 using UnityEngine;
 
-public class PyraController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
 
