@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6418521693095776089}
   - component: {fileID: 6861889613062072124}
   - component: {fileID: 759214939080828409}
-  - component: {fileID: 6940623644450295234}
+  - component: {fileID: -4947143279259230389}
   m_Layer: 0
   m_Name: Bullet1
   m_TagString: Untagged
@@ -93,12 +93,12 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8776175046304697655}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
+  m_IsTrigger: 1
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6940623644450295234
+--- !u!114 &-4947143279259230389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,8 +107,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8776175046304697655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d12ea70587745445839695f6c172077, type: 3}
+  m_Script: {fileID: 11500000, guid: c6d6fe868a28a184fbe19054c3b4e432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 5
-  maxProjectileDistance: 10
+  _projectileSpeed: 5
+  _maxProjectileDistance: 10
+  _damage: 10

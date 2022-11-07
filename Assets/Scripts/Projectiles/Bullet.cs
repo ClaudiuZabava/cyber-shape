@@ -25,7 +25,7 @@ namespace Projectiles
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
-                other.gameObject.GetComponentInParent<EnemyBody>().TakeDamage(_parentProjectile.Damage);
+                other.gameObject.GetComponentInParent<EnemyController>().TakeDamage(_parentProjectile.Damage);
                 StartCoroutine(Reload());
             }
         }
