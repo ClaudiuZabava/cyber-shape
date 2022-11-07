@@ -15,6 +15,6 @@ MonoBehaviour:
   <Mesh>k__BackingField: {fileID: 289301614986012343, guid: d9001b7daae234538861ad53f0181517, type: 3}
   <NextStage>k__BackingField: {fileID: 0}
   <EnemyData>k__BackingField:
-    <Health>k__BackingField: 13
+    <Health>k__BackingField: 50
   <PlayerData>k__BackingField:
     <Health>k__BackingField: 13
