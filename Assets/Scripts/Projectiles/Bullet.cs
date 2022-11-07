@@ -1,6 +1,5 @@
 using System.Collections;
 using Constants;
-using Enemy;
 using UnityEngine;
 
 namespace Projectiles
