@@ -6,7 +6,7 @@ namespace Projectiles
     {
         public const float ProjectileHeight = 0.1f;
         
-        public int Damage { get; private set; } = 1;
+        public int Damage { get; private set; } = 10;
         
         public Transform gapTransform;
 

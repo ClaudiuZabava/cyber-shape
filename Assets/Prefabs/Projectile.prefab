@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c50d52b0ed849a7935dc9c8bfa02b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
   respawnTime: 1
   gapTransform: {fileID: 5024396634550717112}
+  speed: 3
 --- !u!1 &7790020460590018520
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5631663424836493574}
   - component: {fileID: 3460546708885991562}
+  - component: {fileID: -7446022277169073416}
   m_Layer: 6
   m_Name: Projectile
   m_TagString: Untagged
@@ -209,3 +210,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gapTransform: {fileID: 5024396634550717112}
+  _damage: 10
+--- !u!136 &-7446022277169073416
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139162334264945893}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 0.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
