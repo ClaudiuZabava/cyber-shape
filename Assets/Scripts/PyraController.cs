@@ -1,13 +1,17 @@
+using Constants;
 using Projectiles;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class PyraController : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
+    [SerializeField] public float _phealth = 100.0f;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
+    public float _OldPhealth;
 
     private void Awake()
     {
@@ -16,6 +20,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _OldPhealth = _phealth;
         _mainCamera = Camera.main;
         _orbitalController = GetComponent<ProjectileOrbitalController>();
     }
@@ -24,6 +29,7 @@ public class Player : MonoBehaviour
     {
         HandleShootInput();
         MovementControl();
+        checkStatus();
     }
 
     private void MovementControl()
@@ -43,6 +49,23 @@ public class Player : MonoBehaviour
             {
                 _orbitalController.Shoot(hit.point);
             }
+        }
+    }
+
+    private void checkStatus()
+    {
+        if(_phealth <= 0)
+        {
+            Destroy(this.gameObject);
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag=="Enemy")
+        {
+            _phealth -=5;
         }
     }
 }
