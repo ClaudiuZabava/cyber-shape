@@ -12,10 +12,12 @@ public class PyraController : MonoBehaviour
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     public float _OldPhealth;
+    private RhythmTimer _rTimer;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _rTimer = GetComponentInParent<RhythmTimer>();
     }
 
     private void Start()
@@ -41,7 +43,7 @@ public class PyraController : MonoBehaviour
 
     private void HandleShootInput()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && _rTimer.CheckTime(0.10f))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
