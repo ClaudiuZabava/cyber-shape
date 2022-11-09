@@ -18,11 +18,11 @@ namespace Projectiles
 
             for (var i = 0; i < projectileCount; i++)
             {
-                var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+                var projectileObj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 // projectile.transform.parent = transform;
 
-                var projectileScript = projectile.GetComponent<Projectile>();
-                projectileScript.Init(
+                var projectile = projectileObj.GetComponent<Projectile>();
+                projectile.Init(
                     new Vector3(
                         radius * Mathf.Cos(i * 2 * Mathf.PI / projectileCount),
                         Projectile.ProjectileHeight,
@@ -31,7 +31,7 @@ namespace Projectiles
                     Quaternion.Euler(90, -i * 360 / projectileCount, 0),
                     -i * 360 / projectileCount
                 );
-                _projectiles.Add(projectileScript);
+                _projectiles.Add(projectile);
             }
         }
 
@@ -59,10 +59,7 @@ namespace Projectiles
             var deltaPos = playerPos - _prevPlayerPos;
             foreach (var projectile in _projectiles)
             {
-                if (projectile.ShouldOrbit())
-                {
-                    projectile.transform.position += deltaPos;
-                }
+               projectile.UpdateProjectilePosition(deltaPos);
             }
 
             _prevPlayerPos = playerPos;
