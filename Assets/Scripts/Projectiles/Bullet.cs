@@ -20,7 +20,7 @@ namespace Projectiles
             _parentProjectile = GetComponentInParent<Projectile>();
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
