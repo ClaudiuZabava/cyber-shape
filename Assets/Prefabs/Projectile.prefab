@@ -86,7 +86,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2920112061099636206}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 1
@@ -210,7 +210,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gapTransform: {fileID: 5024396634550717112}
-  _damage: 10
 --- !u!136 &-7446022277169073416
 CapsuleCollider:
   m_ObjectHideFlags: 0
