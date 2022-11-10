@@ -1,6 +1,5 @@
 using System.Collections;
 using Constants;
-using Enemy;
 using UnityEngine;
 
 namespace Projectiles
@@ -21,11 +20,11 @@ namespace Projectiles
             _parentProjectile = GetComponentInParent<Projectile>();
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
-                other.gameObject.GetComponentInParent<EnemyBody>().TakeDamage(_parentProjectile.Damage);
+                other.gameObject.GetComponentInParent<EnemyController>().TakeDamage(_parentProjectile.Damage);
                 StartCoroutine(Reload());
             }
         }

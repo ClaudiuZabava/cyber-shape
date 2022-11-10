@@ -6,7 +6,7 @@ namespace Projectiles
     {
         public const float ProjectileHeight = 0.1f;
         
-        public int Damage { get; private set; } = 1;
+        public int Damage { get; private set; } = 10;
         
         public Transform gapTransform;
 
@@ -33,6 +33,15 @@ namespace Projectiles
             if (ShouldOrbit())
             {
                 _bullet.transform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+            }
+        }
+        
+        public void UpdateProjectilePosition(Vector3 deltaPos)
+        {
+            gapTransform.position += deltaPos;
+            if(ShouldOrbit())
+            {
+                _bullet.transform.position += deltaPos;
             }
         }
 
