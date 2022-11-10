@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 391842223}
   - component: {fileID: 391842224}
   - component: {fileID: 391842225}
+  - component: {fileID: 391842226}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -269,6 +270,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crosshairImg: {fileID: 2800000, guid: c186448c466fad9478c38ce9c2f7b71b, type: 3}
+  enemyPrefab: {fileID: 956035031}
+  constEnemies: 7
+  maxWidth: 10
+  maxDistance: 5
+--- !u!114 &391842226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391842222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 885e351b7ada0f644b7bf7527a4a3e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 0
+  interval: 0
+  bpm: 130
+  track: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

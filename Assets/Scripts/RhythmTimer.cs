@@ -35,7 +35,7 @@ public class RhythmTimer : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (lastTime > GetComponent<AudioSource>().time)
         {
@@ -47,6 +47,7 @@ public class RhythmTimer : MonoBehaviour
         if (Timer >= interval)
         {
             Timer = Timer - interval;
+          //  Debug.Log("beat");
         }
         lastTime = GetComponent<AudioSource>().time;
     }
