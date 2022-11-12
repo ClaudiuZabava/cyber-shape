@@ -3,35 +3,41 @@ using Projectiles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PyraController : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] public float _phealth = 100.0f;
+    [SerializeField] public float health = 100.0f;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
-    public float _OldPhealth;
     private RhythmTimer _rTimer;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
+        _orbitalController = GetComponent<ProjectileOrbitalController>();
     }
 
     private void Start()
     {
-        _OldPhealth = _phealth;
         _mainCamera = Camera.main;
-        _orbitalController = GetComponent<ProjectileOrbitalController>();
     }
 
     private void Update()
     {
         HandleShootInput();
         MovementControl();
-        checkStatus();
+        CheckStatus();
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(Tags.Enemy))
+        {
+            health -= 5;
+        }
     }
 
     private void MovementControl()
@@ -54,20 +60,12 @@ public class PyraController : MonoBehaviour
         }
     }
 
-    private void checkStatus()
+    private void CheckStatus()
     {
-        if(_phealth <= 0)
+        if (health <= 0)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             SceneManager.LoadScene(0);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag=="Enemy")
-        {
-            _phealth -=5;
         }
     }
 }

@@ -1,54 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RhythmTimer : MonoBehaviour
 {
-
-    private float currentTime; //the time between updates
-    private float lastTime; //previous time of audio source
-    public float Timer; //current time since last beat
-    public float interval; //time it takes for 1 beat
-
-    public int bpm = 120; //default value, change in inspector for each track
-    public AudioSource track; //the audio source it does the rhythm timing for
-
+    [SerializeField] private int bpm = 120; // default value, change in inspector for each track
+    
+    private float _timer; // current time since last beat
+    private float _currentTime; // the time between updates
+    private float _lastTime; // previous time of audio source
+    private float _interval; // time it takes for 1 beat
+    private AudioSource _track; // the audio source it does the rhythm timing for
 
     private void Awake()
     {
-        currentTime = 0f;
-        lastTime = 0f;
-        Timer = 0f;
-        interval = 60f / bpm;
-        track = GetComponent<AudioSource>();
+        _currentTime = 0f;
+        _lastTime = 0f;
+        _timer = 0f;
+        _interval = 60f / bpm;
+        _track = GetComponent<AudioSource>();
+    }
+    
+    private void FixedUpdate()
+    {
+        if (_lastTime > _track.time)
+        {
+            _lastTime = 0f;
+        }
+        _currentTime = _track.time - _lastTime;
+        _timer += _currentTime;
+
+        if (_timer >= _interval)
+        {
+            _timer -= _interval;
+        }
+        _lastTime = _track.time;
     }
 
-    public bool CheckTime(float pity_Time) //checks if time since last beat is in the decided time interval for the next beat
+    public bool CheckTime(float pityTime) // checks if time since last beat is in the decided time interval for the next beat
     {
-        if (Timer >= interval - pity_Time || Timer <= pity_Time) 
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        if (lastTime > GetComponent<AudioSource>().time)
-        {
-            lastTime = 0f;
-        }
-        currentTime = track.time - lastTime;
-        Timer += currentTime;
-
-        if (Timer >= interval)
-        {
-            Timer = Timer - interval;
-          //  Debug.Log("beat");
-        }
-        lastTime = GetComponent<AudioSource>().time;
+        return _timer >= _interval - pityTime || _timer <= pityTime;
     }
 }

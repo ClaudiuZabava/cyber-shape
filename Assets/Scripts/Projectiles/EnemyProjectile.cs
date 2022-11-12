@@ -1,52 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
+using Constants;
 using UnityEngine;
 
-public class EnemyProjectile : MonoBehaviour
+namespace Projectiles
 {
-    private Vector3 _firingPoint;
-    [SerializeField] private float _projectileSpeed;
-
-    [SerializeField] private float _maxProjectileDistance;
-
-    [SerializeField] private float _damage;
-
-    private GameObject _triggeringPlayer;
-
-    private void Start()
+    public class EnemyProjectile : MonoBehaviour
     {
-        _firingPoint = transform.position;
-    }
+        [SerializeField] private float projectileSpeed;
+        [SerializeField] private float maxProjectileDistance;
+        [SerializeField] private float damage;
 
-    private void Update()
-    {
-        
-        MoveProjectile();
-    }
+        private GameObject _triggeringPlayer;
+        private Vector3 _firingPoint;
 
-    void MoveProjectile() {
-        if (Vector3.Distance(_firingPoint, transform.position) > _maxProjectileDistance)
+        private void Start()
         {
-            Destroy(this.gameObject);
-        } 
-        else 
-        {
-            transform.Translate(Vector3.forward * _projectileSpeed * Time.deltaTime);
+            _firingPoint = transform.position;
         }
-        transform.Translate(Vector3.forward * _projectileSpeed * Time.deltaTime);
-    }
+
+        private void Update()
+        {
+            MoveProjectile();
+        }
     
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.tag=="Player")
+        private void OnTriggerEnter(Collider other)
         {
-            _triggeringPlayer = other.gameObject;
-            _triggeringPlayer.GetComponent<PyraController>()._phealth -= _damage;
-            Destroy(this.gameObject);
+            if (other.CompareTag(Tags.Player))
+            {
+                _triggeringPlayer = other.gameObject;
+                _triggeringPlayer.GetComponent<Player>().health -= damage;
+                Destroy(gameObject);
+            }
+            else if (other.CompareTag(Tags.Wall)) // Obiectele puse de Daria pot avea tag-ul Wall 
+            {
+                Destroy(gameObject);
+            }
         }
-        else if(other.tag == "Wall") // Obiectele puse de Daria pot avea tag-ul Wall 
+
+        private void MoveProjectile() 
         {
-            Destroy(this.gameObject);
+            if (Vector3.Distance(_firingPoint, transform.position) > maxProjectileDistance)
+            {
+                Destroy(gameObject);
+            } 
+            else 
+            {
+                transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+            }
+            transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
         }
     }
 }

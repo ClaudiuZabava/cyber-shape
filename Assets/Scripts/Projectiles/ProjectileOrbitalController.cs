@@ -34,18 +34,7 @@ namespace Projectiles
                 _projectiles.Add(projectile);
             }
         }
-
-        public void Shoot(Vector3 target)
-        {
-            var projectileIndex = GetProjectileClosestToPoint(target);
-            if (projectileIndex == -1)
-            {
-                return;
-            }
-
-            _projectiles[projectileIndex].Shoot(target);
-        }
-
+        
         private void FixedUpdate()
         {
             // // Get all projectiles and rotate them around the parent
@@ -59,10 +48,21 @@ namespace Projectiles
             var deltaPos = playerPos - _prevPlayerPos;
             foreach (var projectile in _projectiles)
             {
-               projectile.UpdateProjectilePosition(deltaPos);
+                projectile.UpdateProjectilePosition(deltaPos);
             }
 
             _prevPlayerPos = playerPos;
+        }
+
+        public void Shoot(Vector3 target)
+        {
+            var projectileIndex = GetProjectileClosestToPoint(target);
+            if (projectileIndex == -1)
+            {
+                return;
+            }
+
+            _projectiles[projectileIndex].Shoot(target);
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)

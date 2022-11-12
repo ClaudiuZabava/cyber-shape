@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GeneralGameController : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private Texture2D crosshairImg;
 

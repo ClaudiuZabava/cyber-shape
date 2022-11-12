@@ -1,94 +1,85 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.AI;
 using Evolution;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
-public class EnemyController : MonoBehaviour
+namespace Enemy
 {
-
-    private GameObject _player;
-    private NavMeshAgent _nav;
-    private Canvas _healthBar;
-    private Slider _healthBarSlider;
-    private int _maxHealth;
-    public int _health;
-    private Evolvable _evolvable;
-    private EnemyStageData StageData => _evolvable.Stage.EnemyData;
-    private int _distance;
-    private float _lastTimeShot = 0;
-
-
-    [SerializeField] private float _firingSpeed;
-    [SerializeField] private GameObject _projectile;
-    [SerializeField] private Transform _enemyFirePoint;
-    [SerializeField] private int _minDistance = 10;
-
-
-    private void Awake()
+    public class EnemyController : MonoBehaviour
     {
-        _nav = GetComponent<NavMeshAgent>();
-        _player = GameObject.FindWithTag("Player");
-        _healthBar = GetComponentInChildren<Canvas>();
-        _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
-        _evolvable = GetComponentInChildren<Evolvable>();
-    }
-
-    private void Start()
-    {
-        _health = StageData.Health;
-        SetMaxHealth(_health);
-        SetHealth(_health);
-
-    }
-
-    private void Update()
-    {
-
-        _healthBar.transform.rotation = Camera.main.transform.rotation;
-        float _distance = Vector3.Distance(_player.transform.position, this.transform.position);
-        this.transform.LookAt(_player.transform);
-
-        if (_distance < _minDistance && _player.transform.hasChanged)
+        [SerializeField] private float firingSpeed;
+        [SerializeField] private GameObject projectile;
+        [SerializeField] private Transform enemyFirePoint;
+        [SerializeField] private int minDistance = 10;
+        
+        private GameObject _player;
+        private NavMeshAgent _nav;
+        private Canvas _healthBar;
+        private Slider _healthBarSlider;
+        private int _maxHealth;
+        public int health;
+        private Evolvable _evolvable;
+        private EnemyStageData StageData => _evolvable.Stage.EnemyData;
+        private int _distance;
+        private float _lastTimeShot = 0;
+        
+        private void Awake()
         {
-            this._nav.SetDestination(_player.transform.position);
-            Shoot();
+            _nav = GetComponent<NavMeshAgent>();
+            _player = GameObject.FindWithTag("Player");
+            _healthBar = GetComponentInChildren<Canvas>();
+            _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
+            _evolvable = GetComponentInChildren<Evolvable>();
         }
 
-        if(_health <= 0)
+        private void Start()
         {
-            Destroy(this.gameObject);
+            health = StageData.Health;
+            SetMaxHealth(health);
+            SetHealth(health);
         }
 
-       
-    }
-
-
-    public void SetMaxHealth(int maxHealth)
-    {
-        _maxHealth = maxHealth;
-    }
-
-    public void SetHealth(int health)
-    {
-        _healthBarSlider.value = (float)health / _maxHealth;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        _health -= damage;
-        SetHealth(_health);
-    }
-
-    public void Shoot()
-    {
-        if (_lastTimeShot + _firingSpeed < Time.time)
+        private void Update()
         {
-            _lastTimeShot = Time.time;
-            Instantiate(_projectile, _enemyFirePoint.position, _enemyFirePoint.rotation);
+            _healthBar.transform.rotation = Camera.main.transform.rotation;
+            var distance = Vector3.Distance(_player.transform.position, this.transform.position);
+            transform.LookAt(_player.transform);
+
+            if (distance < minDistance && _player.transform.hasChanged)
+            {
+                _nav.SetDestination(_player.transform.position);
+                Shoot();
+            }
+
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void SetMaxHealth(int maxHealth)
+        {
+            _maxHealth = maxHealth;
+        }
+
+        private void SetHealth(int health)
+        {
+            _healthBarSlider.value = (float)health / _maxHealth;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            health -= damage;
+            SetHealth(health);
+        }
+
+        private void Shoot()
+        {
+            if (_lastTimeShot + firingSpeed < Time.time)
+            {
+                _lastTimeShot = Time.time;
+                Instantiate(projectile, enemyFirePoint.position, enemyFirePoint.rotation);
+            }
         }
     }
-
-
 }
