@@ -6,8 +6,13 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public GameObject healthPrefab;
-    public int current_health, max_health;
     List<HealthChunk> health = new List<HealthChunk>();
+    public Player player;
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player").GetComponent<Player>();
+    }
 
     private void Start()
     {
@@ -16,22 +21,16 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < max_health; i++)
+        for (int i = 0; i < player.max_health; i++)
         {
-            health[i].SetHealth(i + 1 <= current_health);
+            health[i].SetHealth(i + 1 <= player.current_health);
         }
     }
 
-    public void UpdateMaxHealth(int max)
-    {
-        max_health = max;
-        DrawHealth();
-    }
-
-    private void DrawHealth()
+    public void DrawHealth()
     {
         ClearHealth();
-        for (int i = 0; i < max_health; i++)
+        for (int i = 0; i < player.max_health; i++)
         {
             CreateHealthChunk();
         }

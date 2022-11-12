@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class RhythmTimer : MonoBehaviour
 {
-    [SerializeField] private int bpm = 120; // default value, change in inspector for each track
-    
-    private float _timer; // current time since last beat
+    [SerializeField] private int bpm = 130; // default value, change in inspector for each track
+
+    [SerializeField] private float _timer; // current time since last beat
     private float _currentTime; // the time between updates
     private float _lastTime; // previous time of audio source
     private float _interval; // time it takes for 1 beat

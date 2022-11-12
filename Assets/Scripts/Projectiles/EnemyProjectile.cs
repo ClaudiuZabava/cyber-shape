@@ -21,13 +21,13 @@ namespace Projectiles
         {
             MoveProjectile();
         }
-    
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(Tags.Player))
             {
                 _triggeringPlayer = other.gameObject;
-                _triggeringPlayer.GetComponent<Player>().health -= damage;
+                _triggeringPlayer.GetComponent<Player>().TakeDamage(1);
                 Destroy(gameObject);
             }
             else if (other.CompareTag(Tags.Wall)) // Obiectele puse de Daria pot avea tag-ul Wall 
@@ -36,13 +36,13 @@ namespace Projectiles
             }
         }
 
-        private void MoveProjectile() 
+        private void MoveProjectile()
         {
             if (Vector3.Distance(_firingPoint, transform.position) > maxProjectileDistance)
             {
                 Destroy(gameObject);
-            } 
-            else 
+            }
+            else
             {
                 transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
             }

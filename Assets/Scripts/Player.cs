@@ -5,16 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public int current_health = 4, max_health = 4;
+
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] public float health = 100.0f;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
+    private HudManager _UI;
 
     private void Awake()
     {
+        _UI = GameObject.Find("HudManager").GetComponent<HudManager>();
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
@@ -31,12 +34,26 @@ public class Player : MonoBehaviour
         MovementControl();
         CheckStatus();
     }
-    
+
+    public void TakeDamage(int dmg)
+    {
+        current_health = current_health - dmg;
+    }
+
+    public void UpdateMaxHealth(int max)
+    {
+        if (current_health + (max - max_health) > 0)
+            current_health = current_health + (max - max_health);
+
+        max_health = max;
+        _UI.hp.DrawHealth();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Tags.Enemy))
         {
-            health -= 5;
+            TakeDamage(1);
         }
     }
 
@@ -62,7 +79,7 @@ public class Player : MonoBehaviour
 
     private void CheckStatus()
     {
-        if (health <= 0)
+        if (current_health <= 0)
         {
             Destroy(gameObject);
             SceneManager.LoadScene(0);
