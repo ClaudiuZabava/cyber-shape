@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 759214939080828409}
   - component: {fileID: -4947143279259230389}
   m_Layer: 0
-  m_Name: Bullet1
+  m_Name: Enemy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,6 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d6fe868a28a184fbe19054c3b4e432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileSpeed: 5
-  _maxProjectileDistance: 10
-  _damage: 10
+  projectileSpeed: 3
+  maxProjectileDistance: 10
+  damage: 1

@@ -8,10 +8,10 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        MoveCam();
+        MoveCamera();
     }
 
-    private void MoveCam()
+    private void MoveCamera()
     {
         transform.position = Vector3.Lerp(transform.position, target.position + tOffset, cSpeed * Time.deltaTime);
     }

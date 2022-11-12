@@ -5,9 +5,7 @@ namespace Projectiles
     public class Projectile : MonoBehaviour
     {
         public const float ProjectileHeight = 0.1f;
-        
         public int Damage { get; private set; } = 10;
-        
         public Transform gapTransform;
 
         private Bullet _bullet;

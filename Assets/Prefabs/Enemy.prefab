@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2525876238310573766}
   - component: {fileID: 6474508674071635226}
   m_Layer: 0
-  m_Name: enemyFirePoint
+  m_Name: Enemy Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,8 +142,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9001530473334595022}
-  - component: {fileID: 1603119405078734005}
   - component: {fileID: 5360700543554486392}
+  - component: {fileID: 1603119405078734005}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -169,23 +169,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1603119405078734005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5576741164709612590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f5f8d44ac5a4db47824896eca95415c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 100
-  _firingSpeed: 1
-  _projectile: {fileID: 8776175046304697655, guid: 4e99050254c64f3429d71de83e3360e4, type: 3}
-  _enemyFirePoint: {fileID: 7821751694810432115}
-  _minDistance: 10
 --- !u!195 &5360700543554486392
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -208,6 +191,23 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1603119405078734005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576741164709612590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5f8d44ac5a4db47824896eca95415c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firingSpeed: 2
+  projectile: {fileID: 8776175046304697655, guid: 4e99050254c64f3429d71de83e3360e4, type: 3}
+  enemyFirePoint: {fileID: 7821751694810432115}
+  minDistance: 10
+  health: 0
 --- !u!1 &5834089900873688663
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 182511240205109265}
   - component: {fileID: 4479390413686602562}
   m_Layer: 0
-  m_Name: HealthBar
+  m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -487,12 +487,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8136808836286152613}
   - component: {fileID: 5135259247320723456}
-  - component: {fileID: 2119145725098330086}
   - component: {fileID: 6962824895340709066}
   - component: {fileID: 3582381791312686009}
   - component: {fileID: 7572338363145395030}
+  - component: {fileID: 2119145725098330086}
   m_Layer: 0
-  m_Name: Tetrahedron
+  m_Name: Body
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,19 +521,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8908137836564718879}
   m_Mesh: {fileID: -7178685034035712819, guid: 483de333af80f4f74a93a04b67c658cc, type: 3}
---- !u!114 &2119145725098330086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8908137836564718879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36e64f7b482694491b5ae8203dcb6a09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Stage>k__BackingField: {fileID: 11400000, guid: c780ddf13c78d4102bdcf43044ceaeba, type: 2}
 --- !u!23 &6962824895340709066
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -610,6 +597,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2119145725098330086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8908137836564718879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e64f7b482694491b5ae8203dcb6a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Stage>k__BackingField: {fileID: 11400000, guid: c780ddf13c78d4102bdcf43044ceaeba, type: 2}
 --- !u!1 &8913044851404976762
 GameObject:
   m_ObjectHideFlags: 0
