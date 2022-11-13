@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HudManager : MonoBehaviour
+namespace UI
 {
-
-    public PlayerHealth hp;
-    void Awake()
+    public class HudManager : MonoBehaviour
     {
-        hp = GameObject.Find("PlayerHealth").GetComponent<PlayerHealth>();
-    }
+        public PlayerHealth hp;
 
+        private void Awake()
+        {
+            hp = GameObject.Find("PlayerHealth").GetComponent<PlayerHealth>();
+        }
+    }
 }

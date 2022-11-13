@@ -1,28 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthChunk : MonoBehaviour
+namespace UI
 {
-    public Sprite FullChunk;
-    public Sprite BlankChunk;
-    Image healthImage;
-
-    private void Awake()
+    public class HealthChunk : MonoBehaviour
     {
-        healthImage = GetComponent<Image>();
-    }
+        [SerializeField] private Sprite fullChunk;
+        [SerializeField] private Sprite blankChunk;
+    
+        private Image _healthImage;
 
-    public void SetHealth(bool Full)
-    {
-        if (Full)
+        private void Awake()
         {
-            healthImage.sprite = FullChunk;
+            _healthImage = GetComponent<Image>();
         }
-        else
+
+        public void SetHealth(bool full)
         {
-            healthImage.sprite = BlankChunk;
+            _healthImage.sprite = full ? fullChunk : blankChunk;
         }
     }
 }

@@ -110,5 +110,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8d72fde7c7e844a91f0e83e4a22e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FullChunk: {fileID: 21300000, guid: ffd2c9444393cad4db4c8bcdcb6022e1, type: 3}
-  BlankChunk: {fileID: 21300000, guid: cf2319095fce7194a8d02e7dcaea9fbf, type: 3}
+  fullChunk: {fileID: 21300000, guid: ffd2c9444393cad4db4c8bcdcb6022e1, type: 3}
+  blankChunk: {fileID: 21300000, guid: cf2319095fce7194a8d02e7dcaea9fbf, type: 3}
