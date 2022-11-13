@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 996477931859293469}
   - component: {fileID: 3040145457451745751}
   - component: {fileID: 996477931859293467}
+  - component: {fileID: 9121859637158167580}
   - component: {fileID: 996477931859293464}
   - component: {fileID: 2846068225945342563}
   - component: {fileID: 996477931859293466}
   - component: {fileID: 996477931859293465}
   - component: {fileID: 6163434126350315386}
-  - component: {fileID: 9121859637158167580}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -38,7 +38,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
 --- !u!33 &996477931859293469
 MeshFilter:
@@ -104,6 +104,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7178685034035712819, guid: 483de333af80f4f74a93a04b67c658cc, type: 3}
+--- !u!135 &9121859637158167580
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544394890068779010}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.06
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &996477931859293464
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,8 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d20d4fd45c08374abcdd4972dfa4d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current_health: 4
+  max_health: 4
   speed: 12
-  health: 100
 --- !u!114 &996477931859293465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,16 +196,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Stage>k__BackingField: {fileID: 0}
---- !u!135 &9121859637158167580
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3544394890068779010}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.06
-  m_Center: {x: 0, y: 0, z: 0}

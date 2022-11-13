@@ -1,20 +1,25 @@
 using Constants;
 using Projectiles;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    [field: SerializeField] public int CurrentHealth { get; private set; } = 4;
+    [field: SerializeField] public int MaxHealth { get; private set; } = 4;
+
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] public float health = 100.0f;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
+    private HudManager _ui;
 
     private void Awake()
     {
+        _ui = GameObject.Find("HudManager").GetComponent<HudManager>();
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
@@ -31,12 +36,26 @@ public class Player : MonoBehaviour
         MovementControl();
         CheckStatus();
     }
-    
+
+    public void TakeDamage(int dmg)
+    {
+        CurrentHealth -= dmg;
+    }
+
+    public void UpdateMaxHealth(int max)
+    {
+        if (CurrentHealth + (max - MaxHealth) > 0)
+            CurrentHealth += max - MaxHealth;
+
+        MaxHealth = max;
+        _ui.hp.DrawHealth();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Tags.Enemy))
         {
-            health -= 5;
+            TakeDamage(1);
         }
     }
 
@@ -62,7 +81,7 @@ public class Player : MonoBehaviour
 
     private void CheckStatus()
     {
-        if (health <= 0)
+        if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
             SceneManager.LoadScene(0);
