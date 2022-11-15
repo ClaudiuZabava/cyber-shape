@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,16 +10,41 @@ public class GameManager : MonoBehaviour
     [Header("Enemy settings")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private int constEnemies = 7;
+    [SerializeField] private int totalEnemies;
     [SerializeField] private int maxWidth = 10;
     [SerializeField] private int maxDistance = 5;
     [SerializeField] private float secondsTillSpawn = 3f;
+    [SerializeField] private float percentToNextWave = .75f;
 
+    private bool _spawning = false;
     private void Start()
     {
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
         
         StartCoroutine(SpawnEnemies());
+        //
+    }
+
+    private void Update()
+    {
+        if (!_spawning)
+        {
+            CheckNoEnemies();
+        }
+    }
+
+    private void CheckNoEnemies()
+    {
+        Debug.Log("check");
+        
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length < percentToNextWave * constEnemies)
+        {
+            _spawning = true;
+            StartCoroutine(SpawnEnemies());
+            
+        }
+        
     }
     
     private Vector3 GetRandomPosition()
@@ -42,5 +69,8 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
         }
+
+        _spawning = false;
     }
+    
 }
