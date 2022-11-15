@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.173079, g: 0.21631923, b: 0.29832268, a: 1}
+  m_IndirectSpecularColor: {r: 0.17307928, g: 0.21631947, b: 0.2983233, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -455,9 +455,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crosshairImg: {fileID: 2800000, guid: c186448c466fad9478c38ce9c2f7b71b, type: 3}
   enemyPrefab: {fileID: 5576741164709612590, guid: cdc60f457fc567b40a3eb8e604006314, type: 3}
-  constEnemies: 7
+  constEnemies: 1
   maxWidth: 10
-  maxDistance: 5
+  maxDistance: 7
 --- !u!114 &391842226
 MonoBehaviour:
   m_ObjectHideFlags: 0
