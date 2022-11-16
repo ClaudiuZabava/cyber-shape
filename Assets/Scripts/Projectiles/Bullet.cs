@@ -14,12 +14,14 @@ namespace Projectiles
         
         private Vector3 _velocity;
         private Rigidbody _rigidbody;
+        private Renderer _renderer;
         private Projectile _parentProjectile;
-        private Boolean shot = false;
+        private bool _shot = false;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _renderer = GetComponent<Renderer>();
             _parentProjectile = GetComponentInParent<Projectile>();
         }
 
@@ -30,12 +32,6 @@ namespace Projectiles
                 other.gameObject.GetComponentInParent<EnemyController>().TakeDamage(_parentProjectile.Damage);
                 StartCoroutine(Reload());
             }
-
-            if (shot is true)
-            {
-                Destroy(gameObject);
-            }
-
         }
 
         public void Shoot(Vector3 target)
@@ -48,7 +44,7 @@ namespace Projectiles
             // Keep the projectile oriented parallel to the ground
             transform.Rotate(90, 0, 0);
             _velocity = direction * speed;
-            shot = true;
+            _shot = true;
         }
 
         public bool ShouldOrbit()
@@ -63,8 +59,14 @@ namespace Projectiles
 
         private IEnumerator Reload()
         {
+            if (_shot)
+            {
+                _shot = false;
+                _renderer.enabled = false;
+            }
             yield return new WaitForSeconds(respawnTime);
 
+            _renderer.enabled = true;
             _velocity = Vector3.zero;
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
