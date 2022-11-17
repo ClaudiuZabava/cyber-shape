@@ -10,16 +10,15 @@ public class Player : MonoBehaviour
     [field: SerializeField] public int MaxHealth { get; private set; } = 4;
 
     [SerializeField] private float speed = 5.0f;
+    [SerializeField] private HudManager ui;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
-    private HudManager _ui;
 
     private void Awake()
     {
-        _ui = GameObject.Find("HudManager").GetComponent<HudManager>();
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
@@ -48,7 +47,7 @@ public class Player : MonoBehaviour
             CurrentHealth += max - MaxHealth;
 
         MaxHealth = max;
-        _ui.hp.DrawHealth();
+        ui.hp.DrawHealth();
     }
 
     private void OnTriggerEnter(Collider other)
