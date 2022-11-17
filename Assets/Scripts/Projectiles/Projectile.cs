@@ -5,7 +5,7 @@ namespace Projectiles
     public class Projectile : MonoBehaviour
     {
         public const float ProjectileHeight = 0.1f;
-        public int Damage { get; private set; } = 10;
+        public int Damage { get; private set; } = 100;
         public Transform gapTransform;
 
         private Bullet _bullet;
@@ -37,7 +37,7 @@ namespace Projectiles
         public void UpdateProjectilePosition(Vector3 deltaPos)
         {
             gapTransform.position += deltaPos;
-            if(ShouldOrbit())
+            if (ShouldOrbit())
             {
                 _bullet.transform.position += deltaPos;
             }
