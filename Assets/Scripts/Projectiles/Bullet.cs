@@ -30,8 +30,9 @@ namespace Projectiles
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
                 other.gameObject.GetComponentInParent<EnemyController>().TakeDamage(_parentProjectile.Damage);
-                StartCoroutine(Reload());
             }
+
+            StartCoroutine(Reload());
         }
 
         public void Shoot(Vector3 target)
