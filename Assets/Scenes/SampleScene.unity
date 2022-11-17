@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17307928, g: 0.21631947, b: 0.2983233, a: 1}
+  m_IndirectSpecularColor: {r: 0.173079, g: 0.21631923, b: 0.29832268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -357,7 +357,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90dd543ae3513594d9be0fb517ce6d30, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.491
+  m_Volume: 0.122
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -717,7 +717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.6427876, y: 0, z: 0, w: 0.7660445}
-  m_LocalPosition: {x: 0, y: 20, z: -2.53}
+  m_LocalPosition: {x: 0, y: 23, z: -3.5}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -769,9 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a45a82d3768be04c80a7b4f87d78711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2229630943731596230}
-  tOffset: {x: 0, y: 20, z: -2.53}
-  cSpeed: 5
+  smoothSpeed: 3.5
 --- !u!1 &1287808794
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +782,7 @@ GameObject:
   - component: {fileID: 1287808797}
   - component: {fileID: 1287808796}
   - component: {fileID: 1287808795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor
   m_TagString: Floor
   m_Icon: {fileID: 0}
