@@ -7,6 +7,7 @@ namespace Projectiles
         public const float ProjectileHeight = 0.1f;
         public int Damage { get; private set; } = 100;
         public Transform gapTransform;
+        public bool QueuedForShooting { get; set; } = false;
 
         private Bullet _bullet;
 
@@ -15,14 +16,20 @@ namespace Projectiles
             _bullet = GetComponentInChildren<Bullet>();
         }
 
-        public bool ShouldOrbit()
+        private bool ShouldOrbit()
         {
             return _bullet.ShouldOrbit();
+        }
+
+        public bool CanShoot()
+        {
+            return ShouldOrbit() && !QueuedForShooting;
         }
 
         public void Shoot(Vector3 target)
         {
             _bullet.Shoot(target);
+            QueuedForShooting = false;
         }
 
         public void OrbitAround(Vector3 point, float orbitSpeed)
@@ -33,7 +40,7 @@ namespace Projectiles
                 _bullet.transform.RotateAround(point, Vector3.up, orbitSpeed * Time.deltaTime);
             }
         }
-        
+
         public void UpdateProjectilePosition(Vector3 deltaPos)
         {
             gapTransform.position += deltaPos;

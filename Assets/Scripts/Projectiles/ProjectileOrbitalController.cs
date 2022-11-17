@@ -9,8 +9,9 @@ namespace Projectiles
         [SerializeField] private int projectileCount = 5;
         [SerializeField] private float radius = 0.3f;
         [SerializeField] private GameObject projectilePrefab;
-        [SerializeField] private float orbitSpeed = 20f;
-        [SerializeField] private float orbitShootingSpeed = 35f;
+        [SerializeField] private float orbitSpeed = 35f;
+        [SerializeField] private float orbitShootingSpeed = 70f;
+        [SerializeField] private float launchDistanceThreshold = 0.5f;
 
         private Vector3 _prevPlayerPos;
         private readonly List<Projectile> _projectiles = new();
@@ -70,7 +71,7 @@ namespace Projectiles
                     removeList.Add(shootingInfo);
                 }
             }
-            
+
             foreach (var shootingInfo in removeList)
             {
                 _shootingQueue.Remove(shootingInfo);
@@ -86,6 +87,7 @@ namespace Projectiles
             }
 
             _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex]));
+            _projectiles[projectileIndex].QueuedForShooting = true;
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)
@@ -98,7 +100,7 @@ namespace Projectiles
                 var bulletPosition = _projectiles[i].GetBulletPosition();
                 var distance = Vector3.Distance(bulletPosition, hitInfoPoint);
                 // Ignore projectiles that have already been fired
-                if (distance < minDistance && _projectiles[i].ShouldOrbit())
+                if (distance < minDistance && _projectiles[i].CanShoot())
                 {
                     minDistance = distance;
                     projectileIndex = i;
@@ -111,13 +113,14 @@ namespace Projectiles
         private bool CanShoot(ShootingInfo shootingInfo)
         {
             var center = transform.position;
-            var slope = (shootingInfo.TargetPosition.z - shootingInfo.Projectile.transform.position.z) /
-                        (shootingInfo.TargetPosition.x - shootingInfo.Projectile.transform.position.x);
-            var run = -slope * shootingInfo.Projectile.transform.position.x +
-                      shootingInfo.Projectile.transform.position.z;
+            var bulletPosition = shootingInfo.Projectile.GetBulletPosition();
+            var slope = (shootingInfo.TargetPosition.z - bulletPosition.z) /
+                        (shootingInfo.TargetPosition.x - bulletPosition.x);
+            var run = -slope * bulletPosition.x +
+                      bulletPosition.z;
             var distance = MathF.Abs(center.x * slope - center.y + run) / MathF.Sqrt(1 + slope * slope);
-
-            return distance > radius;
+            
+            return distance > radius - launchDistanceThreshold;
         }
     }
 }
