@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
             CurrentHealth += max - MaxHealth;
 
         MaxHealth = max;
-        ui.hp.DrawHealth();
+        ui.Hp.DrawHealth();
     }
 
     private void OnTriggerEnter(Collider other)

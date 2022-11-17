@@ -814,6 +814,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LongerWall
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
@@ -1312,6 +1316,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
       propertyPath: m_Name
       value: LongerWall (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3867,6 +3875,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LongerWall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
@@ -5454,6 +5466,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
       propertyPath: m_Name
       value: LongerWall (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6feb902f47443be4a8b53ee668a8701b, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

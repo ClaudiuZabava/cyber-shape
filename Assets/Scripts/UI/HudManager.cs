@@ -4,11 +4,11 @@ namespace UI
 {
     public class HudManager : MonoBehaviour
     {
-        public PlayerHealth hp;
+        public PlayerHealth Hp { get; private set; }
 
         private void Awake()
         {
-            hp = GameObject.Find("PlayerHealth").GetComponent<PlayerHealth>();
+            Hp = GetComponentInChildren<PlayerHealth>();
         }
     }
 }
