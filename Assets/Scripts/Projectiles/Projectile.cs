@@ -34,10 +34,10 @@ namespace Projectiles
 
         public void OrbitAround(Vector3 point, float orbitSpeed)
         {
-            gapTransform.RotateAround(point, Vector3.up, orbitSpeed * Time.deltaTime);
+            gapTransform.RotateAround(point, Vector3.up, 20 * Time.deltaTime * orbitSpeed);
             if (ShouldOrbit())
             {
-                _bullet.transform.RotateAround(point, Vector3.up, orbitSpeed * Time.deltaTime);
+                _bullet.transform.RotateAround(point, Vector3.up, 20 * Time.deltaTime * orbitSpeed);
             }
         }
 

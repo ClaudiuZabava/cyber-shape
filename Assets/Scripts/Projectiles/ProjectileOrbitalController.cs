@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Projectiles
 {
@@ -9,8 +13,8 @@ namespace Projectiles
         [SerializeField] private int projectileCount = 5;
         [SerializeField] private float radius = 0.3f;
         [SerializeField] private GameObject projectilePrefab;
-        [SerializeField] private float orbitSpeed = 35f;
-        [SerializeField] private float orbitShootingSpeed = 70f;
+        [SerializeField] private float orbitSpeed = 10f;
+        [SerializeField] private float orbitShootingSpeed = 25f;
         [SerializeField] private float launchDistanceThreshold = 0.5f;
 
         private Vector3 _prevPlayerPos;
@@ -104,7 +108,7 @@ namespace Projectiles
                 {
                     minDistance = distance;
                     projectileIndex = i;
-                }
+                }   
             }
 
             return projectileIndex;
@@ -113,14 +117,16 @@ namespace Projectiles
         private bool CanShoot(ShootingInfo shootingInfo)
         {
             var center = transform.position;
+            var center2 = new Vector2(center.x, center.z);
             var bulletPosition = shootingInfo.Projectile.GetBulletPosition();
-            var slope = (shootingInfo.TargetPosition.z - bulletPosition.z) /
-                        (shootingInfo.TargetPosition.x - bulletPosition.x);
-            var run = -slope * bulletPosition.x +
-                      bulletPosition.z;
-            var distance = MathF.Abs(center.x * slope - center.y + run) / MathF.Sqrt(1 + slope * slope);
-            
-            return distance > radius - launchDistanceThreshold;
+            var bulletPosition2 = new Vector2(bulletPosition.x, bulletPosition.z);
+            var targetPosition2 = new Vector2(shootingInfo.TargetPosition.x, shootingInfo.TargetPosition.z);
+
+            var normalizedDirection = (targetPosition2 - bulletPosition2).normalized;
+            var lineToCenter = center2 - bulletPosition2;
+
+            return Mathf.Abs(normalizedDirection.x * lineToCenter.y - normalizedDirection.y * lineToCenter.x) >
+                   radius - launchDistanceThreshold;
         }
     }
 }
