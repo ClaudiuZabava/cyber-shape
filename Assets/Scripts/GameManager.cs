@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     [Header("Enemy settings")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private int constEnemies = 7;
-    [SerializeField] private int totalEnemies;
     [SerializeField] private int maxWidth = 10;
     [SerializeField] private int maxDistance = 5;
     [SerializeField] private float secondsTillSpawn = 3f;
@@ -21,9 +20,8 @@ public class GameManager : MonoBehaviour
     {
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
-        
+
         StartCoroutine(SpawnEnemies());
-        //
     }
 
     private void Update()
@@ -36,15 +34,10 @@ public class GameManager : MonoBehaviour
 
     private void CheckNoEnemies()
     {
-        Debug.Log("check");
-        
         if (GameObject.FindGameObjectsWithTag("Enemy").Length < percentToNextWave * constEnemies)
         {
-            _spawning = true;
             StartCoroutine(SpawnEnemies());
-            
         }
-        
     }
     
     private Vector3 GetRandomPosition()
@@ -62,8 +55,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
+        _spawning = true;
         yield return new WaitForSeconds(secondsTillSpawn);
         for (var i = 0; i < constEnemies; i++)
         {
@@ -72,5 +66,4 @@ public class GameManager : MonoBehaviour
 
         _spawning = false;
     }
-    
 }
