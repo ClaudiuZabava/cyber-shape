@@ -25,12 +25,12 @@ namespace Projectiles
             _bullet.Shoot(target);
         }
 
-        public void OrbitAround(Vector3 point)
+        public void OrbitAround(Vector3 point, float orbitSpeed)
         {
-            gapTransform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+            gapTransform.RotateAround(point, Vector3.up, orbitSpeed * Time.deltaTime);
             if (ShouldOrbit())
             {
-                _bullet.transform.RotateAround(point, Vector3.up, 20 * Time.deltaTime);
+                _bullet.transform.RotateAround(point, Vector3.up, orbitSpeed * Time.deltaTime);
             }
         }
         
@@ -43,7 +43,7 @@ namespace Projectiles
             }
         }
 
-        public void Init(Vector3 position, Quaternion rotation, float yAngle)
+        public void Init(Vector3 position, Quaternion rotation)
         {
             _bullet.transform.localPosition = position;
             _bullet.transform.localRotation = rotation;

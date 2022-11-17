@@ -25,7 +25,7 @@ namespace Projectiles
             _parentProjectile = GetComponentInParent<Projectile>();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) 
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {

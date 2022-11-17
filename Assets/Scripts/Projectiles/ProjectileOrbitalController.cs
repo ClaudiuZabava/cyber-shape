@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,13 @@ namespace Projectiles
         [SerializeField] private int projectileCount = 5;
         [SerializeField] private float radius = 0.3f;
         [SerializeField] private GameObject projectilePrefab;
-        
+        [SerializeField] private float orbitSpeed = 20f;
+        [SerializeField] private float orbitShootingSpeed = 35f;
+
         private Vector3 _prevPlayerPos;
         private readonly List<Projectile> _projectiles = new();
+        private readonly List<ShootingInfo> _shootingQueue = new();
+
 
         private void Start()
         {
@@ -28,19 +33,19 @@ namespace Projectiles
                         Projectile.ProjectileHeight,
                         radius * Mathf.Sin(i * 2 * Mathf.PI / projectileCount)
                     ),
-                    Quaternion.Euler(90, -i * 360 / projectileCount, 0),
-                    -i * 360 / projectileCount
+                    Quaternion.Euler(90, -i * 360 / projectileCount, 0)
                 );
                 _projectiles.Add(projectile);
             }
         }
-        
+
         private void FixedUpdate()
         {
+            var speed = _shootingQueue.Count > 0 ? orbitShootingSpeed : orbitSpeed;
             // // Get all projectiles and rotate them around the parent
             foreach (var projectile in _projectiles)
             {
-                projectile.OrbitAround(transform.position);
+                projectile.OrbitAround(transform.position, speed);
             }
 
             // Move the projectiles along with the player
@@ -54,7 +59,25 @@ namespace Projectiles
             _prevPlayerPos = playerPos;
         }
 
-        public void Shoot(Vector3 target)
+        private void Update()
+        {
+            var removeList = new List<ShootingInfo>();
+            foreach (var shootingInfo in _shootingQueue)
+            {
+                if (CanShoot(shootingInfo))
+                {
+                    shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition);
+                    removeList.Add(shootingInfo);
+                }
+            }
+            
+            foreach (var shootingInfo in removeList)
+            {
+                _shootingQueue.Remove(shootingInfo);
+            }
+        }
+
+        public void EnqueueShoot(Vector3 target)
         {
             var projectileIndex = GetProjectileClosestToPoint(target);
             if (projectileIndex == -1)
@@ -62,7 +85,7 @@ namespace Projectiles
                 return;
             }
 
-            _projectiles[projectileIndex].Shoot(target);
+            _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex]));
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)
@@ -83,6 +106,18 @@ namespace Projectiles
             }
 
             return projectileIndex;
+        }
+
+        private bool CanShoot(ShootingInfo shootingInfo)
+        {
+            var center = transform.position;
+            var slope = (shootingInfo.TargetPosition.z - shootingInfo.Projectile.transform.position.z) /
+                        (shootingInfo.TargetPosition.x - shootingInfo.Projectile.transform.position.x);
+            var run = -slope * shootingInfo.Projectile.transform.position.x +
+                      shootingInfo.Projectile.transform.position.z;
+            var distance = MathF.Abs(center.x * slope - center.y + run) / MathF.Sqrt(1 + slope * slope);
+
+            return distance > radius;
         }
     }
 }
