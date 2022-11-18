@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [field: SerializeField] public int CurrentHealth { get; private set; } = 4;
     [field: SerializeField] public int MaxHealth { get; private set; } = 4;
 
+    [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
+
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private HudManager ui;
 
@@ -67,13 +69,13 @@ public class Player : MonoBehaviour
 
     private void HandleShootInput()
     {
-        if (Input.GetButtonDown("Fire1") && _rTimer.CheckTime(0.10f))
+        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(0.10f) || !IsRhythmActive))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                _orbitalController.Shoot(hit.point);
+                _orbitalController.EnqueueShoot(hit.point);
             }
         }
     }
