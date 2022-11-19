@@ -7,11 +7,6 @@ public class RhythmLine : MonoBehaviour
     private float _time;
     private float _distance;
     private float _startpos;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     public void SetTime(float time)
     {
@@ -28,12 +23,12 @@ public class RhythmLine : MonoBehaviour
         _startpos = pos;
     }
 
-    public float getSpeed()
+    public float GetSpeed()
     {
         return _distance / _time;
     }
 
-    private void checkPosition()
+    private void CheckPosition()
     {
         if(_distance < 0)
         {
@@ -57,6 +52,6 @@ public class RhythmLine : MonoBehaviour
     {
         transform.position += new Vector3(_distance *Time.deltaTime/_time, 0,0);
 
-        checkPosition();
+        CheckPosition();
     }
 }
