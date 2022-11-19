@@ -1,10 +1,12 @@
+using UI;
 using UnityEngine;
+
 
 public class RhythmTimer : MonoBehaviour
 {
-    [SerializeField] private int bpm = 130; // default value, change in inspector for each track
+    [SerializeField] private float bpm = 135.0f; // default value, change in inspector for each track
     [SerializeField] private float timer; // current time since last beat
-    
+
     private float _currentTime; // the time between updates
     private float _lastTime; // previous time of audio source
     private float _interval; // time it takes for 1 beat
@@ -15,7 +17,7 @@ public class RhythmTimer : MonoBehaviour
         _currentTime = 0f;
         _lastTime = 0f;
         timer = 0f;
-        _interval = 60f / bpm;
+        _interval = 60.0f / bpm;
         _track = GetComponent<AudioSource>();
     }
 
@@ -26,7 +28,7 @@ public class RhythmTimer : MonoBehaviour
 
     public float getTime()
     {
-        return timer;
+        return _track.time;
     }
     
     private void FixedUpdate()
@@ -41,12 +43,11 @@ public class RhythmTimer : MonoBehaviour
         if (timer >= _interval)
         {
             timer -= _interval;
-            Debug.Log("beat");
         }
         _lastTime = _track.time;
     }
 
-    public bool CheckTime(float pityTime) // checks if time since last beat is in the decided time interval for the next beat
+    public bool CheckTime(float pityTime = 0) // checks if time since last beat is in the decided time interval for the next beat
     {
         return timer >= _interval - pityTime || timer <= pityTime;
     }

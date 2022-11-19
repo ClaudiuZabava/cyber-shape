@@ -158,7 +158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_AnchorMin.x
@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_SizeDelta.x
@@ -210,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -193
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -254,8 +254,12 @@ PrefabInstance:
       value: 0
     - target: {fileID: 12744624317710529, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: bpm
-      value: 130
+      value: 135
       objectReference: {fileID: 0}
+    - target: {fileID: 12744624317710531, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a3fdf2b2aeef98a4c84f58eec9684566, type: 3}
     - target: {fileID: 12744624317710556, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -311,6 +315,9 @@ PrefabInstance:
     - target: {fileID: 2986908248243961111, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: <IsRhythmActive>k__BackingField
       value: 0
+    - target: {fileID: 2986908248243961111, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: pityTime
+      value: 0.13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:

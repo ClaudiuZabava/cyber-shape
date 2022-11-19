@@ -10,13 +10,12 @@ public class RhythmLine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public void SetTime(float time)
     {
         _time = time;
-        _time = _time / Time.deltaTime;
     }
 
     public void SetDistance(float distance)
@@ -27,6 +26,11 @@ public class RhythmLine : MonoBehaviour
     public void SetStartPos(float pos)
     {
         _startpos = pos;
+    }
+
+    public float getSpeed()
+    {
+        return _distance / _time;
     }
 
     private void checkPosition()
@@ -51,7 +55,8 @@ public class RhythmLine : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
-        transform.position += new Vector3(_distance/_time, 0,0);
+        transform.position += new Vector3(_distance *Time.deltaTime/_time, 0,0);
+
         checkPosition();
     }
 }
