@@ -1,65 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RhythmUI : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private GameObject linePrefab;
-    [SerializeField] private int numOfBeats = 5;
-
-    private float _distance;
-    private RhythmTimer _time;
-    private List<RhythmLine> _lines = new();
-
-    private void Awake()
+    public class RhythmUI : MonoBehaviour
     {
-        _distance = GetComponent<RectTransform>().sizeDelta.x / 2;
-        _time = GameObject.Find("Game Manager").GetComponent<RhythmTimer>();
-        InitialDraw();
-    }
+        [SerializeField] private GameObject linePrefab;
+        [SerializeField] private int numOfBeats = 5;
 
-    private void ClearLines()
-    {
-        foreach (Transform t in transform)
+        private float _distance;
+        private RhythmTimer _time;
+
+        private void Awake()
         {
-            Destroy(t.gameObject);
+            _distance = GetComponent<RectTransform>().sizeDelta.x / 2;
+            _time = GameObject.Find("Game Manager").GetComponent<RhythmTimer>();
         }
-        _lines = new List<RhythmLine>();
-    }
 
-    private void InitialDraw()
-    {
-        ClearLines();
-        for(int i=1; i<=numOfBeats;i++)
+        private void Start()
         {
-            CreateLine(i);
+            InitialDraw();
+        }
+
+        private void ClearLines()
+        {
+            foreach (Transform t in transform)
+            {
+                Destroy(t.gameObject);
+            }
+        }
+
+        private void InitialDraw()
+        {
+            ClearLines();
+            for (var i = 1; i <= numOfBeats; i++)
+            {
+                CreateLine(i);
+            }
+        }
+
+        private void CreateLine(int i)
+        {
+            var j = -i;
+            var newLine = Instantiate(linePrefab, transform, true);
+            var newLine2 = Instantiate(linePrefab, transform, true);
+
+            var lineComponent = newLine.GetComponent<RhythmLine>();
+            var lineComponent2 = newLine2.GetComponent<RhythmLine>();
+
+            lineComponent.Time = _time.Interval - _time.Time;
+            lineComponent2.Time = _time.Interval - _time.Time;
+
+            lineComponent.Distance = -Mathf.Sign(i) * _distance / numOfBeats;
+            lineComponent.StartPos = Mathf.Sign(i) * _distance;
+            lineComponent2.Distance = -Mathf.Sign(j) * _distance / numOfBeats;
+            lineComponent2.StartPos = Mathf.Sign(j) * _distance;
+
+            var distOffset = lineComponent.Speed() * _time.Offset;
+
+            newLine.GetComponent<RectTransform>().localPosition = new Vector2(i * _distance / numOfBeats - Mathf.Sign(i) * distOffset, 0);
+            newLine2.GetComponent<RectTransform>().localPosition = new Vector2(j * _distance / numOfBeats - Mathf.Sign(j) * distOffset, 0);
         }
     }
-
-    private void CreateLine(int i)
-    {
-        var j = -i;
-        var newLine = Instantiate(linePrefab, transform, true);
-        var newLine2 = Instantiate(linePrefab, transform, true);
-
-        var lineComponent = newLine.GetComponent<RhythmLine>();
-        var lineComponent2 = newLine2.GetComponent<RhythmLine>();
-
-        lineComponent.SetTime(_time.GetInterval() - _time.GetTime());
-        lineComponent2.SetTime(_time.GetInterval() - _time.GetTime());
-
-        lineComponent.SetDistance(-Mathf.Sign(i) * _distance / numOfBeats);
-        lineComponent.SetStartPos(Mathf.Sign(i) * _distance);
-        lineComponent2.SetDistance(-Mathf.Sign(j) * _distance / numOfBeats);
-        lineComponent2.SetStartPos(Mathf.Sign(j) * _distance);
-
-        var dist_offset = lineComponent.GetSpeed() * _time.GetOffset();
-
-        newLine.GetComponent<RectTransform>().localPosition = new Vector2(i * _distance / numOfBeats - Mathf.Sign(i) * dist_offset, 0);
-        newLine2.GetComponent<RectTransform>().localPosition = new Vector2(j * _distance / numOfBeats - Mathf.Sign(j) * dist_offset, 0);
-
-        _lines.Add(lineComponent);
-        _lines.Add(lineComponent2);
-    }
-
 }

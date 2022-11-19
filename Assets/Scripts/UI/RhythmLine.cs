@@ -1,57 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RhythmLine : MonoBehaviour
+namespace UI
 {
-    private float _time=0;
-    private float _distance=0;
-    private float _startpos=0;
-
-    public void SetTime(float time)
+    public class RhythmLine : MonoBehaviour
     {
-        _time = time;
-    }
+        public float Time { get; set; }
+        public float Distance { get; set; }
+        public float StartPos { get; set; }
+        public float Speed() => Distance / Time;
 
-    public void SetDistance(float distance)
-    {
-        _distance = distance;
-    }
+        private RectTransform _rectTransform;
 
-    public void SetStartPos(float pos)
-    {
-        _startpos = pos;
-    }
-
-    public float GetSpeed()
-    {
-        return _distance / _time;
-    }
-
-    private void CheckPosition()
-    {
-        if(_distance < 0)
+        private void Awake()
         {
-            if (GetComponent<RectTransform>().localPosition.x <= 0.0f)
-            {
+            _rectTransform = GetComponent<RectTransform>();
+        }
 
-                GetComponent<RectTransform>().localPosition = new Vector3(_startpos, 0, 0);
+        private void FixedUpdate()
+        {
+            transform.position += new Vector3(Distance * UnityEngine.Time.deltaTime / Time, 0, 0);
+
+            CheckPosition();
+        }
+
+        private void CheckPosition()
+        {
+            if ((Distance < 0 && _rectTransform.localPosition.x <= 0.0f)
+                || (Distance > 0 && _rectTransform.localPosition.x >= 0.0f))
+            {
+                _rectTransform.localPosition = new Vector3(StartPos, 0, 0);
             }
         }
-        if(_distance > 0)
-        {
-            if (GetComponent<RectTransform>().localPosition.x >= 0.0f)
-            {
-                GetComponent<RectTransform>().localPosition = new Vector3(_startpos, 0, 0);
-            }
-        }
-    }
-
-    // Update is called once per frame
-    private void FixedUpdate()
-    {
-        transform.position += new Vector3(_distance *Time.deltaTime/_time, 0,0);
-
-        CheckPosition();
     }
 }

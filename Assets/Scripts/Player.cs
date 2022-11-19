@@ -38,11 +38,6 @@ public class Player : MonoBehaviour
         MovementControl();
         CheckStatus();
     }
-    
-    public float GetPityTime()
-    {
-        return pityTime;
-    }
 
     public void TakeDamage(int dmg)
     {
