@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Constants;
 using Projectiles;
 using UI;
@@ -8,8 +9,9 @@ public class Player : MonoBehaviour
 {
     [field: SerializeField] public int CurrentHealth { get; private set; } = 4;
     [field: SerializeField] public int MaxHealth { get; private set; } = 4;
-
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
+    [field: SerializeField] public List<BulletType> AvailableBullets { get; private set; } = new();
+    [field: SerializeField] public BulletType CurrentBullet { get; set; }
 
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private HudManager ui;
