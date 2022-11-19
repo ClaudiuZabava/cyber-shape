@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private HudManager ui;
+    [SerializeField] private float pityTime = 0.13f;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
 
     private void HandleShootInput()
     {
-        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(0.10f) || !IsRhythmActive))
+        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(pityTime) || !IsRhythmActive))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);

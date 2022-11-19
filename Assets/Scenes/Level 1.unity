@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17307952, g: 0.21632008, b: 0.29832444, a: 1}
+  m_IndirectSpecularColor: {r: 0.173079, g: 0.21631923, b: 0.29832268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -675,6 +675,10 @@ PrefabInstance:
       propertyPath: constEnemies
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 12744624317710531, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a3fdf2b2aeef98a4c84f58eec9684566, type: 3}
     - target: {fileID: 12744624317710556, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -722,6 +726,10 @@ PrefabInstance:
     - target: {fileID: 12744624317710557, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_Name
       value: Game Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 782049926943382682, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: numOfBeats
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2986908248243961108, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: projectilePrefab

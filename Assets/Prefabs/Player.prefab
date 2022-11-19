@@ -165,9 +165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d20d4fd45c08374abcdd4972dfa4d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current_health: 4
-  max_health: 4
+  <CurrentHealth>k__BackingField: 4
+  <MaxHealth>k__BackingField: 4
   speed: 12
+  ui: {fileID: 0}
+  pityTime: 0.135
 --- !u!114 &996477931859293465
 MonoBehaviour:
   m_ObjectHideFlags: 0

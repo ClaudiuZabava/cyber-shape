@@ -2,41 +2,43 @@ using UnityEngine;
 
 public class RhythmTimer : MonoBehaviour
 {
-    [SerializeField] private int bpm = 130; // default value, change in inspector for each track
-    [SerializeField] private float timer; // current time since last beat
-    
-    private float _currentTime; // the time between updates
-    private float _lastTime; // previous time of audio source
-    private float _interval; // time it takes for 1 beat
+    [field: SerializeField] public float Offset { get; private set; } = 0.045f;
+    [SerializeField] private float bpm = 135.0f; // default value, change in inspector for each track
+
+    public float Interval { get; private set; }
+    public float Time => _track.time;
+
+    private float _lastBeat;
+    private float _dspTimeSong;
     private AudioSource _track; // the audio source it does the rhythm timing for
 
     private void Awake()
     {
-        _currentTime = 0f;
-        _lastTime = 0f;
-        timer = 0f;
-        _interval = 60f / bpm;
+        Interval = 60.0f / bpm;
         _track = GetComponent<AudioSource>();
+        _dspTimeSong = (float) AudioSettings.dspTime;
     }
-    
+
+    private void Start()
+    {
+        _track.Play();
+    }
+
     private void FixedUpdate()
     {
-        if (_lastTime > _track.time)
+        if (TrackTime() >= _lastBeat + Interval)
         {
-            _lastTime = 0f;
+            _lastBeat = TrackTime();
         }
-        _currentTime = _track.time - _lastTime;
-        timer += _currentTime;
-
-        if (timer >= _interval)
-        {
-            timer -= _interval;
-        }
-        _lastTime = _track.time;
     }
 
-    public bool CheckTime(float pityTime) // checks if time since last beat is in the decided time interval for the next beat
+    private float TrackTime()
     {
-        return timer >= _interval - pityTime || timer <= pityTime;
+        return (float)(AudioSettings.dspTime - _dspTimeSong) - Offset;
+    }
+
+    public bool CheckTime(float pityTime = 0) // checks if time since last beat is in the decided time interval for the next beat
+    {
+        return TrackTime() >= _lastBeat + Interval - pityTime || TrackTime() <= _lastBeat + pityTime;
     }
 }
