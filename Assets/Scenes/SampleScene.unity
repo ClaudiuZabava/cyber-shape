@@ -123,12 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 086b74f51c4de804da342acc9beeae7f, type: 2}
---- !u!108 &705507994 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 12744624633740265, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
-  m_PrefabInstance: {fileID: 12744623996520819}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1170017721
+--- !u!1001 &525957052
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -174,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 98
+      value: 130
       objectReference: {fileID: 0}
     - target: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
       propertyPath: m_LocalPosition.x
@@ -224,17 +219,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 398225101771953754, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
-      propertyPath: numOfBeats
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
---- !u!224 &1259220660 stripped
+--- !u!224 &525957053 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 398225101771953753, guid: 38fe4d91ca857c3428a497366bd74e87, type: 3}
-  m_PrefabInstance: {fileID: 1170017721}
+  m_PrefabInstance: {fileID: 525957052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &705507994 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 12744624633740265, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+  m_PrefabInstance: {fileID: 12744623996520819}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &1627886537 stripped
 RectTransform:
@@ -323,5 +319,5 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 12744625466207063, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       insertIndex: 0
-      addedObject: {fileID: 1259220660}
+      addedObject: {fileID: 525957053}
   m_SourcePrefab: {fileID: 100100000, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}

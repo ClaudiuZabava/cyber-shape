@@ -5,20 +5,15 @@ using UnityEngine;
 public class RhythmUI : MonoBehaviour
 {
     [SerializeField] private GameObject linePrefab;
-    [SerializeField] private GameObject pityPrefab;
     [SerializeField] private int numOfBeats = 5;
 
     private float _distance;
     private RhythmTimer _time;
     private List<RhythmLine> _lines = new();
-    // Start is called before the first frame update
-    void Awake()
-    {
-        _distance = GetComponent<RectTransform>().sizeDelta.x/2; //distanta de la un capat la centru, start position pt linii e ori distance ori -distance pt x, si acelasi y ca bara
-    }
 
-    private void Start()
+    private void Awake()
     {
+        _distance = GetComponent<RectTransform>().sizeDelta.x / 2;
         _time = GameObject.Find("Game Manager").GetComponent<RhythmTimer>();
         InitialDraw();
     }
@@ -46,9 +41,6 @@ public class RhythmUI : MonoBehaviour
         var j = -i;
         var newLine = Instantiate(linePrefab, transform, true);
         var newLine2 = Instantiate(linePrefab, transform, true);
-
-        newLine.GetComponent<RectTransform>().localPosition = new Vector2(i * _distance / numOfBeats, 0);
-        newLine2.GetComponent<RectTransform>().localPosition = new Vector2(j * _distance / numOfBeats, 0);
 
         var lineComponent = newLine.GetComponent<RhythmLine>();
         var lineComponent2 = newLine2.GetComponent<RhythmLine>();

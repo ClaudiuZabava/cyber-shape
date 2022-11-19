@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 61}
-  m_SizeDelta: {x: 1000, y: 98}
+  m_SizeDelta: {x: 1000, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &398225101771953755
 CanvasRenderer:
@@ -89,7 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c7ea092dd3e921418959d102f5cb850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
   linePrefab: {fileID: 6845411114419292175, guid: b8e2ef95cd5bcb243bc567d0a8655cda, type: 3}
   pityPrefab: {fileID: 2186720250558879346, guid: 5b84ad340d8ee8a4383bea5b2c65bd41, type: 3}
   numOfBeats: 5

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RhythmLine : MonoBehaviour
 {
-    private float _time;
-    private float _distance;
-    private float _startpos;
+    private float _time=0;
+    private float _distance=0;
+    private float _startpos=0;
 
     public void SetTime(float time)
     {
