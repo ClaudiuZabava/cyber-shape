@@ -18,6 +18,16 @@ public class RhythmTimer : MonoBehaviour
         _interval = 60f / bpm;
         _track = GetComponent<AudioSource>();
     }
+
+    public float getInterval()
+    {
+        return _interval;
+    }
+
+    public float getTime()
+    {
+        return timer;
+    }
     
     private void FixedUpdate()
     {
@@ -31,6 +41,7 @@ public class RhythmTimer : MonoBehaviour
         if (timer >= _interval)
         {
             timer -= _interval;
+            Debug.Log("beat");
         }
         _lastTime = _track.time;
     }
