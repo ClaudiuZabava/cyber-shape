@@ -6,6 +6,10 @@ A low poly top-down shooter.
 
 Reports are in [`./Reports/`](./Reports/).
 
+We make releases at the end of each sprint. When reviewing a sprint
+please checkout the tag for that sprint (usually it's the one made on
+the last Sunday of that sprint).
+
 ## For developers & testers
 
 Required Unity version: 2022.1.20f1.
