@@ -3,6 +3,7 @@ using Projectiles;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Evolution;
 
 public class Player : MonoBehaviour
 {
@@ -11,25 +12,55 @@ public class Player : MonoBehaviour
 
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
 
+
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private HudManager ui;
     [SerializeField] private float pityTime = 0.13f;
+    [SerializeField] private int scoreEvolve = 5;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
+    private int _tempScore = 0;
+    private Evolvable _evolution;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
+        _evolution = GetComponent<Evolvable>();
+        ui = GameObject.Find("HUD").GetComponent<HudManager>();
+    }
+
+    private void CheckHighScore()
+    {
+        if (!PlayerPrefs.HasKey(PlayerPrefsKeys.HighScore))
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, 0);
+        }
+    }
+
+    public void AddScore(int val)
+    {
+        _tempScore += val;
+        if (PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore) < _tempScore)
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, _tempScore);
+        }
+
+        ui.ScoreUI.UpdateScore(_tempScore, PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore));
+        if (_tempScore % scoreEvolve == 0)
+        {
+            _evolution.Evolve();
+        }
     }
 
     private void Start()
     {
         _mainCamera = Camera.main;
+        CheckHighScore();
     }
 
     private void Update()
