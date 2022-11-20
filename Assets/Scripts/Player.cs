@@ -116,8 +116,10 @@ public class Player : MonoBehaviour
     {
         if (CurrentHealth <= 0)
         {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, SceneManager.GetActiveScene().buildIndex);
+            PlayerPrefs.Save();
             Destroy(gameObject);
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene((int) Scenes.GameOverMenu);
         }
     }
 }
