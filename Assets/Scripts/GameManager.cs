@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            var randomPosition = new Vector3(Random.Range(-maxWidth, maxWidth), 0.95f, Random.Range(-maxWidth, maxWidth));
+            var randomPosition = new Vector3(Random.Range(-maxWidth, maxWidth), 0.5f, Random.Range(-maxWidth, maxWidth));
             var distance = Vector3.Distance(transform.position, randomPosition);
             if (distance < maxDistance)
             {

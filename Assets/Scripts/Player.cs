@@ -31,25 +31,27 @@ public class Player : MonoBehaviour
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
         _evolution = GetComponent<Evolvable>();
+        ui = GameObject.Find("HUD").GetComponent<HudManager>();
     }
 
-    private void CheckHighscore()
+    private void CheckHighScore()
     {
-        if(!PlayerPrefs.HasKey("Highscore"))
+        if (!PlayerPrefs.HasKey(PlayerPrefsKeys.HighScore))
         {
-            PlayerPrefs.SetInt("Highscore", 0);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, 0);
         }
     }
 
     public void AddScore(int val)
     {
         _tempScore += val;
-        if (PlayerPrefs.GetInt("Highscore") < _tempScore)
+        if (PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore) < _tempScore)
         {
-            PlayerPrefs.SetInt("Highscore", _tempScore);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, _tempScore);
         }
-        ui.Sc.UpdateScore(_tempScore, PlayerPrefs.GetInt("Highscore"));
-        if(_tempScore % scoreEvolve == 0)
+
+        ui.ScoreUI.UpdateScore(_tempScore, PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore));
+        if (_tempScore % scoreEvolve == 0)
         {
             _evolution.Evolve();
         }
@@ -58,7 +60,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _mainCamera = Camera.main;
-        CheckHighscore();
+        CheckHighScore();
     }
 
     private void Update()

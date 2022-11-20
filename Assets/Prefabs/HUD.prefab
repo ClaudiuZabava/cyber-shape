@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5064528226822856470}
   - component: {fileID: 1882330815155962492}
   - component: {fileID: 1165336690050360334}
+  - component: {fileID: 1168892276157611167}
   m_Layer: 0
   m_Name: Score
   m_TagString: Untagged
@@ -33,11 +34,11 @@ RectTransform:
   m_Father: {fileID: 9204221221743950176}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -550, y: 156}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 18, y: -112}
+  m_SizeDelta: {x: 150, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &1882330815155962492
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -79,7 +80,21 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score : 0'
+  m_Text: 'Score : 0
+
+    Highscore : 0'
+--- !u!114 &1168892276157611167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675644128338661978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f612388b23b3343bb0be7e3784184f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9204221220915684628
 GameObject:
   m_ObjectHideFlags: 0
