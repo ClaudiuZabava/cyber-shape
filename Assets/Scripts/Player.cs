@@ -3,6 +3,7 @@ using Projectiles;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Evolution;
 
 public class Player : MonoBehaviour
 {
@@ -11,20 +12,38 @@ public class Player : MonoBehaviour
 
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
 
+    [field: SerializeField] public int LevelScore { get; private set; } = 0;
+
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private HudManager ui;
     [SerializeField] private float pityTime = 0.13f;
+    [SerializeField] private int scoreEvolve = 5;
 
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
+    private int _tempScore = 0;
+    private Evolvable _evolution;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
+        PlayerPrefs.SetInt("TempScore", 0);
+        _evolution = GetComponent<Evolvable>();
+    }
+
+    public void AddScore(int val)
+    {
+        LevelScore += val;
+        _tempScore = LevelScore;
+        ui.Sc.UpdateScore(_tempScore);
+        if(LevelScore %scoreEvolve == 0)
+        {
+            _evolution.Evolve();
+        }
     }
 
     private void Start()

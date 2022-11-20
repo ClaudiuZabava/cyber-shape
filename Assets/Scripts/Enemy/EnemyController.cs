@@ -71,6 +71,8 @@ namespace Enemy
         {
             health -= damage;
             SetHealth(health);
+            if(health <=0)
+                _player.GetComponent<Player>().AddScore(1);
         }
 
         private void Shoot()
