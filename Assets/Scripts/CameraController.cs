@@ -26,30 +26,30 @@ public class CameraController : MonoBehaviour
         var ray = _camera.ViewportPointToRay(new Vector3(0.0f, 0.5f, 0.0f));
         if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
         {
-            newCameraPos.x = Mathf.Max(transform.position.x, newCameraPos.x);
+            newCameraPos.x = Mathf.Max(_camera.transform.position.x, newCameraPos.x);
         }
 
         // Right
         ray = _camera.ViewportPointToRay(new Vector3(1.0f, 0.5f, 0.0f));
         if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
         {
-            newCameraPos.x = Mathf.Min(transform.position.x, newCameraPos.x);
+            newCameraPos.x = Mathf.Min(_camera.transform.position.x, newCameraPos.x);
         }
 
         // Bottom
         ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.0f, 0.0f));
         if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
         {
-            newCameraPos.z = Mathf.Max(transform.position.z, newCameraPos.z);
+            newCameraPos.z = Mathf.Max(_camera.transform.position.z, newCameraPos.z);
         }
 
         // Top
         ray = _camera.ViewportPointToRay(new Vector3(0.5f, 1.0f, 0.0f));
         if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
         {
-            newCameraPos.z = Mathf.Min(transform.position.z, newCameraPos.z);
+            newCameraPos.z = Mathf.Min(_camera.transform.position.z, newCameraPos.z);
         }
 
-        transform.position = Vector3.Lerp(transform.position, newCameraPos, smoothSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(_camera.transform.position, newCameraPos, smoothSpeed * Time.deltaTime);
     }
 }

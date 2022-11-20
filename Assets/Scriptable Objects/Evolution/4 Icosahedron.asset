@@ -16,5 +16,7 @@ MonoBehaviour:
   <NextStage>k__BackingField: {fileID: 11400000, guid: d0e3a1132591e4c35beaa77f184be357, type: 2}
   <EnemyData>k__BackingField:
     <Health>k__BackingField: 50
+    <RollSpeed>k__BackingField: 18
+    <NavSpeed>k__BackingField: 3
   <PlayerData>k__BackingField:
     <Health>k__BackingField: 8
