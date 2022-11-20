@@ -10,12 +10,19 @@ public class ScoreUI : MonoBehaviour
     private void Awake()
     {
         _scoreText = GetComponent<Text>();
-        _scoreText.text = "Score: 0";
     }
 
-    public void UpdateScore(int newScore)
+    private void Start()
     {
-        _scoreText.text = "Score: " + newScore;
+        if (PlayerPrefs.HasKey("Highscore"))
+            UpdateScore(0, PlayerPrefs.GetInt("Highscore"));
+        else
+            UpdateScore(0, 0);
+    }
+
+    public void UpdateScore(int newScore, int highScore)
+    {
+        _scoreText.text = "Score: " + newScore + "\n" + "Highscore: " + highScore;
     }
 
     // Update is called once per frame

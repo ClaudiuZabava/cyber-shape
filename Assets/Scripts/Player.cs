@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
 
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
 
-    [field: SerializeField] public int LevelScore { get; private set; } = 0;
 
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private HudManager ui;
@@ -31,16 +30,26 @@ public class Player : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
-        PlayerPrefs.SetInt("TempScore", 0);
         _evolution = GetComponent<Evolvable>();
+    }
+
+    private void CheckHighscore()
+    {
+        if(!PlayerPrefs.HasKey("Highscore"))
+        {
+            PlayerPrefs.SetInt("Highscore", 0);
+        }
     }
 
     public void AddScore(int val)
     {
-        LevelScore += val;
-        _tempScore = LevelScore;
-        ui.Sc.UpdateScore(_tempScore);
-        if(LevelScore %scoreEvolve == 0)
+        _tempScore += val;
+        if (PlayerPrefs.GetInt("Highscore") < _tempScore)
+        {
+            PlayerPrefs.SetInt("Highscore", _tempScore);
+        }
+        ui.Sc.UpdateScore(_tempScore, PlayerPrefs.GetInt("Highscore"));
+        if(_tempScore % scoreEvolve == 0)
         {
             _evolution.Evolve();
         }
@@ -49,6 +58,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _mainCamera = Camera.main;
+        CheckHighscore();
     }
 
     private void Update()
