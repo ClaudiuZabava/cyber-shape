@@ -10,6 +10,8 @@ We make releases at the end of each sprint. When reviewing a sprint
 please checkout the tag for that sprint (usually it's the one made on
 the last Sunday of that sprint).
 
+Please upload your reviews in [this form](https://docs.google.com/forms/d/e/1FAIpQLSepXZIKSq6zAAuUhfujJ55L4E4B_wqLcTU8dhjdk5Bcpwlrdw/viewform?usp=sf_link).
+
 ## For developers & testers
 
 Required Unity version: 2022.1.20f1.
