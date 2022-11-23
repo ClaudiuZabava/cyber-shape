@@ -46,14 +46,6 @@ namespace Projectiles
 
         private void FixedUpdate()
         {
-            var speed = _shootingQueue.Count > 0 ? orbitShootingSpeed : orbitSpeed;
-            // // Get all projectiles and rotate them around the parent
-            foreach (var projectile in _projectiles)
-            {
-                projectile.OrbitAround(transform.position, speed);
-            }
-
-            // Move the projectiles along with the player
             var playerPos = transform.position;
             var deltaPos = playerPos - _prevPlayerPos;
             foreach (var projectile in _projectiles)
@@ -62,6 +54,12 @@ namespace Projectiles
             }
 
             _prevPlayerPos = playerPos;
+            var speed = _shootingQueue.Count > 0 ? orbitShootingSpeed : orbitSpeed;
+            // Get all projectiles and rotate them around the parent
+            foreach (var projectile in _projectiles)
+            {
+                projectile.OrbitAround(playerPos, speed);
+            }
         }
 
         private void Update()
