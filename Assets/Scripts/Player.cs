@@ -62,8 +62,8 @@ public class Player : MonoBehaviour
 
     public void SetBullet(BulletType bulletType)
     {
-        this.CurrentBullet = bulletType;
-        this.CanShoot = false;
+        CurrentBullet = bulletType;
+        CanShoot = false;
         if (_changeBulletCoroutine != null)
         {
             StopCoroutine(_changeBulletCoroutine);
@@ -72,12 +72,12 @@ public class Player : MonoBehaviour
         _changeBulletCoroutine =
             StartCoroutine(_orbitalController.ChangeBullet(
                 bulletType,
-                () => this.CanShoot = true)
+                () => CanShoot = true)
             );
     }
 
     public void AddBullet(BulletType bulletType)
     {
-        this.AvailableBullets.Add(bulletType);
+        AvailableBullets.Add(bulletType);
     }
 }

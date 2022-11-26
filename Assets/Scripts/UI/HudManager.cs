@@ -1,61 +1,59 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Projectiles;
 using UnityEngine;
 using UnityEngine.UI;
+using Animations = Constants.Animations;
 
 namespace UI
 {
     public class HudManager : MonoBehaviour
     {
-        public PlayerHealth Hp { get; private set; }
-        private List<BulletType> Bullets { get; set; } = new();
         [field: SerializeField] public Player Player { get; set; }
         [field: SerializeField] public GameObject BulletUiPrefab { get; set; }
 
-        private GameObject _bulletUiContainer;
-        private List<GameObject> _bulletUiList = new();
-        private static readonly int SelectBulletTriggerHash = Animator.StringToHash(SelectBulletTrigger);
+        public PlayerHealth Hp { get; private set; }
+
+        private List<BulletType> Bullets { get; set; } = new();
+        
         private const string BulletUIContainerName = "Bullets";
         private const string BulletIconName = "Bullet";
-        private const string SelectBulletTrigger = "SelectBullet";
         private const int BulletUiSize = 50;
         private const int BulletUiMargin = 30;
         private const int BulletSelectedUiExtraOffset = 20;
+
+        private GameObject _bulletUiContainer;
+        private readonly List<GameObject> _bulletUiList = new();
 
         private int _selectedBulletIndex = -1;
 
         private void Awake()
         {
             Hp = GetComponentInChildren<PlayerHealth>();
-        }
-
-        private void Start()
-        {
             _bulletUiContainer = GameObject.Find(BulletUIContainerName);
         }
 
         private void Update()
         {
+            // TODO: It doesn't make sense to call these every frame. We should only call them in resposponse to some
+            // event, such as when the player gets a new class of projectiles or they change the active ones.
             AddBullets(Player.AvailableBullets);
             StartCoroutine(SelectBullet(Player.CurrentBullet));
         }
 
         private void AddBullets(List<BulletType> projectiles)
         {
-            foreach (BulletType projectile in projectiles)
+            foreach (var projectile in projectiles.Where(projectile => !Bullets.Contains(projectile)))
             {
-                if (!Bullets.Contains(projectile))
-                {
-                    AddBullet(projectile);
-                }
+                AddBullet(projectile);
             }
         }
 
         private void AddBullet(BulletType projectile)
         {
-            GameObject bulletUi = Instantiate(BulletUiPrefab, _bulletUiContainer.transform);
+            var bulletUi = Instantiate(BulletUiPrefab, _bulletUiContainer.transform);
 
             bulletUi.transform.Find(BulletIconName).GetComponent<Image>().sprite = projectile.sprite;
             var leftOffset = BulletUiSize * Bullets.Count + BulletUiMargin * Bullets.Count;
@@ -78,12 +76,12 @@ namespace UI
             {
                 var currentBulletUi = _bulletUiList[_selectedBulletIndex];
                 var currentBulletAnimator = currentBulletUi.GetComponent<Animator>();
-                currentBulletAnimator.SetBool(SelectBulletTriggerHash, false);
+                currentBulletAnimator.SetBool(Animations.BulletsUI.Triggers.SelectBullet, false);
             }
 
             var bulletUi = _bulletUiList[index];
             var animator = bulletUi.GetComponent<Animator>();
-            animator.SetBool(SelectBulletTriggerHash, true);
+            animator.SetBool(Animations.BulletsUI.Triggers.SelectBullet, true);
             _selectedBulletIndex = index;
             UpdateBulletPositions(index);
         }

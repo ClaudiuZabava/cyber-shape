@@ -269,3 +269,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
+  <BulletUiPrefab>k__BackingField: {fileID: 8572785308964836563, guid: ca0c389115e194a3fb08ccc3d4e80ca2, type: 3}

@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
+using System.Linq;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using Animations = Constants.Animations;
 
 namespace Projectiles
 {
@@ -22,13 +23,7 @@ namespace Projectiles
         private readonly List<Projectile> _projectiles = new();
         private readonly List<ShootingInfo> _shootingQueue = new();
         private readonly List<MeshFilter> _projectileMeshFilters = new();
-        private readonly List<Animator> _projectileAnimator = new();
-
-        private static readonly string SHideBulletTrigger = "Hide";
-        private static readonly string SRevealBulletTrigger = "Show";
-        private static readonly string SHideBulletAnimationName = "HideAnimation";
-        private static readonly string SRevealBulletAnimationName = "Reveal";
-
+        private readonly List<Animator> _projectileAnimators = new();
 
         private void Start()
         {
@@ -52,27 +47,27 @@ namespace Projectiles
                 _projectileMeshFilters.Add(
                     projectileObj.GetComponentInChildren<MeshFilter>()
                 );
-                _projectileAnimator.Add(projectileObj.GetComponent<Animator>());
+                _projectileAnimators.Add(projectileObj.GetComponent<Animator>());
             }
         }
 
         public IEnumerator ChangeBullet(BulletType bulletType, Action then)
         {
-            foreach (var animator in _projectileAnimator)
+            foreach (var animator in _projectileAnimators)
             {
-                animator.SetTrigger(SHideBulletTrigger);
+                animator.SetTrigger(Animations.Bullets.Triggers.Hide);
             }
 
-            yield return new WaitUntil(() => IsAnimationComplete(SHideBulletAnimationName));
+            yield return new WaitUntil(() => IsAnimationComplete(Animations.Bullets.Hide));
 
             foreach (var meshFilter in _projectileMeshFilters)
             {
                 meshFilter.mesh = bulletType.mesh;
             }
 
-            foreach (var animator in _projectileAnimator)
+            foreach (var animator in _projectileAnimators)
             {
-                animator.SetTrigger(SRevealBulletTrigger);
+                animator.SetTrigger(Animations.Bullets.Triggers.Show);
             }
 
             then?.Invoke();
@@ -80,12 +75,12 @@ namespace Projectiles
             yield return null;
         }
 
-        private bool IsAnimationComplete(string animationName)
+        private bool IsAnimationComplete(int animationHash)
         {
-            return !_projectileAnimator.Exists(animator =>
+            return !_projectileAnimators.Exists(animator =>
                 {
                     var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                    return !animatorStateInfo.IsName(animationName) || animatorStateInfo.normalizedTime < 1;
+                    return animatorStateInfo.shortNameHash != animationHash || animatorStateInfo.normalizedTime < 1;
                 }
             );
         }
@@ -113,13 +108,10 @@ namespace Projectiles
         private void Update()
         {
             var removeList = new List<ShootingInfo>();
-            foreach (var shootingInfo in _shootingQueue)
+            foreach (var shootingInfo in _shootingQueue.Where(shootingInfo => CanShoot(shootingInfo)))
             {
-                if (CanShoot(shootingInfo))
-                {
-                    shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition);
-                    removeList.Add(shootingInfo);
-                }
+                shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition);
+                removeList.Add(shootingInfo);
             }
 
             foreach (var shootingInfo in removeList)
@@ -145,7 +137,7 @@ namespace Projectiles
             // Get the children that is farthest away from the mouse
             var projectileIndex = -1;
             var minDistance = Mathf.Infinity;
-            for (int i = 0; i < projectileCount; i++)
+            for (var i = 0; i < projectileCount; i++)
             {
                 var bulletPosition = _projectiles[i].GetBulletPosition();
                 var distance = Vector3.Distance(bulletPosition, hitInfoPoint);

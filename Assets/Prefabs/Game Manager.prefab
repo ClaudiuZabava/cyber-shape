@@ -738,10 +738,6 @@ PrefabInstance:
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 2986908248243961111}
-    - target: {fileID: 9204221221743950188, guid: c68163b566467484c9688ae1584afb55, type: 3}
-      propertyPath: <BulletUiPrefab>k__BackingField
-      value: 
-      objectReference: {fileID: 8572785308964836563, guid: ca0c389115e194a3fb08ccc3d4e80ca2, type: 3}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c68163b566467484c9688ae1584afb55, type: 3}

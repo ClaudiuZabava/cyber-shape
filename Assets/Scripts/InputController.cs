@@ -9,8 +9,8 @@ public class InputController : MonoBehaviour
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
     private Player _player;
-    private static readonly string SPrevBulletKey = "q";
-    private static readonly string SNextBulletKey = "e";
+    private const KeyCode SPrevBulletKey = KeyCode.Q;
+    private const KeyCode SNextBulletKey = KeyCode.E;
 
     [SerializeField] private float speed = 5.0f;
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
@@ -70,8 +70,12 @@ public class InputController : MonoBehaviour
                 bullet => bullet == _player.CurrentBullet
             );
 
-            if (currentBulletIndex - 1 < 0) return;
-            newBullet = _player.AvailableBullets[currentBulletIndex - 1];
+            var nextIndex = currentBulletIndex - 1;
+            if (nextIndex < 0)
+            {
+                nextIndex = _player.AvailableBullets.Count - 1;
+            }
+            newBullet = _player.AvailableBullets[nextIndex];
         }
 
         if (Input.GetKeyDown(SNextBulletKey))
@@ -80,11 +84,16 @@ public class InputController : MonoBehaviour
                 bullet => bullet == _player.CurrentBullet
             );
 
-            if (currentBulletIndex + 1 > _player.AvailableBullets.Count) return;
-            newBullet = _player.AvailableBullets[currentBulletIndex + 1];
+            var nextIndex = currentBulletIndex + 1;
+            if (nextIndex >= _player.AvailableBullets.Count)
+            {
+                nextIndex = 0;
+            }
+
+            newBullet = _player.AvailableBullets[nextIndex];
         }
         
-        if(newBullet != null)
+        if (newBullet != null)
         {
             _player.SetBullet(newBullet);
         }
