@@ -1,20 +1,21 @@
+using Evolution;
 using Projectiles;
 using UnityEngine;
 
 
 public class InputController : MonoBehaviour
 {
+    [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
+    [SerializeField] private float speed = 5.0f;
+    [SerializeField] private float pityTime = 0.13f;
+
+    private const KeyCode SPrevBulletKey = KeyCode.Q;
+    private const KeyCode SNextBulletKey = KeyCode.E;
     private Rigidbody _rigidbody;
     private Camera _mainCamera;
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
     private Player _player;
-    private const KeyCode SPrevBulletKey = KeyCode.Q;
-    private const KeyCode SNextBulletKey = KeyCode.E;
-
-    [SerializeField] private float speed = 5.0f;
-    [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
-
 
     private void Awake()
     {
@@ -50,7 +51,7 @@ public class InputController : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(0.10f) || !IsRhythmActive))
+        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(pityTime) || !IsRhythmActive))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);

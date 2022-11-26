@@ -22,16 +22,7 @@ namespace Evolution
             ApplyStage();
         }
 
-        private void Update()
-        {
-            // TODO: remove this; it's here only for demonstrating how this works.
-            if (Input.GetMouseButtonDown(0))
-            {
-                Evolve();
-            }
-        }
-
-        private void Evolve()
+        public void Evolve()
         {
             if (Stage.NextStage is null)
             {

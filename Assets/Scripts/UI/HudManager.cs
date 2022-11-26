@@ -15,6 +15,7 @@ namespace UI
         [field: SerializeField] public GameObject BulletUiPrefab { get; set; }
 
         public PlayerHealth Hp { get; private set; }
+        public ScoreUI ScoreUI { get; private set; }
 
         private List<BulletType> Bullets { get; set; } = new();
         
@@ -32,6 +33,7 @@ namespace UI
         private void Awake()
         {
             Hp = GetComponentInChildren<PlayerHealth>();
+			ScoreUI = GetComponentInChildren<ScoreUI>();
             _bulletUiContainer = GameObject.Find(BulletUIContainerName);
         }
 

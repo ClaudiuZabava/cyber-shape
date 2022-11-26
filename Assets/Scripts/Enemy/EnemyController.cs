@@ -11,18 +11,23 @@ namespace Enemy
         [SerializeField] private GameObject projectile;
         [SerializeField] private Transform enemyFirePoint;
         [SerializeField] private int minDistance = 10;
+        [SerializeField] private GameObject enemyBody;
         
+        private EnemyStageData StageData => _evolvable.Stage.EnemyData;
+
         private GameObject _player;
+        private Rigidbody _rigidbody;
         private NavMeshAgent _nav;
         private Canvas _healthBar;
         private Slider _healthBarSlider;
         private int _maxHealth;
         public int health;
         private Evolvable _evolvable;
-        private EnemyStageData StageData => _evolvable.Stage.EnemyData;
         private int _distance;
-        private float _lastTimeShot = 0;
-        
+        private float _lastTimeShot;
+        private Camera _camera;
+        private float _rollSpeed;
+
         private void Awake()
         {
             _nav = GetComponent<NavMeshAgent>();
@@ -30,6 +35,8 @@ namespace Enemy
             _healthBar = GetComponentInChildren<Canvas>();
             _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
             _evolvable = GetComponentInChildren<Evolvable>();
+            _rigidbody = enemyBody.GetComponent<Rigidbody>();
+            _camera = Camera.main;
         }
 
         private void Start()
@@ -37,17 +44,33 @@ namespace Enemy
             health = StageData.Health;
             SetMaxHealth(health);
             SetHealth(health);
+
+            _rollSpeed = StageData.RollSpeed;
+            _nav.speed = StageData.NavSpeed;
         }
 
         private void Update()
         {
-            _healthBar.transform.rotation = Camera.main.transform.rotation;
-            var distance = Vector3.Distance(_player.transform.position, this.transform.position);
+            _healthBar.transform.rotation = _camera.transform.rotation;
+            var distance = Vector3.Distance(_player.transform.position, transform.position);
             transform.LookAt(_player.transform);
-
+            
             if (distance < minDistance && _player.transform.hasChanged)
             {
-                _nav.SetDestination(_player.transform.position);
+                var destination = _player.transform.position;
+                var rotX  = destination[0] - enemyBody.transform.position.x;
+                var rotZ  = destination[2] - enemyBody.transform.position.z;
+                if (destination == enemyBody.transform.position)
+                {
+                    _rollSpeed = 0;
+                }
+                else
+                {
+                    _rollSpeed = StageData.RollSpeed;
+                    _nav.speed = StageData.NavSpeed;
+                }
+                _rigidbody.AddTorque(new Vector3(rotX / 2, 0, rotZ / 2) * _rollSpeed);
+                _nav.SetDestination(destination);
                 Shoot();
             }
 
@@ -71,6 +94,10 @@ namespace Enemy
         {
             health -= damage;
             SetHealth(health);
+            if (health <= 0)
+            {
+                _player.GetComponent<Player>().AddScore(1);
+            }
         }
 
         private void Shoot()
