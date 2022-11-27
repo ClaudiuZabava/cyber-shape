@@ -88,19 +88,15 @@ namespace Projectiles
         {
             foreach (var animator in _projectileAnimators)
             {
-                animator.SetTrigger(Animations.Bullets.Triggers.Hide);
+                animator.SetTrigger(Animations.Bullets.Triggers.ChangeType);
             }
 
-            yield return new WaitUntil(() => IsAnimationComplete(Animations.Bullets.Hide));
+            var animationLength = _projectileAnimators.First().GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(animationLength / 2);
 
             foreach (var meshFilter in _projectileMeshFilters)
             {
                 meshFilter.mesh = bulletType.mesh;
-            }
-
-            foreach (var animator in _projectileAnimators)
-            {
-                animator.SetTrigger(Animations.Bullets.Triggers.Show);
             }
 
             then?.Invoke();

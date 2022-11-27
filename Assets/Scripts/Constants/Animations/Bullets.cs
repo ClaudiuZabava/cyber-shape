@@ -4,13 +4,12 @@ namespace Constants.Animations
 {
     public static class Bullets
     {
-        public static readonly int Hide = Animator.StringToHash("HideAnimation");
-        public static readonly int Reveal = Animator.StringToHash("Reveal");
+        public static readonly int ChangeType = Animator.StringToHash("ChangeType");
+        public static readonly int Idle = Animator.StringToHash("Idle");
     
         public static class Triggers
         {
-            public static readonly int Show = Animator.StringToHash("Show");
-            public static readonly int Hide = Animator.StringToHash("Hide");
+            public static readonly int ChangeType = Animator.StringToHash("ChangeType");
         }
     }
 }

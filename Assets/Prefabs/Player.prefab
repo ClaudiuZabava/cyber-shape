@@ -151,7 +151,9 @@ MonoBehaviour:
   <AvailableBullets>k__BackingField:
   - {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
   <CurrentBullet>k__BackingField: {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
+  <CanShoot>k__BackingField: 1
   ui: {fileID: 0}
+  scoreEvolve: 5
 --- !u!114 &996477931859293465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f9386cf2ef452785e48134675aa744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
   <IsRhythmActive>k__BackingField: 1
+  speed: 12
+  pityTime: 0.13
 --- !u!95 &-5817902969008648074
 Animator:
   serializedVersion: 4
@@ -217,4 +220,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
-
