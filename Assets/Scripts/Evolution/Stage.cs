@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Evolution
 {
-    [CreateAssetMenu(fileName = "EvolutionStageDetails", menuName = "Evolution/Stage Details")]
+    [CreateAssetMenu(fileName = "EvolutionStageDetails", menuName = "Scriptable Objects/Evolution Stage Details")]
     public class Stage : ScriptableObject
     {
         [field: SerializeField] public Mesh Mesh { get; private set; }
