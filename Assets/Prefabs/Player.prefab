@@ -37,7 +37,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3081989453156096507}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
@@ -220,3 +221,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &3192674581181291927
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 2
+    m_TransformParent: {fileID: 4214218006792911544}
+    m_Modifications:
+    - target: {fileID: 471687781050238060, guid: 55a780d132659443c97f391a40af9058, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 471687781050238060, guid: 55a780d132659443c97f391a40af9058, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 471687781050238060, guid: 55a780d132659443c97f391a40af9058, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 471687781050238060, guid: 55a780d132659443c97f391a40af9058, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 471687781050238061, guid: 55a780d132659443c97f391a40af9058, type: 3}
+      propertyPath: m_Name
+      value: Player Evolution Particles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_AddedGameObjects: []
+  m_SourcePrefab: {fileID: 100100000, guid: 55a780d132659443c97f391a40af9058, type: 3}
+--- !u!4 &3081989453156096507 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 471687781050238060, guid: 55a780d132659443c97f391a40af9058, type: 3}
+  m_PrefabInstance: {fileID: 3192674581181291927}
+  m_PrefabAsset: {fileID: 0}

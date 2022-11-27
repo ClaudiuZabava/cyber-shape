@@ -9,12 +9,14 @@ namespace Evolution
         private MeshFilter _meshFilter;
         private MeshCollider _meshCollider;
         private Animator _animator;
+        private ParticleSystem _particleSystem;
 
         private void Awake()
         {
             _meshFilter = GetComponent<MeshFilter>();
             _meshCollider = GetComponent<MeshCollider>();
             _animator = GetComponent<Animator>();
+            _particleSystem = GetComponentInChildren<ParticleSystem>();
         }
 
         private void Start()
@@ -29,6 +31,8 @@ namespace Evolution
                 return;
             }
             
+            _particleSystem.Play();
+
             Stage = Stage.NextStage;
             _animator.SetTrigger(Constants.Animations.Evolution.Triggers.Evolution);
             var animatorState = _animator.GetCurrentAnimatorStateInfo(_animator.GetLayerIndex("Base Layer"));
