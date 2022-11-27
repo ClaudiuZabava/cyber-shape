@@ -51,6 +51,39 @@ namespace Projectiles
             }
         }
 
+        private void Update()
+        {
+            var removeList = new List<ShootingInfo>();
+            foreach (var shootingInfo in _shootingQueue.Where(CanShoot))
+            {
+                shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition);
+                removeList.Add(shootingInfo);
+            }
+
+            foreach (var shootingInfo in removeList)
+            {
+                _shootingQueue.Remove(shootingInfo);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            var playerPos = transform.position;
+            var deltaPos = playerPos - _prevPlayerPos;
+            foreach (var projectile in _projectiles)
+            {
+                projectile.UpdateProjectilePosition(deltaPos);
+            }
+
+            _prevPlayerPos = playerPos;
+            var speed = _shootingQueue.Count > 0 ? orbitShootingSpeed : orbitSpeed;
+            // Get all projectiles and rotate them around the parent
+            foreach (var projectile in _projectiles)
+            {
+                projectile.OrbitAround(playerPos, speed);
+            }
+        }
+
         public IEnumerator ChangeBullet(BulletType bulletType, Action then)
         {
             foreach (var animator in _projectileAnimators)
@@ -83,39 +116,6 @@ namespace Projectiles
                     return animatorStateInfo.shortNameHash != animationHash || animatorStateInfo.normalizedTime < 1;
                 }
             );
-        }
-
-        private void FixedUpdate()
-        {
-            var playerPos = transform.position;
-            var deltaPos = playerPos - _prevPlayerPos;
-            foreach (var projectile in _projectiles)
-            {
-                projectile.UpdateProjectilePosition(deltaPos);
-            }
-
-            _prevPlayerPos = playerPos;
-            var speed = _shootingQueue.Count > 0 ? orbitShootingSpeed : orbitSpeed;
-            // Get all projectiles and rotate them around the parent
-            foreach (var projectile in _projectiles)
-            {
-                projectile.OrbitAround(playerPos, speed);
-            }
-        }
-
-        private void Update()
-        {
-            var removeList = new List<ShootingInfo>();
-            foreach (var shootingInfo in _shootingQueue.Where(shootingInfo => CanShoot(shootingInfo)))
-            {
-                shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition);
-                removeList.Add(shootingInfo);
-            }
-
-            foreach (var shootingInfo in removeList)
-            {
-                _shootingQueue.Remove(shootingInfo);
-            }
         }
 
         public void EnqueueShoot(Vector3 target)
