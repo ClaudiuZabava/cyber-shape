@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
+using Constants;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Texture2D crosshairImg;
+    [SerializeField] private GameObject panel;
     
     [Header("Enemy settings")]
     [SerializeField] private GameObject enemyPrefab;
@@ -16,16 +20,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float percentToNextWave = .75f;
 
     private bool _spawning = false;
+    private int _pause  = 0;
+    private AudioSource _backgroundMusic;
+
     private void Start()
     {
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause, _pause);
+
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
+        _backgroundMusic = GetComponent<AudioSource>();
+
+        if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
+        {
+            _backgroundMusic.volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicState);
+        }
+        else
+        {
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
+            _backgroundMusic.volume = 0.5f;
+        }
 
         StartCoroutine(SpawnEnemies());
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_pause == 0)
+            {
+                PauseGame();
+            } 
+            else
+            {
+                ResumeGame();
+            }
+        }
+
         if (!_spawning)
         {
             CheckNoEnemies();
@@ -65,5 +97,30 @@ public class GameManager : MonoBehaviour
         }
 
         _spawning = false;
+    }
+
+    private void PauseGame()
+    {
+        _pause = 1;
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause,_pause);
+        Time.timeScale = 0f;
+        this.panel.SetActive(true);
+    }
+    
+    public void ResumeGame()
+    {
+        _pause = 0;
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause,_pause);
+        Time.timeScale = 1f;
+        panel.SetActive(false);
+    }
+
+    public void GoBackMain()
+    {
+        _pause = 0;
+        PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause,_pause);
+        Time.timeScale = 1f;
+        panel.SetActive(false);
+        SceneManager.LoadScene((int) Scenes.MainMenuScene);
     }
 }
