@@ -697,7 +697,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 12744624317710530, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: constEnemies
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 12744624317710531, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_audioClip

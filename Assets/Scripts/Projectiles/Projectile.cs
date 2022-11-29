@@ -23,7 +23,7 @@ namespace Projectiles
 
         public bool CanShoot()
         {
-            return ShouldOrbit() && !QueuedForShooting;
+            return _bullet.ReadyForShooting && ShouldOrbit() && !QueuedForShooting;
         }
 
         public void Shoot(Vector3 target)

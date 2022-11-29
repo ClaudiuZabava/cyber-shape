@@ -24,6 +24,7 @@ namespace Projectiles
         private readonly List<ShootingInfo> _shootingQueue = new();
         private readonly List<MeshFilter> _projectileMeshFilters = new();
         private readonly List<Animator> _projectileAnimators = new();
+        private readonly List<MeshCollider> _projectileColliders = new();
 
         private void Start()
         {
@@ -48,6 +49,7 @@ namespace Projectiles
                     projectileObj.GetComponentInChildren<MeshFilter>()
                 );
                 _projectileAnimators.Add(projectileObj.GetComponent<Animator>());
+                _projectileColliders.Add(projectileObj.GetComponentInChildren<MeshCollider>());
             }
         }
 
@@ -94,24 +96,15 @@ namespace Projectiles
             var animationLength = _projectileAnimators.First().GetCurrentAnimatorStateInfo(0).length;
             yield return new WaitForSeconds(animationLength / 2);
 
-            foreach (var meshFilter in _projectileMeshFilters)
+            for (var i = 0; i < _projectiles.Count; i++)
             {
-                meshFilter.mesh = bulletType.mesh;
+                _projectileMeshFilters[i].mesh = bulletType.mesh;
+                _projectileColliders[i].sharedMesh = bulletType.mesh;
             }
 
             then?.Invoke();
 
             yield return null;
-        }
-
-        private bool IsAnimationComplete(int animationHash)
-        {
-            return !_projectileAnimators.Exists(animator =>
-                {
-                    var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                    return animatorStateInfo.shortNameHash != animationHash || animatorStateInfo.normalizedTime < 1;
-                }
-            );
         }
 
         public void EnqueueShoot(Vector3 target)

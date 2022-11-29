@@ -11,12 +11,13 @@ namespace Projectiles
         [SerializeField] private float respawnTime;
         [SerializeField] private Transform gapTransform;
         [SerializeField] private float speed;
+
+        public bool ReadyForShooting { get; private set; } = true;
         
         private Vector3 _velocity;
         private Rigidbody _rigidbody;
         private Renderer _renderer;
         private Projectile _parentProjectile;
-        private bool _shot = false;
 
         private void Awake()
         {
@@ -45,7 +46,7 @@ namespace Projectiles
             // Keep the projectile oriented parallel to the ground
             transform.Rotate(90, 0, 0);
             _velocity = direction * speed;
-            _shot = true;
+            _rigidbody.velocity = _velocity;
         }
 
         public bool ShouldOrbit()
@@ -53,26 +54,20 @@ namespace Projectiles
             return _velocity.magnitude == 0;
         }
 
-        private void FixedUpdate()
-        {
-            transform.localPosition += _velocity * Time.deltaTime;
-        }
-
         private IEnumerator Reload()
         {
-            if (_shot)
-            {
-                _shot = false;
-                _renderer.enabled = false;
-            }
-            yield return new WaitForSeconds(respawnTime);
-
-            _renderer.enabled = true;
+            ReadyForShooting = false;
+            _renderer.enabled = false;
             _velocity = Vector3.zero;
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
             transform.localPosition = gapTransform.localPosition;
             transform.localRotation = gapTransform.localRotation;
+            
+            yield return new WaitForSeconds(respawnTime);
+            
+            _renderer.enabled = true;
+            ReadyForShooting = true;
         }
     }
 }
