@@ -11,6 +11,7 @@ namespace Projectiles
         [SerializeField] private float respawnTime;
         [SerializeField] private Transform gapTransform;
         [SerializeField] private float speed;
+        [SerializeField] private GameObject explosionParticles;
 
         public bool ReadyForShooting { get; private set; } = true;
         
@@ -33,6 +34,9 @@ namespace Projectiles
                 other.gameObject.GetComponentInParent<EnemyController>().TakeDamage(_parentProjectile.Damage);
             }
 
+            var explosion = ExplosionPool.Instance.Get();
+            explosion.transform.position = transform.position;
+            explosion.transform.rotation = Quaternion.identity;
             StartCoroutine(Reload());
         }
 
