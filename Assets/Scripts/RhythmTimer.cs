@@ -16,28 +16,28 @@ public class RhythmTimer : MonoBehaviour
     {
         Interval = 60.0f / bpm;
         _track = GetComponent<AudioSource>();
-        _dspTimeSong = (float) AudioSettings.dspTime;
-        LastBeat = Offset - Interval + _dspTimeSong;
+       // LastBeat = Offset - Interval;
     }
 
     private void Start()
     {
+        _dspTimeSong = (float)AudioSettings.dspTime;
+        LastBeat = Offset - _dspTimeSong;
         _track.Play();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (TrackTime() >= LastBeat + Interval)
         {
-            LastBeat = LastBeat + Interval;
-            Debug.Log("beat");
+            LastBeat += Interval;
         }
     }
 
     public float TrackTime()
     {
         // return (float)(AudioSettings.dspTime - _dspTimeSong) + Offset;
-        return (float)(AudioSettings.dspTime - _dspTimeSong);
+        return (float)(AudioSettings.dspTime - _dspTimeSong - Offset);
     }
 
     public bool CheckTime(float pityTime = 0) // checks if time since last beat is in the decided time interval for the next beat

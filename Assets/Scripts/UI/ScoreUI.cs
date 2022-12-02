@@ -1,4 +1,5 @@
 using Constants;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,11 +7,11 @@ namespace UI
 {
     public class ScoreUI : MonoBehaviour
     {
-        private Text _scoreText;
+        private TextMeshProUGUI _scoreText;
 
         private void Awake()
         {
-            _scoreText = GetComponent<Text>();
+            _scoreText = GetComponent<TextMeshProUGUI>();
         }
 
         private void Start()
@@ -27,7 +28,7 @@ namespace UI
 
         public void UpdateScore(int newScore, int highScore)
         {
-            _scoreText.text = $"Score: {newScore}\nHigh score: {highScore}";
+            _scoreText.text = $"Score: {newScore}\nHighScore: {highScore}";
         }
     }
 }
