@@ -7,7 +7,7 @@ public class InputController : MonoBehaviour
 {
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] private float pityTime = 0.13f;
+    [SerializeField] private float beatLeeway = 0.5f;
 
     private const KeyCode SPrevBulletKey = KeyCode.Q;
     private const KeyCode SNextBulletKey = KeyCode.E;
@@ -51,7 +51,7 @@ public class InputController : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(pityTime) || !IsRhythmActive))
+        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(beatLeeway) || !IsRhythmActive))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
