@@ -90,5 +90,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 6845411114419292175, guid: b8e2ef95cd5bcb243bc567d0a8655cda, type: 3}
-  pityPrefab: {fileID: 2186720250558879346, guid: 5b84ad340d8ee8a4383bea5b2c65bd41, type: 3}
   numOfBeats: 5
