@@ -6,9 +6,9 @@ public class RhythmTimer : MonoBehaviour
     [SerializeField] private float bpm = 135.0f; // default value, change in inspector for each track
 
     public float Interval { get; private set; }
+    public float LastBeat { get; private set; }
     public float Time => _track.time;
 
-    private float _lastBeat;
     private float _dspTimeSong;
     private AudioSource _track; // the audio source it does the rhythm timing for
 
@@ -16,29 +16,32 @@ public class RhythmTimer : MonoBehaviour
     {
         Interval = 60.0f / bpm;
         _track = GetComponent<AudioSource>();
-        _dspTimeSong = (float) AudioSettings.dspTime;
+       // LastBeat = Offset - Interval;
     }
 
     private void Start()
     {
+        _dspTimeSong = (float)AudioSettings.dspTime;
+        LastBeat = Offset - _dspTimeSong;
         _track.Play();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (TrackTime() >= _lastBeat + Interval)
+        if (TrackTime() >= LastBeat + Interval)
         {
-            _lastBeat = TrackTime();
+            LastBeat += Interval;
         }
     }
 
-    private float TrackTime()
+    public float TrackTime()
     {
-        return (float)(AudioSettings.dspTime - _dspTimeSong) - Offset;
+        // return (float)(AudioSettings.dspTime - _dspTimeSong) + Offset;
+        return (float)(AudioSettings.dspTime - _dspTimeSong - Offset);
     }
 
     public bool CheckTime(float pityTime = 0) // checks if time since last beat is in the decided time interval for the next beat
     {
-        return TrackTime() >= _lastBeat + Interval - pityTime || TrackTime() <= _lastBeat + pityTime;
+        return TrackTime() >= LastBeat + Interval - pityTime || TrackTime() <= LastBeat + pityTime;
     }
 }
