@@ -107,7 +107,7 @@ namespace Projectiles
             yield return null;
         }
 
-        public void EnqueueShoot(Vector3 target)
+        public void EnqueueShoot(Vector3 target, int damage)
         {
             var projectileIndex = GetProjectileClosestToPoint(target);
             if (projectileIndex == -1)
@@ -117,6 +117,7 @@ namespace Projectiles
 
             _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex]));
             _projectiles[projectileIndex].QueuedForShooting = true;
+            _projectiles[projectileIndex].Damage = damage;
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)

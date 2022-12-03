@@ -35,6 +35,7 @@ public class RhythmTimer : MonoBehaviour
             _dspTimeSong += ClipLength;
             _songPosition -= ClipLength;
         }
+
         _songPositionInBeats = _songPosition / Interval;
     }
 

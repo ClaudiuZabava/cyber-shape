@@ -46,18 +46,34 @@ public class InputController : MonoBehaviour
 
     private void HandleShootInput()
     {
+        var damage = 5;
         if (_player.CanShoot == false)
         {
             return;
         }
 
-        if (Input.GetButtonDown("Fire1") && (_rTimer.CheckTime(beatLeeway) || !IsRhythmActive))
+        if (_rTimer.CheckTime(beatLeeway) || !IsRhythmActive)
+        {
+            damage *= 2;
+        }
+
+        if (_rTimer.CheckTime(beatLeeway / 5) || !IsRhythmActive)
+        {
+            damage *= 5;
+        }
+
+        if (_rTimer.CheckTime(beatLeeway / 10) || !IsRhythmActive)
+        {
+            damage *= 10;
+        }
+
+        if (Input.GetButtonDown("Fire1"))
         {
             // Cast a ray from the camera to see where the click intersects with the floor
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                _orbitalController.EnqueueShoot(hit.point);
+                _orbitalController.EnqueueShoot(hit.point, damage);
             }
         }
     }
