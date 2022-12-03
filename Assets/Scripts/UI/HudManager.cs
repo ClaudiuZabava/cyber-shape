@@ -16,6 +16,7 @@ namespace UI
 
         public PlayerHealth Hp { get; private set; }
         public ScoreUI ScoreUI { get; private set; }
+        public WavesUI WavesUI { get; private set; }
 
         private List<BulletType> Bullets { get; set; } = new();
         
@@ -34,6 +35,7 @@ namespace UI
         {
             Hp = GetComponentInChildren<PlayerHealth>();
 			ScoreUI = GetComponentInChildren<ScoreUI>();
+            WavesUI = GetComponentInChildren<WavesUI>();
             _bulletUiContainer = GameObject.Find(BulletUIContainerName);
         }
 
