@@ -40,14 +40,26 @@ public class GameManager : MonoBehaviour
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
         _backgroundMusic = GetComponent<AudioSource>();
 
+        if(!PlayerPrefs.HasKey(PlayerPrefsKeys.MusicVolume))
+        {
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.5f);
+        }
+
         if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
         {
-            _backgroundMusic.volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicState);
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1)
+            {
+                _backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+            }
+            else
+            {
+                _backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
+            }
         }
         else
         {
-            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-            _backgroundMusic.volume = 0.5f;
+            PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
+            _backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
         }
 
         NextWave();

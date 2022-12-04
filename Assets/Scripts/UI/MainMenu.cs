@@ -11,20 +11,35 @@ namespace UI
 
         private void Start()
         {
+            if(!PlayerPrefs.HasKey(PlayerPrefsKeys.MusicVolume))
+            {
+                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.5f);
+            }
+
             if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
             {
-                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicState);
+                if(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1)
+                {
+                    backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+                }
+                else
+                {
+                    backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
+                }
             }
             else
             {
-                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-                backgroundMusic.GetComponent<AudioSource>().volume = 0.5f;
+                PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
+                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
             }
         }
 
         public void Play() 
         {
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene) && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.MainMenuScene) 
+            if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene) 
+                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.MainMenuScene 
+                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.OptionsMenu 
+                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.GameOverMenu)
             {
                 SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene));
             } 

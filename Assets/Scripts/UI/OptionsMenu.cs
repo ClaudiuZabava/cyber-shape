@@ -1,6 +1,7 @@
 using Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -8,30 +9,59 @@ namespace UI
     {
         [SerializeField]
         private GameObject backgroundMusic;
+        [SerializeField]
+        private Slider musicVolume;
 
         private void Start()
         {
+            if(!PlayerPrefs.HasKey(PlayerPrefsKeys.MusicVolume))
+            {
+                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.5f);
+            }
+            musicVolume.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+
             if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
             {
-                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicState);
+                if(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1)
+                {
+                    backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+                }
+                else
+                {
+                    backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
+                }
             }
             else
             {
-                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-                backgroundMusic.GetComponent<AudioSource>().volume = 0.5f;
+                PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
+                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+            }
+        }
+        
+        private void Update()
+        {
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, musicVolume.value);
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1)
+            {
+                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+            }
+            else
+            {
+                backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
             }
         }
 
         public void OnMusic()
         {
-            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-            backgroundMusic.GetComponent<AudioSource>().volume = 0.5f;
+            PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
+            backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
         }
 
         public void OffMusic()
         {
-            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.0f);
-            backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0);
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.0f);
+            backgroundMusic.GetComponent<AudioSource>().volume =0.0f;
         }
 
         public void Back()
