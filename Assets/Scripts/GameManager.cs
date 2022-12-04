@@ -87,9 +87,13 @@ public class GameManager : MonoBehaviour
         {
             var randomPosition = new Vector3(Random.Range(-maxWidth, maxWidth), 0.5f, Random.Range(-maxWidth, maxWidth));
             var distance = Vector3.Distance(transform.position, randomPosition);
+
             if (distance < maxDistance)
             {
-                continue;
+                if (Physics.CheckSphere(randomPosition, 0.7f, (int) Layers.Floor))
+                {
+                    continue;
+                }
             }
 
             return randomPosition;
