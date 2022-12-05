@@ -7,35 +7,11 @@ namespace UI
 {
     public class GameOver : MonoBehaviour
     {
-        [SerializeField]
-        private TMP_Text scoreText;
-        [SerializeField]
-        private GameObject backgroundMusic;
+        [SerializeField] private TMP_Text scoreText;
 
         private void Start()
         {
             scoreText.text = "High Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore);
-            if(!PlayerPrefs.HasKey(PlayerPrefsKeys.MusicVolume))
-            {
-                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.5f);
-            }
-
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
-            {
-                if(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1)
-                {
-                    backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
-                }
-                else
-                {
-                    backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
-                }
-            }
-            else
-            {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
-                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
-            }
         }
 
         public void RestartLevel() 

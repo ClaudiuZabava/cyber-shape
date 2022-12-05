@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
 
     private bool _spawning = false;
     private int _pause  = 0;
-    private AudioSource _backgroundMusic;
     private int _waveCount = 0;
     private HudManager _ui;
 
@@ -38,29 +37,6 @@ public class GameManager : MonoBehaviour
 
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
-        _backgroundMusic = GetComponent<AudioSource>();
-
-        if(!PlayerPrefs.HasKey(PlayerPrefsKeys.MusicVolume))
-        {
-            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.5f);
-        }
-
-        if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
-        {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1)
-            {
-                _backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
-            }
-            else
-            {
-                _backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
-            }
-        }
-        else
-        {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
-            _backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
-        }
 
         NextWave();
     }
