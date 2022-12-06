@@ -29,8 +29,7 @@ namespace UI
             if ((Distance < 0 && _rectTransform.localPosition.x <= 0.0f)
                 || (Distance > 0 && _rectTransform.localPosition.x >= 0.0f))
             {
-                //_rectTransform.localPosition = new Vector3(StartPos + Mathf.Sign(Distance) * ((_timer.TrackTime() - _timer.LastBeat)* Speed()), 0, 0);
-                _rectTransform.localPosition = new Vector3(StartPos, 0, 0);
+                _rectTransform.localPosition = new Vector3(StartPos + _rectTransform.localPosition.x, 0, 0);
             }
         }
     }
