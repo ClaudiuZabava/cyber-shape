@@ -6,25 +6,12 @@ namespace UI
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject backgroundMusic;
-
-        private void Start()
+        public void Play()
         {
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
-            {
-                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicState);
-            }
-            else
-            {
-                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-                backgroundMusic.GetComponent<AudioSource>().volume = 0.5f;
-            }
-        }
-
-        public void Play() 
-        {
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene) && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.MainMenuScene) 
+            if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene) 
+                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.MainMenuScene 
+                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.OptionsMenu 
+                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.GameOverMenu)
             {
                 SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene));
             } 

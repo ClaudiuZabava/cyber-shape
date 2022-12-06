@@ -1,37 +1,40 @@
 using Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class OptionsMenu : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject backgroundMusic;
+        [SerializeField] private VolumeSetter volumeSetter;
+        [SerializeField] private Slider musicVolume;
 
         private void Start()
         {
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.MusicState))
-            {
-                backgroundMusic.GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicState);
-            }
-            else
-            {
-                PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-                backgroundMusic.GetComponent<AudioSource>().volume = 0.5f;
-            }
+            volumeSetter = GetComponent<VolumeSetter>();
+            musicVolume.value = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
+        }
+        
+        private void Update()
+        {
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, musicVolume.value);
+            volumeSetter.BackgroundMusic.volume = PlayerPrefs.GetInt(PlayerPrefsKeys.MusicState) == 1
+                ? PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume)
+                : 0.0f;
         }
 
         public void OnMusic()
         {
-            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.5f);
-            backgroundMusic.GetComponent<AudioSource>().volume = 0.5f;
+            PlayerPrefs.SetInt(PlayerPrefsKeys.MusicState, 1);
+            volumeSetter.BackgroundMusic.volume = PlayerPrefs.GetFloat(PlayerPrefsKeys.MusicVolume);
         }
 
         public void OffMusic()
         {
-            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0.0f);
-            backgroundMusic.GetComponent<AudioSource>().volume = 0.0f;
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicState, 0);
+            PlayerPrefs.SetFloat(PlayerPrefsKeys.MusicVolume, 0.0f);
+            volumeSetter.BackgroundMusic.volume = 0.0f;
         }
 
         public void Back()
