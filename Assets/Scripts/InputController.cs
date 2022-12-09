@@ -55,15 +55,10 @@ public class InputController : MonoBehaviour
 
         if (_rTimer.CheckTime(beatLeeway) || !IsRhythmActive)
         {
-            damage *= 2;
-        }
-
-        if (_rTimer.CheckTime(beatLeeway / 3) || !IsRhythmActive)
-        {
             damage *= 5;
         }
 
-        if (_rTimer.CheckTime(beatLeeway / 6) || !IsRhythmActive)
+        if (_rTimer.CheckTime(beatLeeway / 2) || !IsRhythmActive)
         {
             damage *= 10;
         }
