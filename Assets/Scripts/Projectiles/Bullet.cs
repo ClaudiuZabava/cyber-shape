@@ -72,6 +72,8 @@ namespace Projectiles
             
             _renderer.enabled = true;
             ReadyForShooting = true;
+            GetComponent<MeshRenderer>().material.SetColor("_BaseColor", new Color(0, 0.02415763f, 0.03560133f));
+            GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", new Color(0, 0.7912982f, 1));
         }
     }
 }

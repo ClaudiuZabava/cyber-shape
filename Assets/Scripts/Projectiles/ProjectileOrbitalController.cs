@@ -116,6 +116,12 @@ namespace Projectiles
             }
 
             _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex]));
+            switch(damage)
+            {
+                case 25: _projectiles[projectileIndex].ChangeBulletColor(new Color(0.0037f, 0.0352f, 0f), new Color(0, 1, 0.094f)); break;
+                case 50: _projectiles[projectileIndex].ChangeBulletColor(new Color(0.0342f, 0.0352f, 0f), new Color(16, 15.56f, 0)); break;
+            }
+
             _projectiles[projectileIndex].QueuedForShooting = true;
             _projectiles[projectileIndex].Damage = damage;
         }
