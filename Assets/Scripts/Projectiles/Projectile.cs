@@ -18,7 +18,7 @@ namespace Projectiles
 
         public void ChangeBulletColor(Color baseColor, Color emissionColor)
         {
-            _bullet.GetComponent<MeshRenderer>().material.SetColor("_BaseColor",baseColor);
+            _bullet.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", baseColor);
             _bullet.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", emissionColor);
         }
 

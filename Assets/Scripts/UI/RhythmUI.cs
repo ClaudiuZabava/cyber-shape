@@ -55,7 +55,7 @@ namespace UI
             lineComponent2.Distance = -lineComponent.Distance;
             lineComponent2.StartPos = - _distance;
 
-            var offset = _time.Offset - (AudioSettings.dspTime - _time._dspTimeSong); //the offset of its position at creation is the offset of the track - how much time it's been since song started
+            var offset = _time.Offset - (AudioSettings.dspTime - _time.DspTimeSong); //the offset of its position at creation is the offset of the track - how much time it's been since song started
 
             var distOffset = lineComponent.Speed() * _time.Offset;
 

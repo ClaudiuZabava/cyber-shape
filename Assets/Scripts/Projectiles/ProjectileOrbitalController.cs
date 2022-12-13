@@ -7,6 +7,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Animations = Constants.Animations;
+using Constants;
 
 namespace Projectiles
 {
@@ -118,8 +119,8 @@ namespace Projectiles
             _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex]));
             switch(damage)
             {
-                case 25: _projectiles[projectileIndex].ChangeBulletColor(new Color(0.0037f, 0.0352f, 0f), new Color(0, 1, 0.094f)); break;
-                case 50: _projectiles[projectileIndex].ChangeBulletColor(new Color(0.0342f, 0.0352f, 0f), new Color(16, 15.56f, 0)); break;
+                case 25: _projectiles[projectileIndex].ChangeBulletColor(Colors.GreenBase, Colors.GreenEmission); break;
+                case 50: _projectiles[projectileIndex].ChangeBulletColor(Colors.GoldBase, Colors.GoldEmission); break;
             }
 
             _projectiles[projectileIndex].QueuedForShooting = true;

@@ -6,7 +6,7 @@ public class RhythmTimer : MonoBehaviour
     [SerializeField] private float bpm = 135.0f; // default value, change in inspector for each track
 
     public float Interval { get; private set; }
-    public float _dspTimeSong { get; private set; }
+    public float DspTimeSong { get; private set; }
 
     private float ClipLength => _audioSource.clip.length;
    
@@ -22,16 +22,16 @@ public class RhythmTimer : MonoBehaviour
 
     private void Start()
     {
-        _dspTimeSong = (float)AudioSettings.dspTime;
+        DspTimeSong = (float)AudioSettings.dspTime;
         _audioSource.Play();
     }
 
     private void Update()
     {
-        _songPosition = (float)(AudioSettings.dspTime - _dspTimeSong) - Offset;
+        _songPosition = (float)(AudioSettings.dspTime - DspTimeSong) - Offset;
         if (_songPosition >= ClipLength)
         {
-            _dspTimeSong += ClipLength;
+            DspTimeSong += ClipLength;
             _songPosition -= ClipLength;
         }
 
