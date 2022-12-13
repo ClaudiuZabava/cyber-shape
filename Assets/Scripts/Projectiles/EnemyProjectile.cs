@@ -14,7 +14,9 @@ namespace Projectiles
 
         private void Start()
         {
+            transform.Rotate(90, 0, 0);
             _firingPoint = transform.position;
+            Physics.IgnoreLayerCollision(8, 9, true);
         }
 
         private void Update()
@@ -27,7 +29,7 @@ namespace Projectiles
             if (other.CompareTag(Tags.Player))
             {
                 _triggeringPlayer = other.gameObject;
-                _triggeringPlayer.GetComponent<Player>().TakeDamage(1);
+                _triggeringPlayer.GetComponent<Player>().TakeDamage(0);
                 Destroy(gameObject);
             }
             else if (other.CompareTag(Tags.Wall)) // Obiectele puse de Daria pot avea tag-ul Wall 
@@ -44,9 +46,9 @@ namespace Projectiles
             }
             else
             {
-                transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+                transform.Translate(Vector3.up * projectileSpeed * Time.deltaTime);
             }
-            transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
+            transform.Translate(Vector3.up * projectileSpeed * Time.deltaTime);
         }
     }
 }
