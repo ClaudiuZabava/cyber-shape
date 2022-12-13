@@ -9,11 +9,17 @@ namespace Projectiles
         public Transform gapTransform;
         public bool QueuedForShooting { get; set; } = false;
 
-        private Bullet _bullet;
+        public Bullet _bullet;
 
         private void Awake()
         {
             _bullet = GetComponentInChildren<Bullet>();
+        }
+
+        public void ChangeBulletColor(Color baseColor, Color emissionColor)
+        {
+            _bullet.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", baseColor);
+            _bullet.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", emissionColor);
         }
 
         private bool ShouldOrbit()

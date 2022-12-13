@@ -41,25 +41,26 @@ namespace UI
 
         private void CreateLine(int i)
         {
-            var j = -i;
             var newLine = Instantiate(linePrefab, transform, true);
             var newLine2 = Instantiate(linePrefab, transform, true);
 
             var lineComponent = newLine.GetComponent<RhythmLine>();
             var lineComponent2 = newLine2.GetComponent<RhythmLine>();
 
-            lineComponent.Time = _time.Interval - _time.Time;
-            lineComponent2.Time = _time.Interval - _time.Time;
+            lineComponent.Time = _time.Interval;
+            lineComponent2.Time = _time.Interval;
 
-            lineComponent.Distance = -Mathf.Sign(i) * _distance / numOfBeats;
-            lineComponent.StartPos = Mathf.Sign(i) * _distance;
-            lineComponent2.Distance = -Mathf.Sign(j) * _distance / numOfBeats;
-            lineComponent2.StartPos = Mathf.Sign(j) * _distance;
+            lineComponent.Distance = -_distance / numOfBeats;
+            lineComponent.StartPos = _distance;
+            lineComponent2.Distance = -lineComponent.Distance;
+            lineComponent2.StartPos = - _distance;
+
+            var offset = _time.Offset - (AudioSettings.dspTime - _time.DspTimeSong); //the offset of its position at creation is the offset of the track - how much time it's been since song started
 
             var distOffset = lineComponent.Speed() * _time.Offset;
 
-            newLine.GetComponent<RectTransform>().localPosition = new Vector2(i * _distance / numOfBeats - Mathf.Sign(i) * distOffset, 0);
-            newLine2.GetComponent<RectTransform>().localPosition = new Vector2(j * _distance / numOfBeats - Mathf.Sign(j) * distOffset, 0);
+            newLine.GetComponent<RectTransform>().localPosition = new Vector2(i * _distance / numOfBeats + distOffset, 0);
+            newLine2.GetComponent<RectTransform>().localPosition = new Vector2(-i * _distance / numOfBeats - distOffset, 0);
         }
     }
 }

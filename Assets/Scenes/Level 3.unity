@@ -5926,7 +5926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 12744624317710529, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: <Offset>k__BackingField
-      value: 0.026
+      value: 0.036
       objectReference: {fileID: 0}
     - target: {fileID: 12744624317710531, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_audioClip

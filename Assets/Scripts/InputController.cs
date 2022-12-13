@@ -55,17 +55,12 @@ public class InputController : MonoBehaviour
 
         if (_rTimer.CheckTime(beatLeeway) || !IsRhythmActive)
         {
-            damage *= 2;
+            damage = 25;
         }
 
-        if (_rTimer.CheckTime(beatLeeway / 3) || !IsRhythmActive)
+        if (_rTimer.CheckTime(beatLeeway / 2) || !IsRhythmActive)
         {
-            damage *= 5;
-        }
-
-        if (_rTimer.CheckTime(beatLeeway / 6) || !IsRhythmActive)
-        {
-            damage *= 10;
+            damage = 50;
         }
 
         if (Input.GetButtonDown("Fire1"))
