@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7821751694810432115}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy Fire Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 137525047882992228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 9001530473334595022}
   - component: {fileID: 5360700543554486392}
   - component: {fileID: 1603119405078734005}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firingSpeed: 2
-  projectile: {fileID: 8776175046304697655, guid: 4e99050254c64f3429d71de83e3360e4, type: 3}
+  projectile: {fileID: 9139162334264945893, guid: f510d68a96d48b74c942598ec49e5cd2, type: 3}
   enemyFirePoint: {fileID: 7821751694810432115}
   minDistance: 10
   enemyBody: {fileID: 8908137836564718879}
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9186606512847863072}
   - component: {fileID: 524670187393776097}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 1856631704244371694}
   - component: {fileID: 182511240205109265}
   - component: {fileID: 4479390413686602562}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 4764261200084441252}
   - component: {fileID: 18833921453439763}
   - component: {fileID: 4587849131719335827}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 7572338363145395030}
   - component: {fileID: 7743864895576281543}
   - component: {fileID: 2119145725098330086}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 7824830426720994642}
   - component: {fileID: 5541165040992864827}
   - component: {fileID: 4719544589408159908}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -647,7 +647,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6380830792843603729}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
