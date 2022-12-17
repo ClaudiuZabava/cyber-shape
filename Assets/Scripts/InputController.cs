@@ -67,31 +67,31 @@ public class InputController : MonoBehaviour
         BulletType newBullet = null;
         if (Input.GetKeyDown(SPrevBulletKey))
         {
-            var currentBulletIndex = _player.AvailableBullets.FindIndex(
+            var currentBulletIndex = _player.UnlockedBulletTypes.FindIndex(
                 bullet => bullet == _player.CurrentBullet
             );
 
             var nextIndex = currentBulletIndex - 1;
             if (nextIndex < 0)
             {
-                nextIndex = _player.AvailableBullets.Count - 1;
+                nextIndex = _player.UnlockedBulletTypes.Count - 1;
             }
-            newBullet = _player.AvailableBullets[nextIndex];
+            newBullet = _player.UnlockedBulletTypes[nextIndex];
         }
 
         if (Input.GetKeyDown(SNextBulletKey))
         {
-            var currentBulletIndex = _player.AvailableBullets.FindIndex(
+            var currentBulletIndex = _player.UnlockedBulletTypes.FindIndex(
                 bullet => bullet == _player.CurrentBullet
             );
 
             var nextIndex = currentBulletIndex + 1;
-            if (nextIndex >= _player.AvailableBullets.Count)
+            if (nextIndex >= _player.UnlockedBulletTypes.Count)
             {
                 nextIndex = 0;
             }
 
-            newBullet = _player.AvailableBullets[nextIndex];
+            newBullet = _player.UnlockedBulletTypes[nextIndex];
         }
         
         if (newBullet != null)

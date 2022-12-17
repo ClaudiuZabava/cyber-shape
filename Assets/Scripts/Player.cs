@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
 {
     [field: SerializeField] public float CurrentHealth { get; private set; } = 4;
     [field: SerializeField] public float MaxHealth { get; private set; } = 4;
-    [field: SerializeField] public List<BulletType> AvailableBullets { get; private set; } = new();
+    [field: SerializeField] public List<BulletType> UnlockedBulletTypes { get; private set; } = new();
+    [field: SerializeField] public List<BulletType> AvailableBulletTypes { get; private set; } = new();
     [field: SerializeField] public BulletType CurrentBullet { get; set; }
     [field: SerializeField] public bool CanShoot { get; set; }
 
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, SceneManager.GetActiveScene().buildIndex);
             PlayerPrefs.Save();
             Destroy(gameObject);
-            SceneManager.LoadScene((int) Scenes.GameOverMenu);
+            SceneManager.LoadScene((int)Scenes.GameOverMenu);
         }
     }
 
@@ -119,8 +120,11 @@ public class Player : MonoBehaviour
             );
     }
 
-    public void AddBullet(BulletType bulletType)
+    public void UnlockBulletsForLevel(int upToIndex)
     {
-        AvailableBullets.Add(bulletType);
+        for (int i = 0; i < upToIndex; i++)
+        {
+            UnlockedBulletTypes.Add(AvailableBulletTypes[i]);
+        }
     }
 }
