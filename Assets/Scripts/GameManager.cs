@@ -12,22 +12,22 @@ public class GameManager : MonoBehaviour
     
     [Header("Enemy settings")]
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private int constEnemies = 7;
     [SerializeField] private int maxWidth = 10;
     [SerializeField] private int maxDistance = 5;
     [SerializeField] private float secondsTillSpawn = 3f;
     [SerializeField] private float percentToNextWave = .75f;
-
-    [Header("Level settings")]
-    [SerializeField] private int numberOfWaves;
-
+    
+    private int _numberOfWaves;
+    private int _constEnemies = 5;
     private bool _spawning = false;
     private int _pause  = 0;
     private int _waveCount = 0;
+    private int _waveConst = 3;
     private HudManager _ui;
 
     private void Awake()
     {
+        _numberOfWaves = _waveConst * (SceneManager.GetActiveScene().buildIndex - 2);
         _ui = GameObject.Find("HUD").GetComponent<HudManager>();
     }
 
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckNoEnemies()
     {
-        if (GameObject.FindGameObjectsWithTag(Tags.Enemy).Length < percentToNextWave * constEnemies)
+        if (GameObject.FindGameObjectsWithTag(Tags.Enemy).Length < percentToNextWave * _constEnemies)
         {
             NextWave();
         }
@@ -90,14 +90,14 @@ public class GameManager : MonoBehaviour
 
     private void NextWave()
     {
-        if (_waveCount + 1 > numberOfWaves)
+        if (_waveCount + 1 > _numberOfWaves)
         {
             ProgressToNextLevel();
         }
         else
         {
             _waveCount++;
-            _ui.WavesUI.UpdateWaves(numberOfWaves - _waveCount + 1);
+            _ui.WavesUI.UpdateWaves(_numberOfWaves - _waveCount + 1);
             StartCoroutine(SpawnEnemies());
         }
     }
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
     {
         _spawning = true;
         yield return new WaitForSeconds(secondsTillSpawn);
-        for (var i = 0; i < constEnemies; i++)
+        for (var i = 0; i < _constEnemies; i++)
         {
             Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
         }
