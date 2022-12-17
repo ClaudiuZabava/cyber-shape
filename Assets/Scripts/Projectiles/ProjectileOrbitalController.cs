@@ -23,9 +23,7 @@ namespace Projectiles
         private Vector3 _prevPlayerPos;
         private readonly List<Projectile> _projectiles = new();
         private readonly List<ShootingInfo> _shootingQueue = new();
-        private readonly List<MeshFilter> _projectileMeshFilters = new();
         private readonly List<Animator> _projectileAnimators = new();
-        private readonly List<MeshCollider> _projectileColliders = new();
 
         private void Start()
         {
@@ -46,11 +44,7 @@ namespace Projectiles
                     Quaternion.Euler(90, -i * 360 / projectileCount, 0)
                 );
                 _projectiles.Add(projectile);
-                _projectileMeshFilters.Add(
-                    projectileObj.GetComponentInChildren<MeshFilter>()
-                );
                 _projectileAnimators.Add(projectileObj.GetComponent<Animator>());
-                _projectileColliders.Add(projectileObj.GetComponentInChildren<MeshCollider>());
             }
         }
 
@@ -59,7 +53,7 @@ namespace Projectiles
             var removeList = new List<ShootingInfo>();
             foreach (var shootingInfo in _shootingQueue.Where(CanShoot))
             {
-                shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition);
+                shootingInfo.Projectile.Shoot(shootingInfo.TargetPosition, shootingInfo.DamageMultiplier);
                 removeList.Add(shootingInfo);
             }
 
@@ -97,10 +91,9 @@ namespace Projectiles
             var animationLength = _projectileAnimators.First().GetCurrentAnimatorStateInfo(0).length;
             yield return new WaitForSeconds(animationLength / 2);
 
-            for (var i = 0; i < _projectiles.Count; i++)
+            foreach (var projectile in _projectiles)
             {
-                _projectileMeshFilters[i].mesh = bulletType.mesh;
-                _projectileColliders[i].sharedMesh = bulletType.mesh;
+                projectile.BulletType = bulletType;
             }
 
             then?.Invoke();
@@ -108,7 +101,7 @@ namespace Projectiles
             yield return null;
         }
 
-        public void EnqueueShoot(Vector3 target, int damage)
+        public void EnqueueShoot(Vector3 target, float damageMultiplier)
         {
             var projectileIndex = GetProjectileClosestToPoint(target);
             if (projectileIndex == -1)
@@ -116,15 +109,14 @@ namespace Projectiles
                 return;
             }
 
-            _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex]));
-            switch(damage)
+            _shootingQueue.Add(new ShootingInfo(target, _projectiles[projectileIndex], damageMultiplier));
+            switch(damageMultiplier)
             {
-                case 25: _projectiles[projectileIndex].ChangeBulletColor(Colors.GreenBase, Colors.GreenEmission); break;
-                case 50: _projectiles[projectileIndex].ChangeBulletColor(Colors.GoldBase, Colors.GoldEmission); break;
+                case >= 1.25f and < 1.5f: _projectiles[projectileIndex].ChangeBulletColor(Colors.GreenBase, Colors.GreenEmission); break;
+                case >= 1.5f: _projectiles[projectileIndex].ChangeBulletColor(Colors.GoldBase, Colors.GoldEmission); break;
             }
 
             _projectiles[projectileIndex].QueuedForShooting = true;
-            _projectiles[projectileIndex].Damage = damage;
         }
 
         private int GetProjectileClosestToPoint(Vector3 hitInfoPoint)
@@ -134,7 +126,7 @@ namespace Projectiles
             var minDistance = Mathf.Infinity;
             for (var i = 0; i < projectileCount; i++)
             {
-                var bulletPosition = _projectiles[i].GetBulletPosition();
+                var bulletPosition = _projectiles[i].BulletPosition;
                 var distance = Vector3.Distance(bulletPosition, hitInfoPoint);
                 // Ignore projectiles that have already been fired
                 if (distance < minDistance && _projectiles[i].CanShoot())
@@ -151,7 +143,7 @@ namespace Projectiles
         {
             var center = transform.position;
             var center2 = new Vector2(center.x, center.z);
-            var bulletPosition = shootingInfo.Projectile.GetBulletPosition();
+            var bulletPosition = shootingInfo.Projectile.BulletPosition;
             var bulletPosition2 = new Vector2(bulletPosition.x, bulletPosition.z);
             var targetPosition2 = new Vector2(shootingInfo.TargetPosition.x, shootingInfo.TargetPosition.z);
 

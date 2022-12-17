@@ -59,7 +59,7 @@ namespace UI
         {
             var bulletUi = Instantiate(BulletUiPrefab, _bulletUiContainer.transform);
 
-            bulletUi.transform.Find(BulletIconName).GetComponent<Image>().sprite = projectile.sprite;
+            bulletUi.transform.Find(BulletIconName).GetComponent<Image>().sprite = projectile.Sprite;
             var leftOffset = BulletUiSize * Bullets.Count + BulletUiMargin * Bullets.Count;
             bulletUi.GetComponent<RectTransform>().anchoredPosition = new Vector2(leftOffset, 0);
             Bullets.Add(projectile);

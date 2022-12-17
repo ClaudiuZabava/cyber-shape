@@ -15,8 +15,9 @@ MonoBehaviour:
   <Mesh>k__BackingField: {fileID: 3976614008025827415, guid: 2d819b0af0c00480f92453b986306dde, type: 3}
   <NextStage>k__BackingField: {fileID: 11400000, guid: 5a3fbd5857f8b466c87f21c041fe474a, type: 2}
   <EnemyData>k__BackingField:
-    <Health>k__BackingField: 50
+    <Health>k__BackingField: 3
     <RollSpeed>k__BackingField: 12
     <NavSpeed>k__BackingField: 2
+    <CollisionDamage>k__BackingField: 1.5
   <PlayerData>k__BackingField:
-    <Health>k__BackingField: 2
+    <Health>k__BackingField: 5

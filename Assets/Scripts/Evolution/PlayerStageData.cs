@@ -6,6 +6,6 @@ namespace Evolution
     [Serializable]
     public class PlayerStageData
     {
-        [field: SerializeField] public int Health { get; private set; }
+        [field: SerializeField] public float Health { get; private set; }
     }
 }
