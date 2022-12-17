@@ -169,8 +169,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CurrentHealth>k__BackingField: 4
   <MaxHealth>k__BackingField: 4
-  <AvailableBullets>k__BackingField:
+  <UnlockedBulletTypes>k__BackingField: []
+  <AvailableBulletTypes>k__BackingField:
   - {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
+  - {fileID: 11400000, guid: 77ff25d58ccf34aeab600974fbf652c2, type: 2}
+  - {fileID: 11400000, guid: 2dc5013f6011348ce9873fdabd751c6b, type: 2}
+  - {fileID: 11400000, guid: 6b9d746e74638481280040505dd07240, type: 2}
+  - {fileID: 11400000, guid: f9a8cf6d236504294b9d055e487f6904, type: 2}
   <CurrentBullet>k__BackingField: {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
   <CanShoot>k__BackingField: 1
   ui: {fileID: 0}
@@ -220,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsRhythmActive>k__BackingField: 1
   speed: 12
-  pityTime: 0.13
+  beatLeeway: 0.5
 --- !u!1001 &3192674581181291927
 PrefabInstance:
   m_ObjectHideFlags: 0

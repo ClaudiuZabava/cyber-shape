@@ -9,26 +9,32 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Texture2D crosshairImg;
     [SerializeField] private GameObject panel;
-    
+
     [Header("Enemy settings")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private int maxWidth = 10;
     [SerializeField] private int maxDistance = 5;
     [SerializeField] private float secondsTillSpawn = 3f;
     [SerializeField] private float percentToNextWave = .75f;
-    
+
+    [Header("Level settings")]
+    [SerializeField] private int level = 1;
+
     private int _numberOfWaves;
     private int _constEnemies = 5;
     private bool _spawning = false;
-    private int _pause  = 0;
+    private int _pause = 0;
     private int _waveCount = 0;
     private int _waveConst = 3;
     private HudManager _ui;
+    private Player _player;
 
     private void Awake()
     {
         _numberOfWaves = _waveConst * (SceneManager.GetActiveScene().buildIndex - 2);
         _ui = GameObject.Find("HUD").GetComponent<HudManager>();
+        _player = GetComponentInChildren<Player>();
+        _player.UnlockBulletsForLevel(level);
     }
 
     private void Start()
@@ -48,7 +54,7 @@ public class GameManager : MonoBehaviour
             if (_pause == 0)
             {
                 PauseGame();
-            } 
+            }
             else
             {
                 ResumeGame();
@@ -68,17 +74,18 @@ public class GameManager : MonoBehaviour
             NextWave();
         }
     }
-    
+
     private Vector3 GetRandomPosition()
     {
         while (true)
         {
-            var randomPosition = new Vector3(Random.Range(-maxWidth, maxWidth), 0.5f, Random.Range(-maxWidth, maxWidth));
+            var randomPosition =
+                new Vector3(Random.Range(-maxWidth, maxWidth), 0.5f, Random.Range(-maxWidth, maxWidth));
             var distance = Vector3.Distance(transform.position, randomPosition);
 
             if (distance < maxDistance)
             {
-                if (Physics.CheckSphere(randomPosition, 0.7f, (int) Layers.Floor))
+                if (Physics.CheckSphere(randomPosition, 0.7f, (int)Layers.Floor))
                 {
                     continue;
                 }
@@ -130,7 +137,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         panel.SetActive(true);
     }
-    
+
     public void ResumeGame()
     {
         _pause = 0;
@@ -145,6 +152,6 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause, _pause);
         Time.timeScale = 1f;
         panel.SetActive(false);
-        SceneManager.LoadScene((int) Scenes.MainMenuScene);
+        SceneManager.LoadScene((int)Scenes.MainMenuScene);
     }
 }

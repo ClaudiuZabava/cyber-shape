@@ -43,7 +43,7 @@ namespace UI
         {
             // TODO: It doesn't make sense to call these every frame. We should only call them in resposponse to some
             // event, such as when the player gets a new class of projectiles or they change the active ones.
-            AddBullets(Player.AvailableBullets);
+            AddBullets(Player.UnlockedBulletTypes);
             StartCoroutine(SelectBullet(Player.CurrentBullet));
         }
 
