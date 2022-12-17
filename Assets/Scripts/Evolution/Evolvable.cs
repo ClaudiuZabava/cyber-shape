@@ -1,10 +1,14 @@
+using System;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace Evolution
 {
     public class Evolvable : MonoBehaviour
     {
         [field: SerializeField] public Stage Stage { get; private set; }
+
+        public event EventHandler Evolved;
 
         private MeshFilter _meshFilter;
         private MeshCollider _meshCollider;
@@ -37,12 +41,18 @@ namespace Evolution
             _animator.SetTrigger(Constants.Animations.Evolution.Triggers.Evolution);
             var animatorState = _animator.GetCurrentAnimatorStateInfo(_animator.GetLayerIndex("Base Layer"));
             Invoke(nameof(ApplyStage), animatorState.length / 4);
+            OnEvolved();
         }
 
         private void ApplyStage()
         {     
             _meshFilter.mesh = Stage.Mesh;
             _meshCollider.sharedMesh = Stage.Mesh;
+        }
+
+        protected virtual void OnEvolved()
+        {
+            Evolved?.Invoke(this, EventArgs.Empty);
         }
     }
 }

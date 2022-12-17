@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Constants;
+using Enemy;
 using Projectiles;
 using UI;
 using UnityEngine;
@@ -8,8 +9,8 @@ using Evolution;
 
 public class Player : MonoBehaviour
 {
-    [field: SerializeField] public int CurrentHealth { get; private set; } = 4;
-    [field: SerializeField] public int MaxHealth { get; private set; } = 4;
+    [field: SerializeField] public float CurrentHealth { get; private set; } = 4;
+    [field: SerializeField] public float MaxHealth { get; private set; } = 4;
     [field: SerializeField] public List<BulletType> AvailableBullets { get; private set; } = new();
     [field: SerializeField] public BulletType CurrentBullet { get; set; }
     [field: SerializeField] public bool CanShoot { get; set; }
@@ -17,10 +18,12 @@ public class Player : MonoBehaviour
     [SerializeField] private HudManager ui;
     [SerializeField] private int scoreEvolve = 5;
 
-    private int _tempScore = 0;
+    private PlayerStageData StageData => _evolution.Stage.PlayerData;
+
+    private int _tempScore;
     private Evolvable _evolution;
     private ProjectileOrbitalController _orbitalController;
-    private Coroutine _changeBulletCoroutine = null;
+    private Coroutine _changeBulletCoroutine;
 
     private void Awake()
     {
@@ -32,6 +35,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         CheckHighScore();
+        MaxHealth = StageData.Health;
+        CurrentHealth = MaxHealth;
+
+        _evolution.Evolved += (_, _) => UpdateMaxHealth(StageData.Health);
     }
 
     private void Update()
@@ -43,7 +50,8 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag(Tags.Enemy))
         {
-            TakeDamage(1);
+            var enemyEvolvable = other.GetComponent<Evolvable>();
+            TakeDamage(enemyEvolvable.Stage.EnemyData.CollisionDamage);
         }
     }
 
@@ -70,12 +78,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(float dmg)
     {
         CurrentHealth -= dmg;
     }
 
-    public void UpdateMaxHealth(int max)
+    private void UpdateMaxHealth(float max)
     {
         if (CurrentHealth + (max - MaxHealth) > 0)
             CurrentHealth += max - MaxHealth;
