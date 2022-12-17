@@ -90,14 +90,14 @@ public class GameManager : MonoBehaviour
 
     private void NextWave()
     {
-        _waveCount++;
-        _ui.WavesUI.UpdateWaves(numberOfWaves - _waveCount + 1);
-        if (_waveCount > numberOfWaves)
+        if (_waveCount + 1 > numberOfWaves)
         {
             ProgressToNextLevel();
         }
         else
         {
+            _waveCount++;
+            _ui.WavesUI.UpdateWaves(numberOfWaves - _waveCount + 1);
             StartCoroutine(SpawnEnemies());
         }
     }
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
     private void ProgressToNextLevel()
     {
         var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (activeSceneIndex < (int) Scenes.Level2) // TODO: Replace Level2 with whatever will be the last level
+        if (activeSceneIndex < (int) Scenes.Level4) // TODO: Replace Level4 with whatever will be the last level
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
