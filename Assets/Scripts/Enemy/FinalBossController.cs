@@ -5,28 +5,24 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
-    public class EnemyController : MonoBehaviour
+    public class FinalBossController : MonoBehaviour
     {
-        [SerializeField] private float firingSpeed;
-        [SerializeField] private GameObject projectile; 
-        [SerializeField] private Transform enemyFirePoint;
         [SerializeField] private int minDistance = 10;
         [SerializeField] private GameObject enemyBody;
-        
-        private EnemyStageData StageData => _evolvable.Stage.EnemyData;
-        
-        private GameObject _player;
-        private Rigidbody _rigidbody;
+
+        private static readonly int MAX_ROLL_SPEED = 8;
+        private static readonly int MAX_HP = 100;
+        private static readonly int SCORE = 1000;
+
         private NavMeshAgent _nav;
         private Canvas _healthBar;
         private Slider _healthBarSlider;
-        private int _maxHealth;
-        public int health;
-        private Evolvable _evolvable;
-        private int _distance;
-        private float _lastTimeShot;
-        private Camera _camera;
+        private GameObject _player;
         private float _rollSpeed;
+        private Rigidbody _rigidbody;
+        private Camera _camera;
+
+        public int health = MAX_HP;
 
         private void Awake()
         {
@@ -34,19 +30,9 @@ namespace Enemy
             _player = GameObject.FindWithTag("Player");
             _healthBar = GetComponentInChildren<Canvas>();
             _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
-            _evolvable = GetComponentInChildren<Evolvable>();
             _rigidbody = enemyBody.GetComponent<Rigidbody>();
             _camera = Camera.main;
-        }
 
-        private void Start()
-        {
-            health = StageData.Health;
-            SetMaxHealth(health);
-            SetHealth(health);
-
-            _rollSpeed = StageData.RollSpeed;
-            _nav.speed = StageData.NavSpeed;
         }
 
         private void Update()
@@ -54,40 +40,36 @@ namespace Enemy
             _healthBar.transform.rotation = _camera.transform.rotation;
             var distance = Vector3.Distance(_player.transform.position, transform.position);
             transform.LookAt(_player.transform);
-            
+
             if (distance < minDistance && _player.transform.hasChanged)
             {
                 var destination = _player.transform.position;
-                var rotX  = destination[0] - enemyBody.transform.position.x;
-                var rotZ  = destination[2] - enemyBody.transform.position.z;
+                var rotX = destination[0] - enemyBody.transform.position.x;
+                var rotZ = destination[2] - enemyBody.transform.position.z;
                 if (destination == enemyBody.transform.position)
                 {
                     _rollSpeed = 0;
                 }
                 else
                 {
-                    _rollSpeed = StageData.RollSpeed;
-                    _nav.speed = StageData.NavSpeed;
+                    _rollSpeed = MAX_ROLL_SPEED;
+                    _nav.speed = MAX_ROLL_SPEED;
                 }
+
                 _rigidbody.AddTorque(new Vector3(rotX / 2, 0, rotZ / 2) * _rollSpeed);
                 _nav.SetDestination(destination);
-                Shoot();
             }
 
             if (health <= 0)
             {
+                // TODO: Add death animation
                 Destroy(gameObject);
             }
         }
 
-        private void SetMaxHealth(int maxHealth)
-        {
-            _maxHealth = maxHealth;
-        }
-
         private void SetHealth(int health)
         {
-            _healthBarSlider.value = (float)health / _maxHealth;
+            _healthBarSlider.value = (float)health / MAX_HP;
         }
 
         public void TakeDamage(int damage)
@@ -96,17 +78,13 @@ namespace Enemy
             SetHealth(health);
             if (health <= 0)
             {
-                _player.GetComponent<Player>().AddScore(1);
+                _player.GetComponent<Player>().AddScore(SCORE);
             }
         }
 
         private void Shoot()
         {
-            if (_lastTimeShot + firingSpeed < Time.time)
-            {
-                _lastTimeShot = Time.time;
-                Instantiate(projectile, enemyFirePoint.position, enemyFirePoint.rotation);
-            }
+            // TODO: Implement shooting
         }
     }
 }
