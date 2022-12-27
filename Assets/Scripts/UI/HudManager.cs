@@ -43,7 +43,7 @@ namespace UI
         {
             // TODO: It doesn't make sense to call these every frame. We should only call them in resposponse to some
             // event, such as when the player gets a new class of projectiles or they change the active ones.
-            AddBullets(Player.AvailableBullets);
+            AddBullets(Player.UnlockedBulletTypes);
             StartCoroutine(SelectBullet(Player.CurrentBullet));
         }
 
@@ -59,7 +59,7 @@ namespace UI
         {
             var bulletUi = Instantiate(BulletUiPrefab, _bulletUiContainer.transform);
 
-            bulletUi.transform.Find(BulletIconName).GetComponent<Image>().sprite = projectile.sprite;
+            bulletUi.transform.Find(BulletIconName).GetComponent<Image>().sprite = projectile.Sprite;
             var leftOffset = BulletUiSize * Bullets.Count + BulletUiMargin * Bullets.Count;
             bulletUi.GetComponent<RectTransform>().anchoredPosition = new Vector2(leftOffset, 0);
             Bullets.Add(projectile);

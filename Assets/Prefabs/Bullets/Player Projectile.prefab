@@ -130,8 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTime: 1
   gapTransform: {fileID: 5024396634550717112}
-  speed: 10
-  explosionParticles: {fileID: 9099331632274561931, guid: aade7fbdd0e3b4599bb49ded456a5439, type: 3}
+  type: {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
 --- !u!1 &7790020460590018520
 GameObject:
   m_ObjectHideFlags: 0

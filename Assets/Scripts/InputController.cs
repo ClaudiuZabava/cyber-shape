@@ -8,7 +8,6 @@ public class InputController : MonoBehaviour
 {
     [field: SerializeField] public bool IsRhythmActive { get; private set; } = true;
     [SerializeField] private float speed = 5.0f;
-    [SerializeField] private float beatLeeway = 0.5f;
 
     private const KeyCode SPrevBulletKey = KeyCode.Q;
     private const KeyCode SNextBulletKey = KeyCode.E;
@@ -47,20 +46,9 @@ public class InputController : MonoBehaviour
 
     private void HandleShootInput()
     {
-        var damage = 5;
         if (_player.CanShoot == false)
         {
             return;
-        }
-
-        if (_rTimer.CheckTime(beatLeeway) || !IsRhythmActive)
-        {
-            damage = 25;
-        }
-
-        if (_rTimer.CheckTime(beatLeeway / 2) || !IsRhythmActive)
-        {
-            damage = 50;
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -69,7 +57,7 @@ public class InputController : MonoBehaviour
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                _orbitalController.EnqueueShoot(hit.point, damage);
+                _orbitalController.EnqueueShoot(hit.point, 1 + _rTimer.ClosenessToBeat);
             }
         }
     }
@@ -79,31 +67,31 @@ public class InputController : MonoBehaviour
         BulletType newBullet = null;
         if (Input.GetKeyDown(SPrevBulletKey))
         {
-            var currentBulletIndex = _player.AvailableBullets.FindIndex(
+            var currentBulletIndex = _player.UnlockedBulletTypes.FindIndex(
                 bullet => bullet == _player.CurrentBullet
             );
 
             var nextIndex = currentBulletIndex - 1;
             if (nextIndex < 0)
             {
-                nextIndex = _player.AvailableBullets.Count - 1;
+                nextIndex = _player.UnlockedBulletTypes.Count - 1;
             }
-            newBullet = _player.AvailableBullets[nextIndex];
+            newBullet = _player.UnlockedBulletTypes[nextIndex];
         }
 
         if (Input.GetKeyDown(SNextBulletKey))
         {
-            var currentBulletIndex = _player.AvailableBullets.FindIndex(
+            var currentBulletIndex = _player.UnlockedBulletTypes.FindIndex(
                 bullet => bullet == _player.CurrentBullet
             );
 
             var nextIndex = currentBulletIndex + 1;
-            if (nextIndex >= _player.AvailableBullets.Count)
+            if (nextIndex >= _player.UnlockedBulletTypes.Count)
             {
                 nextIndex = 0;
             }
 
-            newBullet = _player.AvailableBullets[nextIndex];
+            newBullet = _player.UnlockedBulletTypes[nextIndex];
         }
         
         if (newBullet != null)

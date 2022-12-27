@@ -1,3 +1,4 @@
+using System;
 using Constants;
 using UnityEngine;
 
@@ -5,18 +6,37 @@ namespace Projectiles
 {
     public class EnemyProjectile : MonoBehaviour
     {
-        [SerializeField] private float projectileSpeed;
         [SerializeField] private float maxProjectileDistance;
-        [SerializeField] private float damage;
+        [SerializeField] private BulletType bulletType;
 
-        private GameObject _triggeringPlayer;
+        public BulletType BulletType
+        {
+            set
+            {
+                bulletType = value;
+                _meshCollider.sharedMesh = value.Mesh;
+                _meshFilter.mesh = value.Mesh;
+            }
+        }
+
         private Vector3 _firingPoint;
+        private MeshFilter _meshFilter;
+        private MeshCollider _meshCollider;
+
+        private void Awake()
+        {
+            _meshCollider = GetComponent<MeshCollider>();
+            _meshFilter = GetComponent<MeshFilter>();
+        }
 
         private void Start()
         {
             transform.Rotate(90, 0, 0);
             _firingPoint = transform.position;
             Physics.IgnoreLayerCollision(8, 9, true);
+
+            // This makes the bullet initialize correctly if set through the inspector
+            BulletType = bulletType;
         }
 
         private void Update()
@@ -28,8 +48,8 @@ namespace Projectiles
         {
             if (other.CompareTag(Tags.Player))
             {
-                _triggeringPlayer = other.gameObject;
-                _triggeringPlayer.GetComponent<Player>().TakeDamage(0);
+                var triggeringPlayer = other.gameObject.GetComponent<Player>();
+                triggeringPlayer.TakeDamage(bulletType.DamageInfo.ContactDamage);
                 Destroy(gameObject);
             }
             else if (other.CompareTag(Tags.Wall)) // Obiectele puse de Daria pot avea tag-ul Wall 
@@ -46,9 +66,8 @@ namespace Projectiles
             }
             else
             {
-                transform.Translate(Vector3.up * projectileSpeed * Time.deltaTime);
+                transform.Translate(Vector3.up * (bulletType.Speed * Time.deltaTime));
             }
-            transform.Translate(Vector3.up * projectileSpeed * Time.deltaTime);
         }
     }
 }

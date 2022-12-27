@@ -13,15 +13,15 @@ namespace Enemy
         [SerializeField] private int minDistance = 10;
         [SerializeField] private GameObject enemyBody;
         
-        private EnemyStageData StageData => _evolvable.Stage.EnemyData;
-        
+        public EnemyStageData StageData => _evolvable.Stage.EnemyData;
+
         private GameObject _player;
         private Rigidbody _rigidbody;
         private NavMeshAgent _nav;
         private Canvas _healthBar;
         private Slider _healthBarSlider;
-        private int _maxHealth;
-        public int health;
+        private float _maxHealth;
+        public float health;
         private Evolvable _evolvable;
         private int _distance;
         private float _lastTimeShot;
@@ -58,8 +58,8 @@ namespace Enemy
             if (distance < minDistance && _player.transform.hasChanged)
             {
                 var destination = _player.transform.position;
-                var rotX  = destination[0] - enemyBody.transform.position.x;
-                var rotZ  = destination[2] - enemyBody.transform.position.z;
+                var rotX = destination[0] - enemyBody.transform.position.x;
+                var rotZ = destination[2] - enemyBody.transform.position.z;
                 if (destination == enemyBody.transform.position)
                 {
                     _rollSpeed = 0;
@@ -80,17 +80,17 @@ namespace Enemy
             }
         }
 
-        private void SetMaxHealth(int maxHealth)
+        private void SetMaxHealth(float maxHealth)
         {
             _maxHealth = maxHealth;
         }
 
-        private void SetHealth(int health)
+        private void SetHealth(float health)
         {
-            _healthBarSlider.value = (float)health / _maxHealth;
+            _healthBarSlider.value = health / _maxHealth;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             health -= damage;
             SetHealth(health);

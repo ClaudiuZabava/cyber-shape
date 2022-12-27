@@ -8,6 +8,14 @@ public class RhythmTimer : MonoBehaviour
     public float Interval { get; private set; }
     public float DspTimeSong { get; private set; }
 
+    public float ClosenessToBeat
+    {
+        get
+        {
+            var beatProgress = _songPositionInBeats - Mathf.Floor(_songPositionInBeats);
+            return 1.0f - Mathf.Sin(beatProgress);
+        }
+    }
     private float ClipLength => _audioSource.clip.length;
    
     private AudioSource _audioSource;
