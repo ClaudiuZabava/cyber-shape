@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     private int _waveConst = 3;
     private HudManager _ui;
     private Player _player;
+    private Vector3 _playerPosition;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        _playerPosition = _player.transform.position;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (_pause == 0)
@@ -80,7 +82,8 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             var randomPosition =
-                new Vector3(Random.Range(-maxWidth, maxWidth), 0.5f, Random.Range(-maxWidth, maxWidth));
+                new Vector3(Random.Range(_playerPosition.x - maxWidth, _playerPosition.x + maxWidth), 0.5f, 
+                    Random.Range(_playerPosition.y - maxWidth, _playerPosition.y + maxWidth));
             var distance = Vector3.Distance(transform.position, randomPosition);
 
             if (distance < maxDistance)
