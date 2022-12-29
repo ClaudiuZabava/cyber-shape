@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 9001530473334595022}
   - component: {fileID: 5360700543554486392}
   - component: {fileID: -3653418341470107586}
+  - component: {fileID: 1606383767322213653}
   m_Layer: 8
   m_Name: Final Boss
   m_TagString: Enemy
@@ -138,7 +139,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyBody: {fileID: 8908137836564718879}
+  projectile: {fileID: 9139162334264945893, guid: f510d68a96d48b74c942598ec49e5cd2, type: 3}
+  projectileCountPerAttack: 6
+  timeBetweenAttacks: 5000
   health: 100
+--- !u!95 &1606383767322213653
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576741164709612590}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08040b5fa0111417b8f251951a045bcb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5834089900873688663
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +442,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8136808836286152613}
   - component: {fileID: 6962824895340709066}
-  - component: {fileID: 7572338363145395030}
   - component: {fileID: 7743864895576281543}
   - component: {fileID: 1465463525906801470}
   - component: {fileID: 2837017446263764974}
@@ -486,26 +509,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &7572338363145395030
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8908137836564718879}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cfb435ac1d3c946c7876ee089d1931f8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!54 &7743864895576281543
 Rigidbody:
   m_ObjectHideFlags: 0
