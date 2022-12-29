@@ -77,7 +77,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9001530473334595022}
   - component: {fileID: 5360700543554486392}
-  - component: {fileID: -3653418341470107586}
   - component: {fileID: 1606383767322213653}
   - component: {fileID: 6771718552311168023}
   m_Layer: 8
@@ -127,24 +126,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6771718552311168023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5576741164709612590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e18522a76149c3960dc3631d664e12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minDistance: 500
-  enemyBody: {fileID: 8908137836564718879}
-  projectile: {fileID: 9139162334264945893, guid: f510d68a96d48b74c942598ec49e5cd2, type: 3}
-  projectileCountPerAttack: 6
-  timeBetweenAttacks: 5000
-  health: 100
 --- !u!95 &1606383767322213653
 Animator:
   serializedVersion: 4
@@ -165,6 +146,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6771718552311168023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576741164709612590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a83a6b246d53e4ca7a3bee4ce9e847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistance: 500
+  enemyBody: {fileID: 8908137836564718879}
+  projectile: {fileID: 9139162334264945893, guid: f510d68a96d48b74c942598ec49e5cd2, type: 3}
+  projectileCountPerAttack: 10
+  timeBetweenAttacks: 5000
+  health: 100
 --- !u!1 &5834089900873688663
 GameObject:
   m_ObjectHideFlags: 0
