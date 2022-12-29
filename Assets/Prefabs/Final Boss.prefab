@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7821751694810432115
 Transform:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ Transform:
   - {fileID: 686288843163467228}
   - {fileID: 7821751694810432115}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &5360700543554486392
 NavMeshAgent:
@@ -117,7 +117,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e18522a76149c3960dc3631d664e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 10
   enemyBody: {fileID: 8908137836564718879}
   health: 100
 --- !u!1 &5834089900873688663
@@ -534,8 +533,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.97
-  m_Center: {x: -0.23570226, y: -0.13, z: 0}
+  m_Radius: 0.52
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &2837017446263764974
 MeshFilter:
   m_ObjectHideFlags: 0

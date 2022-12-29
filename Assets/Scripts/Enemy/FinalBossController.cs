@@ -7,7 +7,7 @@ namespace Enemy
 {
     public class FinalBossController : MonoBehaviour
     {
-        [SerializeField] private int minDistance = 10;
+        private float minDistance = Mathf.Infinity;
         [SerializeField] private GameObject enemyBody;
 
         private static readonly int MAX_ROLL_SPEED = 8;
@@ -32,7 +32,6 @@ namespace Enemy
             _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
             _rigidbody = enemyBody.GetComponent<Rigidbody>();
             _camera = Camera.main;
-
         }
 
         private void Update()
@@ -40,12 +39,14 @@ namespace Enemy
             _healthBar.transform.rotation = _camera.transform.rotation;
             var distance = Vector3.Distance(_player.transform.position, transform.position);
             transform.LookAt(_player.transform);
-
+            
             if (distance < minDistance && _player.transform.hasChanged)
             {
                 var destination = _player.transform.position;
-                var rotX = destination[0] - enemyBody.transform.position.x;
-                var rotZ = destination[2] - enemyBody.transform.position.z;
+                // var direction = destination - enemyBody.transform.position;
+                var rot = destination - enemyBody.transform.position;
+                // rot.y = 0;
+                
                 if (destination == enemyBody.transform.position)
                 {
                     _rollSpeed = 0;
@@ -55,9 +56,10 @@ namespace Enemy
                     _rollSpeed = MAX_ROLL_SPEED;
                     _nav.speed = MAX_ROLL_SPEED;
                 }
-
-                _rigidbody.AddTorque(new Vector3(rotX / 2, 0, rotZ / 2) * _rollSpeed);
+                // _rigidbody.AddForce(direction.normalized * _rollSpeed);
+                // _rigidbody.AddTorque(new Vector3(rot.x / 2, 0, rot.z / 2) * _rollSpeed);
                 _nav.SetDestination(destination);
+                Shoot();
             }
 
             if (health <= 0)
@@ -66,7 +68,6 @@ namespace Enemy
                 Destroy(gameObject);
             }
         }
-
         private void SetHealth(int health)
         {
             _healthBarSlider.value = (float)health / MAX_HP;

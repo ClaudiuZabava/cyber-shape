@@ -7,18 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private bool withEnemyWaves = true;
     [SerializeField] private Texture2D crosshairImg;
     [SerializeField] private GameObject panel;
 
-    [Header("Enemy settings")]
-    [SerializeField] private GameObject enemyPrefab;
+    [Header("Enemy settings")] [SerializeField]
+    private GameObject enemyPrefab;
+
     [SerializeField] private int maxWidth = 10;
     [SerializeField] private int maxDistance = 5;
     [SerializeField] private float secondsTillSpawn = 3f;
     [SerializeField] private float percentToNextWave = .75f;
 
-    [Header("Level settings")]
-    [SerializeField] private int level = 1;
+    [Header("Level settings")] [SerializeField]
+    private int level = 1;
 
     private int _numberOfWaves;
     private int _constEnemies = 5;
@@ -44,7 +46,10 @@ public class GameManager : MonoBehaviour
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
 
-        NextWave();
+        if (withEnemyWaves)
+        {
+            NextWave();
+        }
     }
 
     private void Update()
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!_spawning)
+        if (!_spawning && withEnemyWaves)
         {
             CheckNoEnemies();
         }
@@ -124,7 +129,7 @@ public class GameManager : MonoBehaviour
     private void ProgressToNextLevel()
     {
         var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (activeSceneIndex < (int) Scenes.Level4) // TODO: Replace Level4 with whatever will be the last level
+        if (activeSceneIndex < (int)Scenes.Level4) // TODO: Replace Level4 with whatever will be the last level
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
