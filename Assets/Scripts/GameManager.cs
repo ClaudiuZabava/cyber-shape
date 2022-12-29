@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     private void ProgressToNextLevel()
     {
         var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (activeSceneIndex < (int) Scenes.Level4) // TODO: Replace Level4 with whatever will be the last level
+        if (activeSceneIndex < (int) Scenes.Level5)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
