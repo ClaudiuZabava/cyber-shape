@@ -4,7 +4,6 @@ using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,14 +17,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float percentToNextWave = .75f;
 
     [Header("Level settings")]
-    [SerializeField] private int level = 1;
-    
-    private int _numberOfWaves;
-    private int _constEnemies = 1;
+    [SerializeField] private int waves = 3;
+    [SerializeField] private int enemiesPerWave = 3;
+
     private bool _spawning = false;
     private int _pause = 0;
     private int _waveCount = 0;
-    private int _waveConst = 3;
     private HudManager _ui;
     private Player _player;
     private Vector3 _playerPosition;
@@ -34,10 +31,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _numberOfWaves = _waveConst * (SceneManager.GetActiveScene().buildIndex - 2);
+        var levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1 + 1;
+
         _ui = GameObject.Find("HUD").GetComponent<HudManager>();
         _player = GetComponentInChildren<Player>();
-        _player.UnlockBulletsForLevel(level);
+        _player.UnlockBulletsForLevel(levelIndex);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
         maxWidth = _floorSize.x / 3; 
         _camera = Camera.main;
@@ -76,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckNoEnemies()
     {
-        if (GameObject.FindGameObjectsWithTag(Tags.Enemy).Length < percentToNextWave * _constEnemies)
+        if (GameObject.FindGameObjectsWithTag(Tags.Enemy).Length < percentToNextWave * enemiesPerWave)
         {
             NextWave();
         }
@@ -117,14 +115,14 @@ public class GameManager : MonoBehaviour
 
     private void NextWave()
     {
-        if (_waveCount + 1 > _numberOfWaves)
+        if (_waveCount + 1 > waves)
         {
             ProgressToNextLevel();
         }
         else
         {
             _waveCount++;
-            _ui.WavesUI.UpdateWaves(_numberOfWaves - _waveCount + 1);
+            _ui.WavesUI.UpdateWaves(waves - _waveCount + 1);
             StartCoroutine(SpawnEnemies());
         }
     }
@@ -133,7 +131,7 @@ public class GameManager : MonoBehaviour
     {
         _spawning = true;
         yield return new WaitForSeconds(secondsTillSpawn);
-        for (var i = 0; i < _constEnemies; i++)
+        for (var i = 0; i < enemiesPerWave; i++)
         {
             Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
         }
@@ -144,7 +142,7 @@ public class GameManager : MonoBehaviour
     private void ProgressToNextLevel()
     {
         var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (activeSceneIndex < (int) Scenes.Level4) // TODO: Replace Level4 with whatever will be the last level
+        if (activeSceneIndex < (int) Scenes.Level5)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }

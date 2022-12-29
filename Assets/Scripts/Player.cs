@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
 
     public void UnlockBulletsForLevel(int upToIndex)
     {
-        for (int i = 0; i < upToIndex; i++)
+        for (var i = 0; i < upToIndex; i++)
         {
             UnlockedBulletTypes.Add(AvailableBulletTypes[i]);
         }
