@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Video;
 
 namespace Evolution
@@ -8,7 +9,7 @@ namespace Evolution
     {
         [field: SerializeField] public Stage Stage { get; private set; }
 
-        public event EventHandler Evolved;
+        public UnityEvent OnEvolution { get; } = new();
 
         private MeshFilter _meshFilter;
         private MeshCollider _meshCollider;
@@ -47,18 +48,13 @@ namespace Evolution
             _animator.SetTrigger(Constants.Animations.Evolution.Triggers.Evolution);
             var animatorState = _animator.GetCurrentAnimatorStateInfo(_animator.GetLayerIndex("Base Layer"));
             Invoke(nameof(ApplyStage), animatorState.length / 4);
-            OnEvolved();
+            OnEvolution.Invoke();
         }
 
         private void ApplyStage()
         {     
             _meshFilter.mesh = Stage.Mesh;
             _meshCollider.sharedMesh = Stage.Mesh;
-        }
-
-        protected virtual void OnEvolved()
-        {
-            Evolved?.Invoke(this, EventArgs.Empty);
         }
     }
 }

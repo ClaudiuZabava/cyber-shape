@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private bool _spawning = false;
     private int _pause = 0;
     private int _waveCount = 0;
-    private HudManager _ui;
+    private HudManager _hudManager;
     private Player _player;
     private Vector3 _playerPosition;
     private Vector3 _floorSize;
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1 + 1;
 
-        _ui = GameObject.Find("HUD").GetComponent<HudManager>();
+        _hudManager = GameObject.Find("HUD").GetComponent<HudManager>();
         _player = GetComponentInChildren<Player>();
         _player.UnlockBulletsForLevel(_levelIndex);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         else
         {
             _waveCount++;
-            _ui.WavesUI.UpdateWaves(waves - _waveCount + 1);
+            _hudManager.WavesUI.UpdateWaves(waves - _waveCount + 1);
             StartCoroutine(SpawnEnemies());
         }
     }
@@ -136,9 +136,13 @@ public class GameManager : MonoBehaviour
         for (var i = 0; i < enemiesPerWave; i++)
         {
             var enemyObject = Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
+
+            // Evolve to random stage (max is determined by current level).
             var enemyEvolvable = enemyObject.GetComponentInChildren<Evolvable>();
             var stageIndex = Random.Range(0, _levelIndex);
             enemyEvolvable.Evolve(stageIndex);
+
+            _hudManager.FollowEnemy(enemyObject);
         }
 
         _spawning = false;

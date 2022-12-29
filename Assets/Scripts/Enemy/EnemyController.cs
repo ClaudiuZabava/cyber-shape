@@ -1,12 +1,16 @@
+using System;
 using Evolution;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Enemy
 {
     public class EnemyController : MonoBehaviour
     {
+        public UnityEvent OnDeath { get; } = new();
+
         [SerializeField] private float firingSpeed;
         [SerializeField] private GameObject projectile;
         [SerializeField] private Transform enemyFirePoint;
@@ -77,11 +81,6 @@ namespace Enemy
             {
                 Shoot();
             }
-
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-            }
         }
 
         private void SetMaxHealth(float maxHealth)
@@ -101,6 +100,8 @@ namespace Enemy
             if (health <= 0)
             {
                 _player.GetComponent<Player>().AddScore(1);
+                OnDeath.Invoke();
+                Destroy(gameObject);
             }
         }
 
