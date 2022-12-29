@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private bool withEnemyWaves = true;
     [SerializeField] private Texture2D crosshairImg;
     [SerializeField] private GameObject panel;
 
@@ -50,7 +51,10 @@ public class GameManager : MonoBehaviour
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
 
-        NextWave();
+        if (withEnemyWaves)
+        {
+            NextWave();
+        }
     }
 
     private void Update()
@@ -68,7 +72,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (!_spawning)
+        if (!_spawning && withEnemyWaves)
         {
             CheckNoEnemies();
         }
