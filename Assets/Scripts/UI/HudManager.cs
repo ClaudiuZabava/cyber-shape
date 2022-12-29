@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Enemy;
 using Projectiles;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +12,9 @@ namespace UI
 {
     public class HudManager : MonoBehaviour
     {
-        [field: SerializeField] public Player Player { get; set; }
-        [field: SerializeField] public GameObject BulletUiPrefab { get; set; }
+        [field: SerializeField] public Player Player { get; private set; }
+        [field: SerializeField] public GameObject BulletUiPrefab { get; private set; }
+        [field: SerializeField] public GameObject EnemyIndicatorPrefab { get; private set; }
 
         public PlayerHealth Hp { get; private set; }
         public ScoreUI ScoreUI { get; private set; }
@@ -45,6 +47,12 @@ namespace UI
             // event, such as when the player gets a new class of projectiles or they change the active ones.
             AddBullets(Player.UnlockedBulletTypes);
             StartCoroutine(SelectBullet(Player.CurrentBullet));
+        }
+
+        public void FollowEnemy(GameObject enemy)
+        {
+            var enemyIndicator = Instantiate(EnemyIndicatorPrefab, transform);
+            enemyIndicator.GetComponent<EnemyIndicator>().TargetEnemy = enemy;
         }
 
         private void AddBullets(List<BulletType> projectiles)

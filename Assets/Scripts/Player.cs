@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         MaxHealth = StageData.Health;
         CurrentHealth = MaxHealth;
 
-        _evolution.Evolved += (_, _) => UpdateMaxHealth(StageData.Health);
+        _evolution.OnEvolution.AddListener(() => UpdateMaxHealth(StageData.Health));
     }
 
     private void Update()

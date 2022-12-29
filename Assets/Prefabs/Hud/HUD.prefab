@@ -657,6 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Player>k__BackingField: {fileID: 0}
   <BulletUiPrefab>k__BackingField: {fileID: 8572785308964836563, guid: ca0c389115e194a3fb08ccc3d4e80ca2, type: 3}
+  <EnemyIndicatorPrefab>k__BackingField: {fileID: 662096838736146680, guid: 27243d970830742d5a2401f64ab5923f, type: 3}
 --- !u!1001 &8127326727434918135
 PrefabInstance:
   m_ObjectHideFlags: 0
