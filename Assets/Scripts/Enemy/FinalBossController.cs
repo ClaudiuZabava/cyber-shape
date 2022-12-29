@@ -8,7 +8,7 @@ namespace Enemy
 {
     public class FinalBossController : MonoBehaviour
     {
-        private float minDistance = Mathf.Infinity;
+        [SerializeField] private int minDistance = 500;
         [SerializeField] private GameObject enemyBody;
         [SerializeField] private GameObject projectile;
         [SerializeField] private int projectileCountPerAttack = 6;
@@ -16,7 +16,7 @@ namespace Enemy
         [SerializeField] private int timeBetweenAttacks = 5 * 1000;
 
         private static readonly int MAX_ROLL_SPEED = 8;
-        private static readonly int MAX_HP = 100;
+        private static readonly int MAX_NAV_SPEED = 2;        private static readonly int MAX_HP = 100;
         private static readonly int SCORE = 1000;
 
         private NavMeshAgent _nav;
@@ -33,6 +33,12 @@ namespace Enemy
         public int health = MAX_HP;
         private static readonly int TelegraphAttackAnimTrig = Animator.StringToHash("TelegraphAttack");
 
+        private void Start()
+        {
+            _rollSpeed = MAX_ROLL_SPEED;
+            _nav.speed = MAX_NAV_SPEED;
+        }
+        
         private void Awake()
         {
             _nav = GetComponent<NavMeshAgent>();
@@ -49,14 +55,14 @@ namespace Enemy
             _healthBar.transform.rotation = _camera.transform.rotation;
             var distance = Vector3.Distance(_player.transform.position, transform.position);
             transform.LookAt(_player.transform);
-
-            if (distance < minDistance && _player.transform.hasChanged)
+            
+            if (_player.transform.hasChanged)
             {
                 var destination = _player.transform.position;
                 // var direction = destination - enemyBody.transform.position;
                 var rot = destination - enemyBody.transform.position;
-                // rot.y = 0;
-
+                rot.y = 0;
+                
                 if (destination == enemyBody.transform.position)
                 {
                     _rollSpeed = 0;
@@ -64,12 +70,11 @@ namespace Enemy
                 else
                 {
                     _rollSpeed = MAX_ROLL_SPEED;
-                    _nav.speed = MAX_ROLL_SPEED;
+                    _nav.speed = MAX_NAV_SPEED;
                 }
-
                 // _rigidbody.AddForce(direction.normalized * _rollSpeed);
-                // _rigidbody.AddTorque(new Vector3(rot.x / 2, 0, rot.z / 2) * _rollSpeed);
-                // _nav.SetDestination(destination);
+                 _rigidbody.AddTorque(new Vector3(rot.x / 2, 0, rot.z / 2) * _rollSpeed);
+                _nav.SetDestination(destination);
                 HandleShooting();
             }
 

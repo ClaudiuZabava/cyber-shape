@@ -10,7 +10,7 @@ namespace Enemy
         [SerializeField] private float firingSpeed;
         [SerializeField] private GameObject projectile; 
         [SerializeField] private Transform enemyFirePoint;
-        [SerializeField] private int minDistance = 10;
+        [SerializeField] private int minDistance = 20;
         [SerializeField] private GameObject enemyBody;
         
         public EnemyStageData StageData => _evolvable.Stage.EnemyData;
@@ -55,7 +55,7 @@ namespace Enemy
             var distance = Vector3.Distance(_player.transform.position, transform.position);
             transform.LookAt(_player.transform);
             
-            if (distance < minDistance && _player.transform.hasChanged)
+            if (_player.transform.hasChanged)
             {
                 var destination = _player.transform.position;
                 var rotX = destination[0] - enemyBody.transform.position.x;
@@ -71,6 +71,10 @@ namespace Enemy
                 }
                 _rigidbody.AddTorque(new Vector3(rotX / 2, 0, rotZ / 2) * _rollSpeed);
                 _nav.SetDestination(destination);
+            }
+
+            if (distance < minDistance)
+            {
                 Shoot();
             }
 

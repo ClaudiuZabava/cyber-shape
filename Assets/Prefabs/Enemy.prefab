@@ -140,7 +140,7 @@ MonoBehaviour:
   firingSpeed: 2
   projectile: {fileID: 9139162334264945893, guid: f510d68a96d48b74c942598ec49e5cd2, type: 3}
   enemyFirePoint: {fileID: 7821751694810432115}
-  minDistance: 10
+  minDistance: 20
   enemyBody: {fileID: 8908137836564718879}
   health: 0
 --- !u!1 &5834089900873688663

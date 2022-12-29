@@ -28,16 +28,22 @@ namespace Evolution
             ApplyStage();
         }
 
-        public void Evolve()
+        public void Evolve(int stages = 1)
         {
             if (Stage.NextStage is null)
             {
                 return;
             }
-            
-            _particleSystem.Play();
 
-            Stage = Stage.NextStage;
+            for (var i = 0; i < stages && Stage.NextStage is not null; i++)
+            {
+                Stage = Stage.NextStage;
+            }
+
+            if (_particleSystem)
+            {
+                _particleSystem.Play();
+            }
             _animator.SetTrigger(Constants.Animations.Evolution.Triggers.Evolution);
             var animatorState = _animator.GetCurrentAnimatorStateInfo(_animator.GetLayerIndex("Base Layer"));
             Invoke(nameof(ApplyStage), animatorState.length / 4);
