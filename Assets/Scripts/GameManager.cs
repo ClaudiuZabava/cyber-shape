@@ -1,5 +1,6 @@
 using System.Collections;
 using Constants;
+using Evolution;
 using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -28,14 +29,15 @@ public class GameManager : MonoBehaviour
     private Vector3 _playerPosition;
     private Vector3 _floorSize;
     private Camera _camera;
+    private int _levelIndex;
 
     private void Awake()
     {
-        var levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1 + 1;
+        _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1 + 1;
 
         _ui = GameObject.Find("HUD").GetComponent<HudManager>();
         _player = GetComponentInChildren<Player>();
-        _player.UnlockBulletsForLevel(levelIndex);
+        _player.UnlockBulletsForLevel(_levelIndex);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
         maxWidth = _floorSize.x / 3; 
         _camera = Camera.main;
@@ -133,7 +135,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(secondsTillSpawn);
         for (var i = 0; i < enemiesPerWave; i++)
         {
-            Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
+            var enemyObject = Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.identity);
+            var enemyEvolvable = enemyObject.GetComponentInChildren<Evolvable>();
+            var stageIndex = Random.Range(0, _levelIndex);
+            enemyEvolvable.Evolve(stageIndex);
         }
 
         _spawning = false;
