@@ -43,7 +43,7 @@ namespace Projectiles
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
-                var enemyController = other.gameObject.GetComponentInParent<EnemyController>();
+                var enemyController = other.gameObject.GetComponentInParent<AbstractEnemyController>();
                 enemyController.TakeDamage(Type.DamageInfo.ContactDamage * _damageMultiplier);
             }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : AbstractEnemyController
     {
         [SerializeField] private float firingSpeed;
         [SerializeField] private GameObject projectile; 
@@ -94,7 +94,7 @@ namespace Enemy
             _healthBarSlider.value = health / _maxHealth;
         }
 
-        public void TakeDamage(float damage)
+        public override void TakeDamage(float damage)
         {
             health -= damage;
             SetHealth(health);

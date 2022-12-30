@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
-    public class FinalBossController : MonoBehaviour
+    public class FinalBossController : AbstractEnemyController
     {
-        [SerializeField] private int minDistance = 500;
         [SerializeField] private GameObject enemyBody;
         [SerializeField] private GameObject projectile;
         [SerializeField] private int projectileCountPerAttack = 6;
@@ -30,11 +29,12 @@ namespace Enemy
         private bool _isTelegraphing = false;
         private Animator _animator;
 
-        public int health = MAX_HP;
+        public float health = MAX_HP;
         private static readonly int TelegraphAttackAnimTrig = Animator.StringToHash("TelegraphAttack");
 
         private void Start()
         {
+            SetHealth(MAX_HP);
             _rollSpeed = MAX_ROLL_SPEED;
             _nav.speed = MAX_NAV_SPEED;
         }
@@ -53,7 +53,6 @@ namespace Enemy
         private void Update()
         {
             _healthBar.transform.rotation = _camera.transform.rotation;
-            var distance = Vector3.Distance(_player.transform.position, transform.position);
             transform.LookAt(_player.transform);
             
             if (_player.transform.hasChanged)
@@ -73,7 +72,7 @@ namespace Enemy
                     _nav.speed = MAX_NAV_SPEED;
                 }
                 // _rigidbody.AddForce(direction.normalized * _rollSpeed);
-                 _rigidbody.AddTorque(new Vector3(rot.x / 2, 0, rot.z / 2) * _rollSpeed);
+                 _rigidbody.AddTorque(new Vector3(rot.z / 2, 0, -rot.x / 2) * _rollSpeed);
                 _nav.SetDestination(destination);
                 HandleShooting();
             }
@@ -85,12 +84,12 @@ namespace Enemy
             }
         }
 
-        private void SetHealth(int health)
+        private void SetHealth(float health)
         {
-            _healthBarSlider.value = (float)health / MAX_HP;
+            _healthBarSlider.value = health / MAX_HP;
         }
 
-        public void TakeDamage(int damage)
+        public override void TakeDamage(float damage)
         {
             health -= damage;
             SetHealth(health);
