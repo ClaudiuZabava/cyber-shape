@@ -104,6 +104,8 @@ namespace Enemy
             }
         }
 
+        public override float CollisionDamage => _evolvable.Stage.EnemyData.CollisionDamage;
+
         private void Shoot()
         {
             if (_lastTimeShot + firingSpeed < Time.time)
