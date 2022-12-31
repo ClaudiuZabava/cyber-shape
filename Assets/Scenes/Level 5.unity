@@ -1716,9 +1716,25 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5360700543554486392, guid: 9b7ac8b6eae57c0499ef3e74abde8526, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5576741164709612590, guid: 9b7ac8b6eae57c0499ef3e74abde8526, type: 3}
       propertyPath: m_Name
       value: Final Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 5576741164709612590, guid: 9b7ac8b6eae57c0499ef3e74abde8526, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6771718552311168023, guid: 9b7ac8b6eae57c0499ef3e74abde8526, type: 3}
+      propertyPath: ramFollowDuration
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 6771718552311168023, guid: 9b7ac8b6eae57c0499ef3e74abde8526, type: 3}
+      propertyPath: timeBetweenRamAttacks
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 9001530473334595022, guid: 9b7ac8b6eae57c0499ef3e74abde8526, type: 3}
       propertyPath: m_RootOrder

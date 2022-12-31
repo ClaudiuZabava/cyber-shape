@@ -79,6 +79,7 @@ GameObject:
   - component: {fileID: 5360700543554486392}
   - component: {fileID: 1606383767322213653}
   - component: {fileID: 6771718552311168023}
+  - component: {fileID: 5521302499393296243}
   m_Layer: 8
   m_Name: Final Boss
   m_TagString: Enemy
@@ -158,12 +159,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a83a6b246d53e4ca7a3bee4ce9e847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 500
   enemyBody: {fileID: 8908137836564718879}
   projectile: {fileID: 9139162334264945893, guid: f510d68a96d48b74c942598ec49e5cd2, type: 3}
   projectileCountPerAttack: 10
   timeBetweenAttacks: 5000
+  timeBetweenRamAttacks: 1000
   health: 100
+--- !u!135 &5521302499393296243
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5576741164709612590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.52
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5834089900873688663
 GameObject:
   m_ObjectHideFlags: 0

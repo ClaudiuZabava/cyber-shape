@@ -51,8 +51,11 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag(Tags.Enemy))
         {
-            var enemyEvolvable = other.GetComponent<Evolvable>();
-            TakeDamage(enemyEvolvable.Stage.EnemyData.CollisionDamage);
+            var enemy = other.GetComponent<AbstractEnemyController>();
+            if(enemy != null)
+            {
+                TakeDamage(enemy.CollisionDamage);
+            }
         }
     }
 

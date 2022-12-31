@@ -1,5 +1,4 @@
-using System.Collections;
-using Evolution;
+using Constants;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -10,13 +9,30 @@ namespace Enemy
     {
         [SerializeField] private GameObject enemyBody;
         [SerializeField] private GameObject projectile;
+
         [SerializeField] private int projectileCountPerAttack = 6;
+
         // Time between attacks in milliseconds
         [SerializeField] private int timeBetweenAttacks = 5 * 1000;
+        [SerializeField] private int timeBetweenRamAttacks = 15 * 1000;
+        [SerializeField] private int ramFollowDuration = 1 * 1000;
 
-        private static readonly int MAX_ROLL_SPEED = 8;
-        private static readonly int MAX_NAV_SPEED = 2;        private static readonly int MAX_HP = 100;
-        private static readonly int SCORE = 1000;
+        private const int MaxRollSpeed = 8;
+        private const int MaxNavSpeed = 2;
+        private const int RamSpeed = 16;
+        private const int KnockbackSpeed = 6;
+        private const int MaxHp = 100;
+        private const int Score = 1000;
+        private const int RegularStopDistance = 5;
+        private const float RamStopDistance = 1;
+
+        private const float KnockbackStopDistance = 2f;
+        private const float KnockbackDistance = 15;
+        private const float RamDamage = 2;
+
+        // This is the radius of the sphere that is used to detect the player
+        private const float DestinationOffset = 1f;
+        private const float DestinationEpsilon = 0.6f;
 
         private NavMeshAgent _nav;
         private Canvas _healthBar;
@@ -26,19 +42,32 @@ namespace Enemy
         private Rigidbody _rigidbody;
         private Camera _camera;
         private int _lastAttackTime = 0;
-        private bool _isTelegraphing = false;
-        private Animator _animator;
+        private int _lastRamAttackTime = 0;
+        private bool _canDealRamDamage = true;
+        private bool _isRamFollowing = false;
+        private Vector3? _ramDestination = null;
+        private int _ramFollowTime = 0;
 
-        public float health = MAX_HP;
+        private bool _isRamAttack => _isRamFollowing || _ramDestination != null;
+
+        // This is true while telegraphing attack AND while attacking
+        private bool _isTelegraphingOrAttacking = false;
+        private Animator _animator;
+        private Vector3? _knockedBackDestination = null;
+
+        public float health = MaxHp;
+
         private static readonly int TelegraphAttackAnimTrig = Animator.StringToHash("TelegraphAttack");
+        private static readonly int TelegraphRamAttackAnimTrig = Animator.StringToHash("TelegraphRamAttack");
+
 
         private void Start()
         {
-            SetHealth(MAX_HP);
-            _rollSpeed = MAX_ROLL_SPEED;
-            _nav.speed = MAX_NAV_SPEED;
+            SetHealth(MaxHp);
+            _rollSpeed = MaxRollSpeed;
+            _nav.speed = MaxNavSpeed;
         }
-        
+
         private void Awake()
         {
             _nav = GetComponent<NavMeshAgent>();
@@ -50,31 +79,83 @@ namespace Enemy
             _animator = GetComponent<Animator>();
         }
 
+        private void MoveTo(Vector3 destination, bool noOffset = false)
+        {
+            var rot = destination - enemyBody.transform.position;
+            rot.y = 0;
+
+            _rigidbody.AddTorque(new Vector3(rot.z / 2, 0, -rot.x / 2) * _rollSpeed);
+
+            // Don't let the enemy climb over the player
+            var destinationWithOffset =
+                destination - (destination - enemyBody.transform.position).normalized * DestinationOffset;
+            _nav.SetDestination(noOffset ? destination : destinationWithOffset);
+        }
+
+        private void HandleKnockBackUpdate()
+        {
+            if (_knockedBackDestination == null)
+            {
+                return;
+            }
+
+            if ((_knockedBackDestination.Value - enemyBody.transform.position).magnitude <=
+                DestinationOffset + DestinationEpsilon)
+            {
+                StopRamAttack();
+                return;
+            }
+
+            MoveTo(_knockedBackDestination.Value);
+            _nav.stoppingDistance = KnockbackStopDistance;
+        }
+
+        private void HandleRamAttackUpdate()
+        {
+            if (_isRamFollowing && Time.time * 1000 - _ramFollowTime > ramFollowDuration)
+            {
+                // Lock on the last position of the player
+                _isRamFollowing = false;
+                _ramDestination = _player.transform.position;
+            }
+
+            var destination = _ramDestination ?? _player.transform.position;
+
+            // If the destination is locked and we reached it, stop ramming
+            // If the destination is not locked, the stopping is handled on collision
+            var distanceToLockedDestination = (destination - enemyBody.transform.position).magnitude;
+            if (!_isRamFollowing &&
+                distanceToLockedDestination <=
+                DestinationEpsilon + RamStopDistance)
+            {
+                StopRamAttack();
+                return;
+            }
+
+            MoveTo(destination, _isRamFollowing);
+            _nav.stoppingDistance = RamStopDistance;
+        }
+
         private void Update()
         {
             _healthBar.transform.rotation = _camera.transform.rotation;
-            transform.LookAt(_player.transform);
-            
+            if (_knockedBackDestination != null)
+            {
+                HandleKnockBackUpdate();
+                return;
+            }
+
+            if (_isRamAttack)
+            {
+                HandleRamAttackUpdate();
+                return;
+            }
+
             if (_player.transform.hasChanged)
             {
                 var destination = _player.transform.position;
-                // var direction = destination - enemyBody.transform.position;
-                var rot = destination - enemyBody.transform.position;
-                rot.y = 0;
-                
-                if (destination == enemyBody.transform.position)
-                {
-                    _rollSpeed = 0;
-                }
-                else
-                {
-                    _rollSpeed = MAX_ROLL_SPEED;
-                    _nav.speed = MAX_NAV_SPEED;
-                }
-                // _rigidbody.AddForce(direction.normalized * _rollSpeed);
-                 _rigidbody.AddTorque(new Vector3(rot.z / 2, 0, -rot.x / 2) * _rollSpeed);
-                _nav.SetDestination(destination);
-                HandleShooting();
+                MoveTo(destination);
+                HandleAttacks();
             }
 
             if (health <= 0)
@@ -86,7 +167,7 @@ namespace Enemy
 
         private void SetHealth(float health)
         {
-            _healthBarSlider.value = health / MAX_HP;
+            _healthBarSlider.value = health / MaxHp;
         }
 
         public override void TakeDamage(float damage)
@@ -95,22 +176,104 @@ namespace Enemy
             SetHealth(health);
             if (health <= 0)
             {
-                _player.GetComponent<Player>().AddScore(SCORE);
+                _player.GetComponent<Player>().AddScore(Score);
             }
         }
 
-        private void HandleShooting()
+        public override float CollisionDamage
         {
-            if (Time.time * 1000 - _lastAttackTime < timeBetweenAttacks || _isTelegraphing) return;
-            TelegraphAttack();
+            get
+            {
+                // Only give dmg once per collision
+                if (_canDealRamDamage)
+                {
+                    _canDealRamDamage = false;
+                    return RamDamage;
+                }
+
+                return 0;
+            }
         }
 
-        private void TelegraphAttack()
+        private void HandleAttacks()
         {
-            _animator.SetTrigger(TelegraphAttackAnimTrig);
-            _isTelegraphing = true;
+            if (_knockedBackDestination != null)
+            {
+                return;
+            }
+
+            if (_isTelegraphingOrAttacking) return;
+
+            var time = (int)(Time.time * 1000);
+
+            if (time - _lastRamAttackTime > timeBetweenRamAttacks)
+            {
+                TelegraphAttack(true);
+                return;
+            }
+
+            if (time - _lastAttackTime > timeBetweenAttacks)
+            {
+                TelegraphAttack(false);
+            }
         }
-        
+
+        private void TelegraphAttack(bool ram)
+        {
+            _animator.SetTrigger(ram ? TelegraphRamAttackAnimTrig : TelegraphAttackAnimTrig);
+            _isTelegraphingOrAttacking = true;
+        }
+
+        private void StartRamAttack()
+        {
+            _nav.speed = RamSpeed;
+            _rollSpeed = RamSpeed;
+            _nav.stoppingDistance = RamStopDistance;
+            _isRamFollowing = true;
+            _ramFollowTime = (int)(Time.time * 1000);
+        }
+
+        private void StopRamAttack()
+        {
+            _ramDestination = null;
+            _nav.speed = MaxNavSpeed;
+            _rollSpeed = MaxNavSpeed;
+            _knockedBackDestination = null;
+            _nav.stoppingDistance = RegularStopDistance;
+            _lastRamAttackTime = (int)(Time.time * 1000);
+            _isTelegraphingOrAttacking = false;
+            _canDealRamDamage = true;
+        }
+
+        private void RamKnockback()
+        {
+            if (_knockedBackDestination != null)
+            {
+                return;
+            }
+
+            _ramDestination = null;
+
+            _nav.speed = KnockbackSpeed;
+            _rollSpeed = KnockbackSpeed;
+
+            var direction = _player.transform.position - enemyBody.transform.position;
+            direction.Normalize();
+            direction.x *= -1;
+            direction.z *= -1;
+            direction.y = 0;
+
+            _knockedBackDestination = enemyBody.transform.position + direction * KnockbackDistance;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag(Tags.Player))
+            {
+                RamKnockback();
+            }
+        }
+
         public void Shoot()
         {
             // check if it's time to shoot
@@ -122,8 +285,9 @@ namespace Enemy
                 var projectilePosition = transform.position + projectileRotation * Vector3.forward * 2;
                 Instantiate(projectile, projectilePosition, projectileRotation);
             }
-            _lastAttackTime = (int) (Time.time * 1000);
-            _isTelegraphing = false;
+
+            _lastAttackTime = (int)(Time.time * 1000);
+            _isTelegraphingOrAttacking = false;
         }
     }
 }
