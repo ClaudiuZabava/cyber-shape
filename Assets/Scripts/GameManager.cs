@@ -36,11 +36,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1 + 1;
+        _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1;
 
         _hudManager = GameObject.Find("HUD").GetComponent<HudManager>();
         _player = GetComponentInChildren<Player>();
-        _player.UnlockBulletsForLevel(_levelIndex);
+        _player.UnlockBulletsForLevel(_levelIndex + 1);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
         maxWidth = _floorSize.x / 3; 
         _camera = Camera.main;
@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 
         var hotSpot = new Vector2(crosshairImg.width / 2f, crosshairImg.height / 2f);
         Cursor.SetCursor(crosshairImg, hotSpot, CursorMode.Auto);
+
+        _player.GetComponent<Evolvable>().Evolve(_levelIndex);
 
         if (withEnemyWaves)
         {
@@ -145,7 +147,7 @@ public class GameManager : MonoBehaviour
 
             // Evolve to random stage (max is determined by current level).
             var enemyEvolvable = enemyObject.GetComponentInChildren<Evolvable>();
-            var stageIndex = Random.Range(0, _levelIndex);
+            var stageIndex = Random.Range(0, _levelIndex + 1);
             enemyEvolvable.Evolve(stageIndex);
 
             _hudManager.FollowEnemy(enemyObject);
