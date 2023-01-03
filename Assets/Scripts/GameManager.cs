@@ -55,6 +55,12 @@ public class GameManager : MonoBehaviour
 
         _player.GetComponent<Evolvable>().Evolve(_levelIndex);
 
+        if(_levelIndex == 4)
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 100);
+            // PopUp Msg (" Congrats!!") sau trigger Achivement.
+        }
+
         if (withEnemyWaves)
         {
             NextWave();
@@ -127,7 +133,31 @@ public class GameManager : MonoBehaviour
     {
         if (_waveCount + 1 > waves)
         {
-            ProgressToNextLevel();
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            {
+                if(_levelIndex == 0)
+                {
+                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 20);
+                }
+                else if(_levelIndex == 1)
+                {
+                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 40);
+                }
+                else if(_levelIndex == 2)
+                {
+                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 60);
+                }
+                else if(_levelIndex == 3)
+                {
+                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 80);
+                }
+                ProgressToNextLevel();                
+            }
+            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            {
+                _waveCount = 1;
+            }
+
         }
         else
         {
@@ -161,6 +191,7 @@ public class GameManager : MonoBehaviour
         var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (activeSceneIndex < (int) Scenes.Level5)
         {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, activeSceneIndex + 1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

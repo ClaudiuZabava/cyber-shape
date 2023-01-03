@@ -7,5 +7,9 @@ namespace Constants
         public const string MusicState = "MusicState";
         public const string MusicVolume = "MusicVolume";
         public const string GamePause = "pause";
+        public const string GameMode = "GameMode";
+        public const string GameProgress = "GameProgress";
+        public const string LastLevel = "LastLevel";
+        public const string SprintScore = "SprintScore";
     }
 }

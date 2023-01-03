@@ -4,6 +4,8 @@ namespace Constants
     public enum Scenes
     {
         MainMenuScene,
+        PlayMenu,
+        LevelSelector,
         OptionsMenu,
         GameOverMenu,
         Level1,

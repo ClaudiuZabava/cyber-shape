@@ -28,7 +28,14 @@ namespace UI
 
         public void UpdateScore(int newScore, int highScore)
         {
-            _scoreText.text = $"Score: {newScore}\nHighScore: {highScore}";
+            if( PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            {
+                _scoreText.text = $"Score: {newScore}\nHighScore: {highScore}";
+            }
+            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            {
+                _scoreText.text = $"Score: {newScore}";
+            }
         }
     }
 }
