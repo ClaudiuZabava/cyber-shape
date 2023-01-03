@@ -6,20 +6,17 @@ namespace UI
 {
     public class MainMenu : MonoBehaviour
     {
+        private void Start()
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, 0);
+            if(!PlayerPrefs.HasKey(PlayerPrefsKeys.GameProgress))
+            {
+                PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 0);
+            }
+        }
         public void Play()
         {
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene) 
-                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.MainMenuScene 
-                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.OptionsMenu 
-                && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.GameOverMenu)
-            {
-                SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene));
-            } 
-            else 
-            {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, (int) Scenes.Level1);
-                SceneManager.LoadScene((int) Scenes.Level1);
-            }
+            SceneManager.LoadScene((int) Scenes.PlayMenu);
         }
 
         public void GoToOptions()

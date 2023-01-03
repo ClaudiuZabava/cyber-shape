@@ -75,6 +75,11 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, _tempScore);
         }
 
+        if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.SprintScore, _tempScore);
+        }
+
         ui.ScoreUI.UpdateScore(_tempScore, PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore));
         if (_tempScore % scoreEvolve == 0)
         {
@@ -100,7 +105,14 @@ public class Player : MonoBehaviour
     {
         if (CurrentHealth <= 0)
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, SceneManager.GetActiveScene().buildIndex);
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0 )
+            {
+                PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, SceneManager.GetActiveScene().buildIndex);
+            }
+            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            {
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, SceneManager.GetActiveScene().buildIndex);
+            }
             PlayerPrefs.Save();
             Destroy(gameObject);
             SceneManager.LoadScene((int)Scenes.GameOverMenu);

@@ -15,7 +15,15 @@ namespace UI
 
         public void UpdateWaves(int remainingWaves)
         {
-            _wavesText.text = $"Remaining Waves: {remainingWaves}";
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            {
+                _wavesText.text = $"Remaining Waves: {remainingWaves}";
+            }
+            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            {
+                _wavesText.text = $"Endless Mode Active";
+            }
+
         }
     }
 }

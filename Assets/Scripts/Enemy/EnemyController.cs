@@ -14,7 +14,7 @@ namespace Enemy
         [SerializeField] private float firingSpeed;
         [SerializeField] private GameObject projectile; 
         [SerializeField] private Transform enemyFirePoint;
-        [SerializeField] private int minDistance = 20;
+        [SerializeField] private int minDistance = 10;
         [SerializeField] private GameObject enemyBody;
         
         public EnemyStageData StageData => _evolvable.Stage.EnemyData;

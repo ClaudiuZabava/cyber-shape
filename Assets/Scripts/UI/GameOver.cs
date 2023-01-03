@@ -11,18 +11,53 @@ namespace UI
 
         private void Start()
         {
-            scoreText.text = "High Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore);
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            {
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.HighScore))
+                {
+                    scoreText.text = "High Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore);
+                }
+                else
+                {
+                    scoreText.text = "High Score: 0";
+                }
+            }
+            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            {
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.SprintScore))
+                {
+                    scoreText.text = "Round Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.SprintScore);
+                }
+                else
+                {
+                    scoreText.text = "Round Score: 0";
+                }
+            }
         }
 
         public void RestartLevel() 
         {
-            if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene)) 
+            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
             {
-                SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene));
-            } 
-            else 
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene)) 
+                {
+                    SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene));
+                } 
+                else 
+                {
+                    SceneManager.LoadScene((int) Scenes.Level1);
+                }
+            }
+            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
             {
-                SceneManager.LoadScene((int) Scenes.Level1);
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.LastLevel)) 
+                {
+                    SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.LastLevel));
+                } 
+                else 
+                {
+                    SceneManager.LoadScene((int) Scenes.Level1);
+                }
             }
         }
 
