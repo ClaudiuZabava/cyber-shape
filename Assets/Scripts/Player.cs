@@ -146,11 +146,11 @@ public class Player : MonoBehaviour
     public void ShieldBuffEffect()
     {
         CanTakeDamage = false;
-        if (_damageBuffCoroutine != null)
+        if (_shieldBuffCoroutine != null)
         {
-            StopCoroutine(_damageBuffCoroutine);
+            StopCoroutine(_shieldBuffCoroutine);
         }
-        _damageBuffCoroutine = StartCoroutine(CancelEffectShield());
+        _shieldBuffCoroutine = StartCoroutine(CancelEffectShield());
     }
 
     public void SetBullet(BulletType bulletType)
@@ -173,14 +173,16 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(2.5f);
         DamageBuff = false;
-        yield break;
+        _damageBuffCoroutine = null;
+        yield return null;
     }
 
     private IEnumerator CancelEffectShield()
     {
         yield return new WaitForSeconds(5f);
         CanTakeDamage = true;
-        yield break;
+        _shieldBuffCoroutine = null;
+        yield return null;
     }
 
     public void UnlockBulletsForLevel(int upToIndex)

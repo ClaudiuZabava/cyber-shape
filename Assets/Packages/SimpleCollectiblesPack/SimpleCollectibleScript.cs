@@ -13,32 +13,45 @@ public class SimpleCollectibleScript : MonoBehaviour
     private Player _player;
 	private GameManager _manager;
 	private float _rotationSpeed;
+	private AudioSource _source;
+	private bool delete;
 	private enum CollectibleTypes { NoType, Health, Damage, Shield };
     private void Awake () {
 
         _manager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+		_rotationSpeed = 150f;
+		_source = GetComponent<AudioSource>();
+		delete = false;
     }
-	
-	private void Update () 
-	{
-		transform.Rotate(Vector3.up * _rotationSpeed * Time.deltaTime, Space.World);
-	}
 
-	private void OnTriggerEnter(Collider other)
+    private void Update()
+    {
+        transform.Rotate(Vector3.up * _rotationSpeed * Time.deltaTime, Space.World);
+
+		if(!_source.isPlaying && delete)
+		{
+			Destroy(gameObject);
+		}	
+    }
+
+    private void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Player") 
 		{
 			_player = other.GetComponent<Player>();
-			Collect ();
+			Collect();
 			_manager.pickupTotal--;
 		}
 	}
+
+	
 
 	private void Collect()
 	{
 		if (collectSound)
 		{
-			AudioSource.PlayClipAtPoint(collectSound, transform.position);
+			_source.Play();
+			delete = true;
 		}
 
 		if (collectEffect)
@@ -68,7 +81,8 @@ public class SimpleCollectibleScript : MonoBehaviour
 			_player.ShieldBuffEffect();
         }
 
-		Destroy (gameObject);
-	}
+		gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponent<SphereCollider>().enabled = false;
+    }
 
 }

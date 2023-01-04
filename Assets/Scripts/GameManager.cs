@@ -104,14 +104,16 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPickup()
     {
-        switch (_pickupCount)
+        Instantiate(_hpPickup, GetRandomPosition() + new Vector3(0, 1.0f), Quaternion.identity);
+        pickupTotal++;
+        /*switch (_pickupCount)
         {
-            case 0: Instantiate(_hpPickup, GetRandomPosition(), Quaternion.identity); break;
-            case 1: Instantiate(_dmgPickup, GetRandomPosition(), Quaternion.identity); break;
-            case 2: Instantiate(_shieldPickup, GetRandomPosition(), Quaternion.identity); break;
+            case 0: Instantiate(_hpPickup, GetRandomPosition() + new Vector3(0,1.0f), Quaternion.identity); break;
+            case 1: Instantiate(_dmgPickup, GetRandomPosition() + new Vector3(0, 1.0f), Quaternion.identity); break;
+            case 2: Instantiate(_shieldPickup, GetRandomPosition() + new Vector3(0, 1.0f), Quaternion.identity); break;
         }
         _pickupCount = (_pickupCount + 1) % 3;
-        pickupTotal++;
+        pickupTotal++;*/
     }
 
     private void CheckNoEnemies()
