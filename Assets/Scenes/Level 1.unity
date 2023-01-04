@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.173079, g: 0.21631923, b: 0.29832268, a: 1}
+  m_IndirectSpecularColor: {r: 0.17307952, g: 0.21632008, b: 0.29832444, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1183,6 +1183,18 @@ PrefabInstance:
       propertyPath: <Offset>k__BackingField
       value: 0.032
       objectReference: {fileID: 0}
+    - target: {fileID: 12744624317710530, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: _hpPickup
+      value: 
+      objectReference: {fileID: 1041510189510284, guid: c693ddaa234c8f2449fb3d47fac3228f, type: 3}
+    - target: {fileID: 12744624317710530, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: _dmgPickup
+      value: 
+      objectReference: {fileID: 1825870777587358, guid: 7eb597a97646a6e49996485911b9a742, type: 3}
+    - target: {fileID: 12744624317710530, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
+      propertyPath: _shieldPickup
+      value: 
+      objectReference: {fileID: 1844328801433658, guid: 8344ce52326fcd549a6c25f37a1a779b, type: 3}
     - target: {fileID: 12744624317710531, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_audioClip
       value: 

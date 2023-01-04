@@ -1,42 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class SimpleCollectibleScript : MonoBehaviour {
+public class SimpleCollectibleScript : MonoBehaviour
+{
 
-	public enum CollectibleTypes {NoType, Health, Damage, Shield}; // you can replace this with your own labels for the types of collectibles in your game!
-
-	public CollectibleTypes CollectibleType; // this gameObject's type
-
-	public bool rotate; // do you want it to rotate?
-
-	public float rotationSpeed;
-
-	public AudioClip collectSound;
-
-	public GameObject collectEffect;
-
+	[SerializeField] private AudioClip collectSound;
+	[SerializeField] private GameObject collectEffect;
+    [SerializeField] private CollectibleTypes collectibleType;
     private Player _player;
-
-    // Use this for initialization
+	private GameManager _manager;
+	private float _rotationSpeed;
+	private enum CollectibleTypes { NoType, Health, Damage, Shield };
     private void Awake () {
 
-        _player = GetComponentInParent<Player>();
+        _manager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 	
-	// Update is called once per frame
-	private void Update () {
-
-		if (rotate)
-			transform.Rotate (Vector3.up * rotationSpeed * Time.deltaTime, Space.World);
-
+	private void Update () 
+	{
+		transform.Rotate(Vector3.up * _rotationSpeed * Time.deltaTime, Space.World);
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.tag == "Player") {
+		if (other.tag == "Player") 
+		{
+			_player = other.GetComponent<Player>();
 			Collect ();
+			_manager.pickupTotal--;
 		}
 	}
 
@@ -54,42 +48,27 @@ public class SimpleCollectibleScript : MonoBehaviour {
 
 		//Below is space to add in your code for what happens based on the collectible type
 
-		if (CollectibleType == CollectibleTypes.NoType) 
+		if (collectibleType == CollectibleTypes.NoType) 
 		{
 			//Add in code here;
 		}
 
-		if (CollectibleType == CollectibleTypes.Health) 
+		if (collectibleType == CollectibleTypes.Health) 
 		{
 			_player.Heal(1);
 		}
 
-		if (CollectibleType == CollectibleTypes.Damage) 
+		if (collectibleType == CollectibleTypes.Damage) 
 		{
-			_player.DamageBuff = true;
-			StartCoroutine(CancelEffectDamage());
+			_player.DamageBuffEffect();
 		}
 
-		if (CollectibleType == CollectibleTypes.Shield) 
+		if (collectibleType == CollectibleTypes.Shield) 
 		{
-			_player.CanTakeDamage = false;
-            StartCoroutine(CancelEffectShield());
+			_player.ShieldBuffEffect();
         }
 
 		Destroy (gameObject);
 	}
 
-    private IEnumerator CancelEffectDamage()
-    {
-		yield return new WaitForSeconds(5f);
-        _player.DamageBuff = false;
-        yield break;
-    }
-
-    private IEnumerator CancelEffectShield()
-    {
-        yield return new WaitForSeconds(5f);
-        _player.CanTakeDamage = true;
-		yield break;
-    }
 }

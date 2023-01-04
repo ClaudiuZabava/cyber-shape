@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private int level = 1;
 
+    [Header("Pickups")]
+    [SerializeField] private GameObject _hpPickup;
+    [SerializeField] private GameObject _dmgPickup;
+    [SerializeField] private GameObject _shieldPickup;
+    [SerializeField] public int pickupTotal { get; set; }
+
     private bool _spawning = false;
     private int _pause = 0;
     private int _waveCount = 0;
@@ -33,6 +39,7 @@ public class GameManager : MonoBehaviour
     private Vector3 _floorSize;
     private Camera _camera;
     private int _levelIndex;
+    private int _pickupCount;
 
     private void Awake()
     {
@@ -44,6 +51,8 @@ public class GameManager : MonoBehaviour
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
         maxWidth = _floorSize.x / 3; 
         _camera = Camera.main;
+        pickupTotal = 0;
+        _pickupCount = 0;
     }
 
     private void Start()
@@ -82,10 +91,27 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (pickupTotal < 3)
+        {
+            SpawnPickup();
+        }
+
         if (!_spawning && withEnemyWaves)
         {
             CheckNoEnemies();
         }
+    }
+
+    private void SpawnPickup()
+    {
+        switch (_pickupCount)
+        {
+            case 0: Instantiate(_hpPickup, GetRandomPosition(), Quaternion.identity); break;
+            case 1: Instantiate(_dmgPickup, GetRandomPosition(), Quaternion.identity); break;
+            case 2: Instantiate(_shieldPickup, GetRandomPosition(), Quaternion.identity); break;
+        }
+        _pickupCount = (_pickupCount + 1) % 3;
+        pickupTotal++;
     }
 
     private void CheckNoEnemies()

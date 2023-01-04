@@ -218,15 +218,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfab56809e9bcf147b407fee17125d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  withEnemyWaves: 1
   crosshairImg: {fileID: 2800000, guid: c186448c466fad9478c38ce9c2f7b71b, type: 3}
   panel: {fileID: 5384072540428272855}
   enemyPrefab: {fileID: 5576741164709612590, guid: cdc60f457fc567b40a3eb8e604006314, type: 3}
-  constEnemies: 3
   maxWidth: 10
-  maxDistance: 7
   secondsTillSpawn: 3
   percentToNextWave: 0.75
-  numberOfWaves: 3
+  waves: 3
+  enemiesPerWave: 3
+  level: 1
+  _hpPickup: {fileID: 1041510189510284, guid: c693ddaa234c8f2449fb3d47fac3228f, type: 3}
+  _dmgPickup: {fileID: 1825870777587358, guid: 7eb597a97646a6e49996485911b9a742, type: 3}
+  _shieldPickup: {fileID: 1844328801433658, guid: 8344ce52326fcd549a6c25f37a1a779b, type: 3}
 --- !u!114 &12744624317710529
 MonoBehaviour:
   m_ObjectHideFlags: 0

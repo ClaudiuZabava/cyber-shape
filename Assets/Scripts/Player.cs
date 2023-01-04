@@ -6,6 +6,8 @@ using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Evolution;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -27,6 +29,8 @@ public class Player : MonoBehaviour
     private Evolvable _evolution;
     private ProjectileOrbitalController _orbitalController;
     private Coroutine _changeBulletCoroutine;
+    private Coroutine _damageBuffCoroutine;
+    private Coroutine _shieldBuffCoroutine;
 
     private void Awake()
     {
@@ -129,6 +133,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void DamageBuffEffect()
+    {
+        DamageBuff = true;
+        if (_damageBuffCoroutine != null)
+        {
+            StopCoroutine(_damageBuffCoroutine);
+        }
+        _damageBuffCoroutine = StartCoroutine(CancelEffectDamage());
+    }
+
+    public void ShieldBuffEffect()
+    {
+        CanTakeDamage = false;
+        if (_damageBuffCoroutine != null)
+        {
+            StopCoroutine(_damageBuffCoroutine);
+        }
+        _damageBuffCoroutine = StartCoroutine(CancelEffectShield());
+    }
+
     public void SetBullet(BulletType bulletType)
     {
         CurrentBullet = bulletType;
@@ -143,6 +167,20 @@ public class Player : MonoBehaviour
                 bulletType,
                 () => CanShoot = true)
             );
+    }
+
+    private IEnumerator CancelEffectDamage()
+    {
+        yield return new WaitForSeconds(2.5f);
+        DamageBuff = false;
+        yield break;
+    }
+
+    private IEnumerator CancelEffectShield()
+    {
+        yield return new WaitForSeconds(5f);
+        CanTakeDamage = true;
+        yield break;
     }
 
     public void UnlockBulletsForLevel(int upToIndex)
