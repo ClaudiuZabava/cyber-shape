@@ -178,6 +178,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f9a8cf6d236504294b9d055e487f6904, type: 2}
   <CurrentBullet>k__BackingField: {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
   <CanShoot>k__BackingField: 1
+  <CanTakeDamage>k__BackingField: 1
+  <DamageBuff>k__BackingField: 0
   ui: {fileID: 0}
   scoreEvolve: 5
 --- !u!114 &996477931859293465
@@ -225,7 +227,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsRhythmActive>k__BackingField: 1
   speed: 12
-  beatLeeway: 0.5
 --- !u!1001 &3192674581181291927
 PrefabInstance:
   m_ObjectHideFlags: 0

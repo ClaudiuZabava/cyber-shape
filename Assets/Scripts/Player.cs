@@ -6,6 +6,8 @@ using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Evolution;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class Player : MonoBehaviour
     [field: SerializeField] public List<BulletType> AvailableBulletTypes { get; private set; } = new();
     [field: SerializeField] public BulletType CurrentBullet { get; set; }
     [field: SerializeField] public bool CanShoot { get; set; }
+    [field: SerializeField] public bool CanTakeDamage { get; set; }
+    [field: SerializeField] public bool DamageBuff { get; set; }
 
     [SerializeField] private HudManager ui;
     [SerializeField] private int scoreEvolve = 5;
@@ -25,12 +29,16 @@ public class Player : MonoBehaviour
     private Evolvable _evolution;
     private ProjectileOrbitalController _orbitalController;
     private Coroutine _changeBulletCoroutine;
+    private Coroutine _damageBuffCoroutine;
+    private Coroutine _shieldBuffCoroutine;
+    private MeshRenderer _rend;
 
     private void Awake()
     {
         _orbitalController = GetComponent<ProjectileOrbitalController>();
         _evolution = GetComponent<Evolvable>();
         ui = GameObject.Find("HUD").GetComponent<HudManager>();
+        _rend = GetComponent<MeshRenderer>();
     }
 
     private void Start()
@@ -89,7 +97,15 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        CurrentHealth -= dmg;
+        if (CanTakeDamage)
+        {
+            CurrentHealth -= dmg;
+        }
+    }
+
+    public void Heal(float hp)
+    {
+        CurrentHealth = Mathf.Clamp(CurrentHealth + hp, 0, MaxHealth);
     }
 
     private void UpdateMaxHealth(float max)
@@ -119,6 +135,29 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void DamageBuffEffect()
+    {
+        DamageBuff = true;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerBullet);
+        
+        if (_damageBuffCoroutine != null)
+        {
+            StopCoroutine(_damageBuffCoroutine);
+        }
+        _damageBuffCoroutine = StartCoroutine(CancelEffectDamage());
+    }
+
+    public void ShieldBuffEffect()
+    {
+        CanTakeDamage = false;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerShield);
+        if (_shieldBuffCoroutine != null)
+        {
+            StopCoroutine(_shieldBuffCoroutine);
+        }
+        _shieldBuffCoroutine = StartCoroutine(CancelEffectShield());
+    }
+
     public void SetBullet(BulletType bulletType)
     {
         CurrentBullet = bulletType;
@@ -133,6 +172,24 @@ public class Player : MonoBehaviour
                 bulletType,
                 () => CanShoot = true)
             );
+    }
+
+    private IEnumerator CancelEffectDamage()
+    {
+        yield return new WaitForSeconds(2.5f);
+        DamageBuff = false;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerBlue);
+        _damageBuffCoroutine = null;
+        yield return null;
+    }
+
+    private IEnumerator CancelEffectShield()
+    {
+        yield return new WaitForSeconds(5f);
+        CanTakeDamage = true;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerBlue);
+        _shieldBuffCoroutine = null;
+        yield return null;
     }
 
     public void UnlockBulletsForLevel(int upToIndex)
