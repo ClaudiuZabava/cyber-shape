@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class SimpleCollectibleScript : MonoBehaviour
+public class PickupScript : MonoBehaviour
 {
 
 	[SerializeField] private AudioClip collectSound;

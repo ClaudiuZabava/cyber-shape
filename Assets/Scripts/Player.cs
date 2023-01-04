@@ -31,12 +31,14 @@ public class Player : MonoBehaviour
     private Coroutine _changeBulletCoroutine;
     private Coroutine _damageBuffCoroutine;
     private Coroutine _shieldBuffCoroutine;
+    private MeshRenderer _rend;
 
     private void Awake()
     {
         _orbitalController = GetComponent<ProjectileOrbitalController>();
         _evolution = GetComponent<Evolvable>();
         ui = GameObject.Find("HUD").GetComponent<HudManager>();
+        _rend = GetComponent<MeshRenderer>();
     }
 
     private void Start()
@@ -136,6 +138,8 @@ public class Player : MonoBehaviour
     public void DamageBuffEffect()
     {
         DamageBuff = true;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerBullet);
+        
         if (_damageBuffCoroutine != null)
         {
             StopCoroutine(_damageBuffCoroutine);
@@ -146,6 +150,7 @@ public class Player : MonoBehaviour
     public void ShieldBuffEffect()
     {
         CanTakeDamage = false;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerShield);
         if (_shieldBuffCoroutine != null)
         {
             StopCoroutine(_shieldBuffCoroutine);
@@ -173,6 +178,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(2.5f);
         DamageBuff = false;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerBlue);
         _damageBuffCoroutine = null;
         yield return null;
     }
@@ -181,6 +187,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         CanTakeDamage = true;
+        _rend.material.SetColor("_EmissionColor", Colors.PlayerBlue);
         _shieldBuffCoroutine = null;
         yield return null;
     }

@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (pickupTotal < 3)
+        if (pickupTotal < 4)
         {
             SpawnPickup();
         }
@@ -104,16 +104,16 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPickup()
     {
-        Instantiate(_hpPickup, GetRandomPosition() + new Vector3(0, 1.0f), Quaternion.identity);
-        pickupTotal++;
-        /*switch (_pickupCount)
+       // Instantiate(_hpPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
+       // pickupTotal++;
+        switch (_pickupCount)
         {
-            case 0: Instantiate(_hpPickup, GetRandomPosition() + new Vector3(0,1.0f), Quaternion.identity); break;
-            case 1: Instantiate(_dmgPickup, GetRandomPosition() + new Vector3(0, 1.0f), Quaternion.identity); break;
-            case 2: Instantiate(_shieldPickup, GetRandomPosition() + new Vector3(0, 1.0f), Quaternion.identity); break;
+            case 0: Instantiate(_hpPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity); break;
+            case 1: Instantiate(_dmgPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity); break;
+            case 2: Instantiate(_shieldPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity); break;
         }
         _pickupCount = (_pickupCount + 1) % 3;
-        pickupTotal++;*/
+        pickupTotal++;
     }
 
     private void CheckNoEnemies()
