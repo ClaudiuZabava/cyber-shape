@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [field: SerializeField] public List<BulletType> AvailableBulletTypes { get; private set; } = new();
     [field: SerializeField] public BulletType CurrentBullet { get; set; }
     [field: SerializeField] public bool CanShoot { get; set; }
+    [field: SerializeField] public bool CanTakeDamage { get; set; }
+    [field: SerializeField] public bool DamageBuff { get; set; }
 
     [SerializeField] private HudManager ui;
     [SerializeField] private int scoreEvolve = 5;
@@ -89,7 +91,15 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(float dmg)
     {
-        CurrentHealth -= dmg;
+        if (CanTakeDamage)
+        {
+            CurrentHealth -= dmg;
+        }
+    }
+
+    public void Heal(float hp)
+    {
+        CurrentHealth = Mathf.Clamp(CurrentHealth + hp, 0, MaxHealth);
     }
 
     private void UpdateMaxHealth(float max)

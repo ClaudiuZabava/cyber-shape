@@ -57,7 +57,14 @@ public class InputController : MonoBehaviour
             var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                _orbitalController.EnqueueShoot(hit.point, 1 + _rTimer.ClosenessToBeat);
+                if (_player.DamageBuff)
+                {
+                    _orbitalController.EnqueueShoot(hit.point, 2 + _rTimer.ClosenessToBeat);
+                }
+                else
+                {
+                    _orbitalController.EnqueueShoot(hit.point, 1 + _rTimer.ClosenessToBeat);
+                }
             }
         }
     }
