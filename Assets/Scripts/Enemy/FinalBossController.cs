@@ -7,7 +7,6 @@ namespace Enemy
 {
     public class FinalBossController : AbstractEnemyController
     {
-        [SerializeField] private GameObject enemyBody;
         [SerializeField] private GameObject projectile;
 
         [SerializeField] private int projectileCountPerAttack = 6;
@@ -34,11 +33,9 @@ namespace Enemy
         private const float DestinationOffset = 1f;
         private const float DestinationEpsilon = 0.6f;
 
-        private NavMeshAgent _nav;
         private Canvas _healthBar;
         private Slider _healthBarSlider;
         private GameObject _player;
-        private float _rollSpeed;
         private Rigidbody _rigidbody;
         private Camera _camera;
         private int _lastAttackTime = 0;
@@ -68,9 +65,9 @@ namespace Enemy
             _nav.speed = MaxNavSpeed;
         }
 
-        private void Awake()
+        protected override void Awake()
         {
-            _nav = GetComponent<NavMeshAgent>();
+            base.Awake();
             _player = GameObject.FindWithTag("Player");
             _healthBar = GetComponentInChildren<Canvas>();
             _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
