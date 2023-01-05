@@ -15,13 +15,11 @@ namespace Enemy
         [SerializeField] private GameObject projectile; 
         [SerializeField] private Transform enemyFirePoint;
         [SerializeField] private int minDistance = 10;
-        [SerializeField] private GameObject enemyBody;
         
         public EnemyStageData StageData => _evolvable.Stage.EnemyData;
 
         private GameObject _player;
         private Rigidbody _rigidbody;
-        private NavMeshAgent _nav;
         private Canvas _healthBar;
         private Slider _healthBarSlider;
         private float _maxHealth;
@@ -30,11 +28,10 @@ namespace Enemy
         private int _distance;
         private float _lastTimeShot;
         private Camera _camera;
-        private float _rollSpeed;
-
-        private void Awake()
+         protected override void Awake()
         {
-            _nav = GetComponent<NavMeshAgent>();
+            base.Awake();
+            
             _player = GameObject.FindWithTag("Player");
             _healthBar = GetComponentInChildren<Canvas>();
             _healthBarSlider = _healthBar.GetComponentInChildren<Slider>();
@@ -64,15 +61,6 @@ namespace Enemy
                 var destination = _player.transform.position;
                 var rotX = destination[0] - enemyBody.transform.position.x;
                 var rotZ = destination[2] - enemyBody.transform.position.z;
-                if (destination == enemyBody.transform.position)
-                {
-                    _rollSpeed = 0;
-                }
-                else
-                {
-                    _rollSpeed = StageData.RollSpeed;
-                    _nav.speed = StageData.NavSpeed;
-                }
                 _rigidbody.AddTorque(new Vector3(rotX / 2, 0, rotZ / 2) * _rollSpeed);
                 _nav.SetDestination(destination);
             }

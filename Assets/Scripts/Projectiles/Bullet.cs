@@ -11,6 +11,8 @@ namespace Projectiles
         [SerializeField] private Transform gapTransform;
         [SerializeField] private BulletType type;
 
+        private static readonly float AOE_RANGE = 5f;
+
         public BulletType Type
         {
             get => type;
@@ -39,12 +41,40 @@ namespace Projectiles
             _meshCollider = GetComponent<MeshCollider>();
         }
 
-        private void OnTriggerEnter(Collider other) 
+        private void DealAoeDamage(Transform initialEnemy)
+        {
+            // Get all enemies in range
+            var enemies = Physics.OverlapSphere(initialEnemy.position, AOE_RANGE, LayerMask.GetMask("Enemy"));
+
+            foreach (var enemy in enemies)
+            {
+                if(enemy.transform.GetInstanceID() == initialEnemy.GetInstanceID()) continue;
+                
+                var enemyScript = enemy.GetComponentInParent<AbstractEnemyController>();
+                if (enemyScript == null) continue;
+                enemyScript.TakeDamage(Type.DamageInfo.Damage * _damageMultiplier);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag(Tags.Enemy))
             {
                 var enemyController = other.gameObject.GetComponentInParent<AbstractEnemyController>();
-                enemyController.TakeDamage(Type.DamageInfo.ContactDamage * _damageMultiplier);
+                enemyController.TakeDamage(Type.DamageInfo.Damage * _damageMultiplier);
+                
+                if (Type.DamageInfo.Effect == BulletEffect.AOE)
+                {
+                    DealAoeDamage(enemyController.transform);
+                }
+                
+                enemyController.ApplyBulletEffect(Type.DamageInfo);
+
+                if (Type.DamageInfo.Effect == BulletEffect.PIERCE)
+                {
+                    // Don't destroy the bullet in enemies
+                    return;
+                }
             }
 
             var explosion = ExplosionPool.Instance.Get();
@@ -78,9 +108,9 @@ namespace Projectiles
             _rigidbody.angularVelocity = Vector3.zero;
             transform.localPosition = gapTransform.localPosition;
             transform.localRotation = gapTransform.localRotation;
-            
+
             yield return new WaitForSeconds(respawnTime);
-            
+
             _renderer.enabled = true;
             ReadyForShooting = true;
             GetComponent<MeshRenderer>().material.SetColor("_BaseColor", Colors.BlueBase);

@@ -17,7 +17,5 @@ MonoBehaviour:
   <RespawnTime>k__BackingField: 1
   <Speed>k__BackingField: 12
   <DamageInfo>k__BackingField:
-    <ContactDamage>k__BackingField: 1.2
-    <SplashDamage>k__BackingField: 0
-    <SplashArea>k__BackingField: 0
-    <Piercing>k__BackingField: 0
+    <Damage>k__BackingField: 1.5
+    <Effect>k__BackingField: 1

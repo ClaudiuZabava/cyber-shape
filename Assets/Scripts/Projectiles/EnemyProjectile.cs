@@ -49,7 +49,7 @@ namespace Projectiles
             if (other.CompareTag(Tags.Player))
             {
                 var triggeringPlayer = other.gameObject.GetComponent<Player>();
-                triggeringPlayer.TakeDamage(bulletType.DamageInfo.ContactDamage);
+                triggeringPlayer.TakeDamage(bulletType.DamageInfo.Damage);
                 Destroy(gameObject);
             }
             else if (other.CompareTag(Tags.Wall)) // Obiectele puse de Daria pot avea tag-ul Wall 
