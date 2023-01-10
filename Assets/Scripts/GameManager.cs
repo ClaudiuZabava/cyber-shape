@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Level settings")]
     [SerializeField] private int waves = 3;
-    [SerializeField] private int enemiesPerWave = 3;
+    [SerializeField] private int enemiesPerWave = 5;
     [SerializeField]
     private int level = 1;
 
@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
 
     private void NextWave()
     {
-        if (_waveCount + 1 > waves)
+        if (_waveCount + 1 > (_levelIndex + 1) * waves)
         {
             if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
             {
@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
         else
         {
             _waveCount++;
-            _hudManager.WavesUI.UpdateWaves(waves - _waveCount + 1);
+            _hudManager.WavesUI.UpdateWaves((_levelIndex + 1) * waves - _waveCount + 1);
             StartCoroutine(SpawnEnemies());
         }
     }
