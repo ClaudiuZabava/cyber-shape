@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Constants;
 using Enemy;
 using Projectiles;
 using UnityEngine;
 using UnityEngine.UI;
 using Animations = Constants.Animations;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -108,6 +110,11 @@ namespace UI
                                  BulletSelectedUiExtraOffset * (Math.Max(i - selectedBulletIndex + 1, 0));
                 bulletUiRectTransform.anchoredPosition = new Vector2(leftOffset, 0);
             }
+        }
+        
+        public void GoToMenu()
+        {
+            SceneManager.LoadScene((int)Scenes.MainMenuScene);
         }
     }
 }

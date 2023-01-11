@@ -1,10 +1,13 @@
 using System.Collections;
 using Constants;
 using Evolution;
+using TMPro;
 using UI;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,6 +43,9 @@ public class GameManager : MonoBehaviour
     private Camera _camera;
     private int _levelIndex;
     private int _pickupCount;
+    private TextMeshProUGUI _gameWonText;
+    private GameObject _goToMenuButton;
+    public bool isGameWon = false;
 
     private void Awake()
     {
@@ -49,6 +55,8 @@ public class GameManager : MonoBehaviour
         _player = GetComponentInChildren<Player>();
         _player.UnlockBulletsForLevel(_levelIndex + 1);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
+        _gameWonText = _hudManager.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
+        _goToMenuButton = _hudManager.gameObject.transform.Find("GoToMenu").gameObject;
         maxWidth = _floorSize.x / 3; 
         _camera = Camera.main;
         pickupTotal = 0;
@@ -247,5 +255,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         panel.SetActive(false);
         SceneManager.LoadScene((int)Scenes.MainMenuScene);
+    }
+
+    public void DisplayGameWonText()
+    {
+        _gameWonText.gameObject.SetActive(true);
+        _goToMenuButton.gameObject.SetActive(true);
+        isGameWon = true;
     }
 }

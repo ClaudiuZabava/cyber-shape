@@ -44,6 +44,7 @@ namespace Enemy
         private bool _isRamFollowing = false;
         private Vector3? _ramDestination = null;
         private int _ramFollowTime = 0;
+        private GameManager _gameManager;
 
         private bool _isRamAttack => _isRamFollowing || _ramDestination != null;
 
@@ -74,6 +75,7 @@ namespace Enemy
             _rigidbody = enemyBody.GetComponent<Rigidbody>();
             _camera = Camera.main;
             _animator = GetComponent<Animator>();
+            _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         }
 
         private void MoveTo(Vector3 destination, bool noOffset = false)
@@ -158,8 +160,12 @@ namespace Enemy
             if (health <= 0)
             {
                 // TODO: Add death animation
+                
+                _gameManager.DisplayGameWonText();
+                
                 Destroy(gameObject);
             }
+            
         }
 
         private void SetHealth(float health)
