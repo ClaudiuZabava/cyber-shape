@@ -128,6 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d6fe868a28a184fbe19054c3b4e432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 3
   maxProjectileDistance: 10
   bulletType: {fileID: 11400000, guid: 905472c42630e43e9bbbd648e9d6e1d3, type: 2}
