@@ -16,6 +16,7 @@ public class InputController : MonoBehaviour
     private ProjectileOrbitalController _orbitalController;
     private RhythmTimer _rTimer;
     private Player _player;
+    private GameManager _gameManager;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class InputController : MonoBehaviour
         _rTimer = GetComponentInParent<RhythmTimer>();
         _orbitalController = GetComponent<ProjectileOrbitalController>();
         _player = GetComponentInParent<Player>();
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     private void Start()
@@ -32,9 +34,13 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        HandleShootInput();
-        MovementControl();
-        HandleChangeBullet();
+        if (!_gameManager.isGameWon)
+        {
+            HandleShootInput();
+            MovementControl();
+            HandleChangeBullet();    
+        }
+        
     }
 
     private void MovementControl()
