@@ -55,9 +55,12 @@ public class GameManager : MonoBehaviour
         _player = GetComponentInChildren<Player>();
         _player.UnlockBulletsForLevel(_levelIndex + 1);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
-        _gameWonText = _hudManager.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
-        _goToMenuButton = _hudManager.gameObject.transform.Find("GoToMenu").gameObject;
-        maxWidth = _floorSize.x / 3; 
+        if (SceneManager.GetActiveScene().buildIndex == (int) Scenes.Level5)
+        {
+            _gameWonText = _hudManager.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
+            _goToMenuButton = _hudManager.gameObject.transform.Find("GoToMenu").gameObject;
+        }
+        maxWidth = _floorSize.x / 3;
         _camera = Camera.main;
         pickupTotal = 0;
         _pickupCount = 0;
