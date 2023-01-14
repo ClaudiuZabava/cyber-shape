@@ -11,7 +11,7 @@ namespace UI
 
         private void Start()
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Classic)
             {
                 if (PlayerPrefs.HasKey(PlayerPrefsKeys.HighScore))
                 {
@@ -22,7 +22,7 @@ namespace UI
                     scoreText.text = "High Score: 0";
                 }
             }
-            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            else
             {
                 if (PlayerPrefs.HasKey(PlayerPrefsKeys.SprintScore))
                 {
@@ -35,26 +35,26 @@ namespace UI
             }
         }
 
-        public void RestartLevel() 
+        public void RestartLevel()
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Classic)
             {
-                if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene)) 
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene))
                 {
                     SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene));
-                } 
-                else 
+                }
+                else
                 {
                     SceneManager.LoadScene((int) Scenes.Level1);
                 }
             }
-            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            else // Endless
             {
-                if (PlayerPrefs.HasKey(PlayerPrefsKeys.LastLevel)) 
+                if (PlayerPrefs.HasKey(PlayerPrefsKeys.LastLevel))
                 {
                     SceneManager.LoadScene(PlayerPrefs.GetInt(PlayerPrefsKeys.LastLevel));
-                } 
-                else 
+                }
+                else
                 {
                     SceneManager.LoadScene((int) Scenes.Level1);
                 }
@@ -65,7 +65,7 @@ namespace UI
         {
             SceneManager.LoadScene((int) Scenes.MainMenuScene);
         }
-        
+
         public void ExitGame()
         {
             Application.Quit();

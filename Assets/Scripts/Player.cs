@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag(Tags.Enemy))
         {
             var enemy = other.GetComponent<AbstractEnemyController>();
-            if(enemy != null)
+            if (enemy != null)
             {
                 TakeDamage(enemy.CollisionDamage);
             }
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, _tempScore);
         }
 
-        if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+        if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Endless)
         {
             PlayerPrefs.SetInt(PlayerPrefsKeys.SprintScore, _tempScore);
         }
@@ -121,17 +121,18 @@ public class Player : MonoBehaviour
     {
         if (CurrentHealth <= 0)
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0 )
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Classic)
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, SceneManager.GetActiveScene().buildIndex);
             }
-            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            else // Endless
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, SceneManager.GetActiveScene().buildIndex);
             }
+
             PlayerPrefs.Save();
             Destroy(gameObject);
-            SceneManager.LoadScene((int)Scenes.GameOverMenu);
+            SceneManager.LoadScene((int) Scenes.GameOverMenu);
         }
     }
 
@@ -139,11 +140,12 @@ public class Player : MonoBehaviour
     {
         DamageBuff = true;
         _rend.material.SetColor("_EmissionColor", Colors.PlayerBullet);
-        
+
         if (_damageBuffCoroutine != null)
         {
             StopCoroutine(_damageBuffCoroutine);
         }
+
         _damageBuffCoroutine = StartCoroutine(CancelEffectDamage());
     }
 
@@ -155,6 +157,7 @@ public class Player : MonoBehaviour
         {
             StopCoroutine(_shieldBuffCoroutine);
         }
+
         _shieldBuffCoroutine = StartCoroutine(CancelEffectShield());
     }
 

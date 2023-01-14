@@ -9,7 +9,7 @@ namespace UI
     {
         public void PlayNormal()
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, 0);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, (int) GameMode.Classic);
             if (PlayerPrefs.HasKey(PlayerPrefsKeys.CurrentScene) 
                 && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.MainMenuScene 
                 && PlayerPrefs.GetInt(PlayerPrefsKeys.CurrentScene) != (int) Scenes.OptionsMenu 
@@ -28,16 +28,15 @@ namespace UI
 
         public void PlayEndless()
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, 1);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, (int) GameMode.Endless);
             SceneManager.LoadScene((int) Scenes.LevelSelector);
         }
 
         public void Back()
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, 0);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, (int) GameMode.Classic);
             SceneManager.LoadScene((int) Scenes.MainMenuScene);
         }
     }
-    
 }
 

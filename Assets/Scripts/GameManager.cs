@@ -15,20 +15,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Texture2D crosshairImg;
     [SerializeField] private GameObject panel;
 
-    [Header("Enemy settings")]
-    [SerializeField] private GameObject enemyPrefab;
+    [Header("Enemy settings")] [SerializeField]
+    private GameObject enemyPrefab;
+
     [SerializeField] private float maxWidth;
     [SerializeField] private float secondsTillSpawn = 3f;
     [SerializeField] private float percentToNextWave = .75f;
 
-    [Header("Level settings")]
-    [SerializeField] private int waves = 3;
-    [SerializeField] private int enemiesPerWave = 5;
-    [SerializeField]
-    private int level = 1;
+    [Header("Level settings")] [SerializeField]
+    private int waves = 3;
 
-    [Header("Pickups")]
-    [SerializeField] private GameObject _hpPickup;
+    [SerializeField] private int enemiesPerWave = 5;
+    [SerializeField] private int level = 1;
+
+    [Header("Pickups")] [SerializeField] private GameObject _hpPickup;
     [SerializeField] private GameObject _dmgPickup;
     [SerializeField] private GameObject _shieldPickup;
     [SerializeField] public int pickupTotal { get; set; }
@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
             _gameWonText = _hudManager.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
             _goToMenuButton = _hudManager.gameObject.transform.Find("GoToMenu").gameObject;
         }
+
         maxWidth = _floorSize.x / 3;
         _camera = Camera.main;
         pickupTotal = 0;
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
 
         _player.GetComponent<Evolvable>().Evolve(_levelIndex);
 
-        if(_levelIndex == 4)
+        if (_levelIndex == 4)
         {
             PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 100);
             // PopUp Msg (" Congrats!!") sau trigger Achivement.
@@ -115,14 +116,27 @@ public class GameManager : MonoBehaviour
 
     private void SpawnPickup()
     {
-       // Instantiate(_hpPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
-       // pickupTotal++;
+        // Instantiate(_hpPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
+        // pickupTotal++;
         switch (_pickupCount)
         {
-            case 0: Instantiate(_hpPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity); break;
-            case 1: Instantiate(_dmgPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity); break;
-            case 2: Instantiate(_shieldPickup, new Vector3(Random.Range(-_floorSize.x/2, _floorSize.x / 2), 1.7f, Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity); break;
+            case 0:
+                Instantiate(_hpPickup,
+                    new Vector3(Random.Range(-_floorSize.x / 2, _floorSize.x / 2), 1.7f,
+                        Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
+                break;
+            case 1:
+                Instantiate(_dmgPickup,
+                    new Vector3(Random.Range(-_floorSize.x / 2, _floorSize.x / 2), 1.7f,
+                        Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
+                break;
+            case 2:
+                Instantiate(_shieldPickup,
+                    new Vector3(Random.Range(-_floorSize.x / 2, _floorSize.x / 2), 1.7f,
+                        Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
+                break;
         }
+
         _pickupCount = (_pickupCount + 1) % 3;
         pickupTotal++;
     }
@@ -137,21 +151,20 @@ public class GameManager : MonoBehaviour
 
     private Vector3 GetRandomPosition()
     {
-        
         while (true)
         {
             // get random point around the player
             var randomPosition =
-                new Vector3(Random.Range(_playerPosition.x - maxWidth, _playerPosition.x + maxWidth), 0.5f, 
+                new Vector3(Random.Range(_playerPosition.x - maxWidth, _playerPosition.x + maxWidth), 0.5f,
                     Random.Range(_playerPosition.z - maxWidth, _playerPosition.z + maxWidth));
-            
+
             // check if the point is inside the map
             if (randomPosition.x < -_floorSize.x / 2 || randomPosition.x > _floorSize.x / 2 ||
                 randomPosition.z < -_floorSize.z / 2 || randomPosition.z > _floorSize.z / 2)
             {
                 continue;
             }
-            
+
             // check if the point is outside camera view
             if (Mathf.Abs(randomPosition.x - _playerPosition.x) < _camera.orthographicSize ||
                 Mathf.Abs(randomPosition.z - _playerPosition.z) < _camera.orthographicSize * _camera.aspect)
@@ -172,31 +185,30 @@ public class GameManager : MonoBehaviour
     {
         if (_waveCount + 1 > (_levelIndex + 1) * waves)
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Classic)
             {
-                if(_levelIndex == 0)
+                switch (_levelIndex)
                 {
-                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 20);
+                    case 0:
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 20);
+                        break;
+                    case 1:
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 40);
+                        break;
+                    case 2:
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 60);
+                        break;
+                    case 3:
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 80);
+                        break;
                 }
-                else if(_levelIndex == 1)
-                {
-                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 40);
-                }
-                else if(_levelIndex == 2)
-                {
-                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 60);
-                }
-                else if(_levelIndex == 3)
-                {
-                    PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 80);
-                }
-                ProgressToNextLevel();                
+
+                ProgressToNextLevel();
             }
-            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            else // Endless
             {
                 _waveCount = 1;
             }
-
         }
         else
         {
@@ -257,7 +269,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause, _pause);
         Time.timeScale = 1f;
         panel.SetActive(false);
-        SceneManager.LoadScene((int)Scenes.MainMenuScene);
+        SceneManager.LoadScene((int) Scenes.MainMenuScene);
     }
 
     public void DisplayGameWonText()

@@ -8,7 +8,7 @@ namespace UI
     {
         private void Start()
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, 0);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, (int) GameMode.Classic);
             if(!PlayerPrefs.HasKey(PlayerPrefsKeys.GameProgress))
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 0);

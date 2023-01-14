@@ -1,3 +1,4 @@
+using System;
 using Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,11 +9,17 @@ namespace UI
 {
     public class LevelSelectorMenu : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject err;
+        [SerializeField] private GameObject err;
+        [SerializeField] private Button resumeButton;
+
+        private void Start()
+        {
+            resumeButton.enabled = PlayerPrefs.GetInt(PlayerPrefsKeys.EndlessInProgress) != 0;
+        }
+
         public void LoadLevel1()
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 20)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 20)
             {
                 StartCoroutine(ShowMessage());
             }
@@ -25,7 +32,7 @@ namespace UI
 
         public void LoadLevel2()
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 40)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 40)
             {
                 StartCoroutine(ShowMessage());
             }
@@ -38,7 +45,7 @@ namespace UI
 
         public void LoadLevel3()
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 60)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 60)
             {
                 StartCoroutine(ShowMessage());
             }
@@ -51,7 +58,7 @@ namespace UI
 
         public void LoadLevel4()
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 80)
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameProgress) < 80)
             {
                 StartCoroutine(ShowMessage());
             }
@@ -62,18 +69,21 @@ namespace UI
             }
         }
 
+        public void Resume()
+        {
+
+        }
+
         public void Back()
         {
             SceneManager.LoadScene((int) Scenes.PlayMenu);
         }
 
-        IEnumerator ShowMessage () 
+        IEnumerator ShowMessage()
         {
             err.SetActive(true);
             yield return new WaitForSeconds(3.0f);
             err.SetActive(false);
         }
     }
-
-
 }

@@ -11,5 +11,6 @@ namespace Constants
         public const string GameProgress = "GameProgress";
         public const string LastLevel = "LastLevel";
         public const string SprintScore = "SprintScore";
+        public const string EndlessInProgress = "EndlessInProgress";
     }
 }
