@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Linq;
 using Constants;
+using Enemy;
 using Evolution;
 using TMPro;
 using UI;
@@ -7,13 +9,14 @@ using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
+using Scene = Constants.Scene;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private bool withEnemyWaves = true;
     [SerializeField] private Texture2D crosshairImg;
-    [SerializeField] private GameObject panel;
+    [FormerlySerializedAs("panel")] [SerializeField] private GameObject pausePanel;
 
     [Header("Enemy settings")] [SerializeField]
     private GameObject enemyPrefab;
@@ -26,12 +29,14 @@ public class GameManager : MonoBehaviour
     private int waves = 3;
 
     [SerializeField] private int enemiesPerWave = 5;
-    [SerializeField] private int level = 1;
 
-    [Header("Pickups")] [SerializeField] private GameObject _hpPickup;
-    [SerializeField] private GameObject _dmgPickup;
-    [SerializeField] private GameObject _shieldPickup;
-    [SerializeField] public int pickupTotal { get; set; }
+    [Header("Pickups")]
+    [FormerlySerializedAs("_hpPickup")] [SerializeField] private GameObject hpPickup;
+    [FormerlySerializedAs("_dmgPickup")] [SerializeField] private GameObject dmgPickup;
+    [FormerlySerializedAs("_shieldPickup")] [SerializeField] private GameObject shieldPickup;
+    [SerializeField] public int PickupTotal { get; set; }
+
+    public static bool ShouldLoad = false;
 
     private bool _spawning = false;
     private int _pause = 0;
@@ -49,13 +54,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scenes.Level1;
+        _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scene.Level1;
 
         _hudManager = GameObject.Find("HUD").GetComponent<HudManager>();
         _player = GetComponentInChildren<Player>();
         _player.UnlockBulletsForLevel(_levelIndex + 1);
         _floorSize = GameObject.FindWithTag("Floor").GetComponent<MeshRenderer>().bounds.size;
-        if (SceneManager.GetActiveScene().buildIndex == (int) Scenes.Level5)
+        if (SceneManager.GetActiveScene().buildIndex == (int) Scene.Level5)
         {
             _gameWonText = _hudManager.transform.GetChild(5).GetComponent<TextMeshProUGUI>();
             _goToMenuButton = _hudManager.gameObject.transform.Find("GoToMenu").gameObject;
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
 
         maxWidth = _floorSize.x / 3;
         _camera = Camera.main;
-        pickupTotal = 0;
+        PickupTotal = 0;
         _pickupCount = 0;
     }
 
@@ -82,9 +87,32 @@ public class GameManager : MonoBehaviour
             // PopUp Msg (" Congrats!!") sau trigger Achivement.
         }
 
-        if (withEnemyWaves)
+        if (ShouldLoad && PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Endless)
         {
-            NextWave();
+            ShouldLoad = false;
+            var savedState = EndlessState.Load();
+            _player.gameObject.transform.position = savedState.PlayerPosition;
+            _player.CurrentHealth = savedState.PlayerHealth;
+
+            foreach (var enemyPosition in savedState.EnemyPositions)
+            {
+                var enemyObject = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
+
+                // Evolve to random stage (max is determined by current level).
+                var enemyEvolvable = enemyObject.GetComponentInChildren<Evolvable>();
+                var stageIndex = Random.Range(0, _levelIndex + 1);
+                enemyEvolvable.Evolve(stageIndex);
+
+                _hudManager.FollowEnemy(enemyObject);
+            }
+            _player.AddScore(savedState.Score);
+        }
+        else
+        {
+            if (withEnemyWaves)
+            {
+                NextWave();
+            }
         }
     }
 
@@ -103,7 +131,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (pickupTotal < 4)
+        if (PickupTotal < 4)
         {
             SpawnPickup();
         }
@@ -121,24 +149,24 @@ public class GameManager : MonoBehaviour
         switch (_pickupCount)
         {
             case 0:
-                Instantiate(_hpPickup,
+                Instantiate(hpPickup,
                     new Vector3(Random.Range(-_floorSize.x / 2, _floorSize.x / 2), 1.7f,
                         Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
                 break;
             case 1:
-                Instantiate(_dmgPickup,
+                Instantiate(dmgPickup,
                     new Vector3(Random.Range(-_floorSize.x / 2, _floorSize.x / 2), 1.7f,
                         Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
                 break;
             case 2:
-                Instantiate(_shieldPickup,
+                Instantiate(shieldPickup,
                     new Vector3(Random.Range(-_floorSize.x / 2, _floorSize.x / 2), 1.7f,
                         Random.Range(-_floorSize.z / 2, _floorSize.z / 2)), Quaternion.identity);
                 break;
         }
 
         _pickupCount = (_pickupCount + 1) % 3;
-        pickupTotal++;
+        PickupTotal++;
     }
 
     private void CheckNoEnemies()
@@ -240,7 +268,7 @@ public class GameManager : MonoBehaviour
     private void ProgressToNextLevel()
     {
         var activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (activeSceneIndex < (int) Scenes.Level5)
+        if (activeSceneIndex < (int) Scene.Level5)
         {
             PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, activeSceneIndex + 1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -252,7 +280,7 @@ public class GameManager : MonoBehaviour
         _pause = 1;
         PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause, _pause);
         Time.timeScale = 0f;
-        panel.SetActive(true);
+        pausePanel.SetActive(true);
     }
 
     public void ResumeGame()
@@ -260,16 +288,33 @@ public class GameManager : MonoBehaviour
         _pause = 0;
         PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause, _pause);
         Time.timeScale = 1f;
-        panel.SetActive(false);
+        pausePanel.SetActive(false);
     }
 
     public void GoBackMain()
     {
         _pause = 0;
         PlayerPrefs.SetInt(PlayerPrefsKeys.GamePause, _pause);
+
+        // Save game state if in endless
+        if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Endless)
+        {
+            var enemyPositions = FindObjectsOfType<EnemyController>()
+                .Select(x => x.gameObject.transform.position).ToArray();
+            var gameState = new EndlessState
+            {
+                Level = (Scene) SceneManager.GetActiveScene().buildIndex,
+                Score = _player.Score,
+                PlayerHealth = _player.CurrentHealth,
+                PlayerPosition = _player.transform.position,
+                EnemyPositions = enemyPositions
+            };
+            gameState.Save();
+        }
+
         Time.timeScale = 1f;
-        panel.SetActive(false);
-        SceneManager.LoadScene((int) Scenes.MainMenuScene);
+        pausePanel.SetActive(false);
+        SceneManager.LoadScene((int) Scene.MainMenuScene);
     }
 
     public void DisplayGameWonText()

@@ -8,10 +8,11 @@ using UnityEngine.SceneManagement;
 using Evolution;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using System.Collections;
+using Scene = Constants.Scene;
 
 public class Player : MonoBehaviour
 {
-    [field: SerializeField] public float CurrentHealth { get; private set; } = 4;
+    [field: SerializeField] public float CurrentHealth { get; set; } = 4;
     [field: SerializeField] public float MaxHealth { get; private set; } = 4;
     [field: SerializeField] public List<BulletType> UnlockedBulletTypes { get; private set; } = new();
     [field: SerializeField] public List<BulletType> AvailableBulletTypes { get; private set; } = new();
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private HudManager ui;
     [SerializeField] private int scoreEvolve = 5;
+
+    public int Score => _tempScore;
 
     private PlayerStageData StageData => _evolution.Stage.PlayerData;
 
@@ -128,11 +131,12 @@ public class Player : MonoBehaviour
             else // Endless
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, SceneManager.GetActiveScene().buildIndex);
+                EndlessState.Clear();
             }
 
             PlayerPrefs.Save();
             Destroy(gameObject);
-            SceneManager.LoadScene((int) Scenes.GameOverMenu);
+            SceneManager.LoadScene((int) Scene.GameOverMenu);
         }
     }
 

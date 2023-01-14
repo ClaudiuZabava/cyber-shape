@@ -2,6 +2,7 @@ using Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Scene = Constants.Scene;
 
 namespace UI
 {
@@ -39,7 +40,7 @@ namespace UI
 
         public void Back()
         {
-            SceneManager.LoadScene((int) Scenes.MainMenuScene);
+            SceneManager.LoadScene((int) Scene.MainMenuScene);
         }
 
         /// Pentru cand vom implementa si sunetele gloantelor si ale transformarilor ( Al doilea buton de optiuni):

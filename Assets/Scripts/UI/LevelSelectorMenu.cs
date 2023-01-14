@@ -4,17 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using Scene = Constants.Scene;
 
 namespace UI
 {
     public class LevelSelectorMenu : MonoBehaviour
     {
         [SerializeField] private GameObject err;
-        [SerializeField] private Button resumeButton;
+        [SerializeField] private GameObject resumeButton;
 
         private void Start()
         {
-            resumeButton.enabled = PlayerPrefs.GetInt(PlayerPrefsKeys.EndlessInProgress) != 0;
+            resumeButton.SetActive(PlayerPrefs.GetInt(PlayerPrefsKeys.EndlessInProgress) != 0);
         }
 
         public void LoadLevel1()
@@ -25,8 +26,8 @@ namespace UI
             }
             else
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scenes.Level1);
-                SceneManager.LoadScene((int) Scenes.Level1);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scene.Level1);
+                SceneManager.LoadScene((int) Scene.Level1);
             }
         }
 
@@ -38,8 +39,8 @@ namespace UI
             }
             else
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scenes.Level2);
-                SceneManager.LoadScene((int) Scenes.Level2);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scene.Level2);
+                SceneManager.LoadScene((int) Scene.Level2);
             }
         }
 
@@ -51,8 +52,8 @@ namespace UI
             }
             else
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scenes.Level3);
-                SceneManager.LoadScene((int) Scenes.Level3);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scene.Level3);
+                SceneManager.LoadScene((int) Scene.Level3);
             }
         }
 
@@ -64,22 +65,24 @@ namespace UI
             }
             else
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scenes.Level4);
-                SceneManager.LoadScene((int) Scenes.Level4);
+                PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, (int) Scene.Level4);
+                SceneManager.LoadScene((int) Scene.Level4);
             }
         }
 
         public void Resume()
         {
-
+            GameManager.ShouldLoad = true;
+            var savedState = EndlessState.Load();
+            SceneManager.LoadScene((int) savedState.Level);
         }
 
         public void Back()
         {
-            SceneManager.LoadScene((int) Scenes.PlayMenu);
+            SceneManager.LoadScene((int) Scene.PlayMenu);
         }
 
-        IEnumerator ShowMessage()
+        private IEnumerator ShowMessage()
         {
             err.SetActive(true);
             yield return new WaitForSeconds(3.0f);

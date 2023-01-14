@@ -1,5 +1,6 @@
 using Constants;
 using UnityEngine;
+using LayerMask = Constants.LayerMask;
 
 public class CameraController : MonoBehaviour
 {
@@ -26,28 +27,28 @@ public class CameraController : MonoBehaviour
             // Check if the edges of the camera are seeing outside of the floor plane.
             // Left
             var ray = _camera.ViewportPointToRay(new Vector3(0.0f, 0.5f, 0.0f));
-            if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
+            if (!Physics.Raycast(ray, Mathf.Infinity, (int) LayerMask.Floor))
             {
                 newCameraPos.x = Mathf.Max(_camera.transform.position.x, newCameraPos.x);
             }
 
             // Right
             ray = _camera.ViewportPointToRay(new Vector3(1.0f, 0.5f, 0.0f));
-            if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
+            if (!Physics.Raycast(ray, Mathf.Infinity, (int) LayerMask.Floor))
             {
                 newCameraPos.x = Mathf.Min(_camera.transform.position.x, newCameraPos.x);
             }
 
             // Bottom
             ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.0f, 0.0f));
-            if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
+            if (!Physics.Raycast(ray, Mathf.Infinity, (int) LayerMask.Floor))
             {
                 newCameraPos.z = Mathf.Max(_camera.transform.position.z, newCameraPos.z);
             }
 
             // Top
             ray = _camera.ViewportPointToRay(new Vector3(0.5f, 1.0f, 0.0f));
-            if (!Physics.Raycast(ray, Mathf.Infinity, (int) Layers.Floor))
+            if (!Physics.Raycast(ray, Mathf.Infinity, (int) LayerMask.Floor))
             {
                 newCameraPos.z = Mathf.Min(_camera.transform.position.z, newCameraPos.z);
             }

@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Animations = Constants.Animations;
 using UnityEngine.SceneManagement;
+using Scene = Constants.Scene;
 
 namespace UI
 {
@@ -114,7 +115,7 @@ namespace UI
         
         public void GoToMenu()
         {
-            SceneManager.LoadScene((int)Scenes.MainMenuScene);
+            SceneManager.LoadScene((int)Scene.MainMenuScene);
         }
     }
 }

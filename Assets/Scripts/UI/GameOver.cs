@@ -2,6 +2,7 @@ using Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Scene = Constants.Scene;
 
 namespace UI
 {
@@ -45,7 +46,7 @@ namespace UI
                 }
                 else
                 {
-                    SceneManager.LoadScene((int) Scenes.Level1);
+                    SceneManager.LoadScene((int) Scene.Level1);
                 }
             }
             else // Endless
@@ -56,14 +57,14 @@ namespace UI
                 }
                 else
                 {
-                    SceneManager.LoadScene((int) Scenes.Level1);
+                    SceneManager.LoadScene((int) Scene.Level1);
                 }
             }
         }
 
         public void MainMenu()
         {
-            SceneManager.LoadScene((int) Scenes.MainMenuScene);
+            SceneManager.LoadScene((int) Scene.MainMenuScene);
         }
 
         public void ExitGame()
