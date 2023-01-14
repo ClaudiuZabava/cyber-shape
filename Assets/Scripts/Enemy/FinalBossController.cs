@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Scene = Constants.Scene;
 
 namespace Enemy
 {
@@ -161,7 +162,7 @@ namespace Enemy
             if (health <= 0)
             {
                 // TODO: Add death animation
-                if (SceneManager.GetActiveScene().buildIndex == (int) Scenes.Level5)
+                if (SceneManager.GetActiveScene().buildIndex == (int) Scene.Level5)
                 {
                     _gameManager.DisplayGameWonText();
                 }

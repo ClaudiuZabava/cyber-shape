@@ -1,6 +1,7 @@
 using Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Scene = Constants.Scene;
 
 namespace UI
 {
@@ -8,7 +9,7 @@ namespace UI
     {
         private void Start()
         {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, 0);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.GameMode, (int) GameMode.Classic);
             if(!PlayerPrefs.HasKey(PlayerPrefsKeys.GameProgress))
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.GameProgress, 0);
@@ -16,12 +17,12 @@ namespace UI
         }
         public void Play()
         {
-            SceneManager.LoadScene((int) Scenes.PlayMenu);
+            SceneManager.LoadScene((int) Scene.PlayMenu);
         }
 
         public void GoToOptions()
         {
-            SceneManager.LoadScene((int) Scenes.OptionsMenu);
+            SceneManager.LoadScene((int) Scene.OptionsMenu);
         }
         
         public void ExitGame()

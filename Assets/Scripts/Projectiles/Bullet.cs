@@ -2,6 +2,7 @@ using System.Collections;
 using Constants;
 using Enemy;
 using UnityEngine;
+using LayerMask = UnityEngine.LayerMask;
 
 namespace Projectiles
 {

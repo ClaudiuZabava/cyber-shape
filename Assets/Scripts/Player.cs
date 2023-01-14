@@ -8,10 +8,11 @@ using UnityEngine.SceneManagement;
 using Evolution;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using System.Collections;
+using Scene = Constants.Scene;
 
 public class Player : MonoBehaviour
 {
-    [field: SerializeField] public float CurrentHealth { get; private set; } = 4;
+    [field: SerializeField] public float CurrentHealth { get; set; } = 4;
     [field: SerializeField] public float MaxHealth { get; private set; } = 4;
     [field: SerializeField] public List<BulletType> UnlockedBulletTypes { get; private set; } = new();
     [field: SerializeField] public List<BulletType> AvailableBulletTypes { get; private set; } = new();
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private HudManager ui;
     [SerializeField] private int scoreEvolve = 5;
+
+    public int Score => _tempScore;
 
     private PlayerStageData StageData => _evolution.Stage.PlayerData;
 
@@ -60,7 +63,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag(Tags.Enemy))
         {
             var enemy = other.GetComponent<AbstractEnemyController>();
-            if(enemy != null)
+            if (enemy != null)
             {
                 TakeDamage(enemy.CollisionDamage);
             }
@@ -83,7 +86,7 @@ public class Player : MonoBehaviour
             PlayerPrefs.SetInt(PlayerPrefsKeys.HighScore, _tempScore);
         }
 
-        if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+        if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Endless)
         {
             PlayerPrefs.SetInt(PlayerPrefsKeys.SprintScore, _tempScore);
         }
@@ -121,17 +124,19 @@ public class Player : MonoBehaviour
     {
         if (CurrentHealth <= 0)
         {
-            if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 0 )
+            if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Classic)
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.CurrentScene, SceneManager.GetActiveScene().buildIndex);
             }
-            else if(PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == 1)
+            else // Endless
             {
                 PlayerPrefs.SetInt(PlayerPrefsKeys.LastLevel, SceneManager.GetActiveScene().buildIndex);
+                EndlessState.Clear();
             }
+
             PlayerPrefs.Save();
             Destroy(gameObject);
-            SceneManager.LoadScene((int)Scenes.GameOverMenu);
+            SceneManager.LoadScene((int) Scene.GameOverMenu);
         }
     }
 
@@ -139,11 +144,12 @@ public class Player : MonoBehaviour
     {
         DamageBuff = true;
         _rend.material.SetColor("_EmissionColor", Colors.PlayerBullet);
-        
+
         if (_damageBuffCoroutine != null)
         {
             StopCoroutine(_damageBuffCoroutine);
         }
+
         _damageBuffCoroutine = StartCoroutine(CancelEffectDamage());
     }
 
@@ -155,6 +161,7 @@ public class Player : MonoBehaviour
         {
             StopCoroutine(_shieldBuffCoroutine);
         }
+
         _shieldBuffCoroutine = StartCoroutine(CancelEffectShield());
     }
 

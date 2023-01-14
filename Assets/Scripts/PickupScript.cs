@@ -40,7 +40,7 @@ public class PickupScript : MonoBehaviour
 		{
 			_player = other.GetComponent<Player>();
 			Collect();
-			_manager.pickupTotal--;
+			_manager.PickupTotal--;
 		}
 	}
 
