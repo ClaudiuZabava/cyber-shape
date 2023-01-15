@@ -35,9 +35,11 @@ public class Player : MonoBehaviour
     private Coroutine _damageBuffCoroutine;
     private Coroutine _shieldBuffCoroutine;
     private MeshRenderer _rend;
+    private int _levelIndex;
 
     private void Awake()
     {
+         _levelIndex = SceneManager.GetActiveScene().buildIndex - (int) Scene.Level1;
         _orbitalController = GetComponent<ProjectileOrbitalController>();
         _evolution = GetComponent<Evolvable>();
         ui = GameObject.Find("HUD").GetComponent<HudManager>();
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         CheckHighScore();
+        CheckEndlessScores();
         MaxHealth = StageData.Health;
         CurrentHealth = MaxHealth;
 
@@ -78,6 +81,27 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void CheckEndlessScores()
+    {
+        if(!PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint1))
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint1, 0);
+        }
+        if (!PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint2))
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint2, 0);
+        }
+        if (!PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint3))
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint3, 0);
+        }
+        if(!PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint4))
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint4, 0);
+        }
+        
+    }
+
     public void AddScore(int val)
     {
         _tempScore += val;
@@ -87,8 +111,26 @@ public class Player : MonoBehaviour
         }
 
         if (PlayerPrefs.GetInt(PlayerPrefsKeys.GameMode) == (int) GameMode.Endless)
-        {
-            PlayerPrefs.SetInt(PlayerPrefsKeys.SprintScore, _tempScore);
+        {  
+            switch(_levelIndex)
+            {
+                case 0:
+                    if (PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint1) < _tempScore) 
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint1, _tempScore);
+                    break;
+                case 1:
+                    if (PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint2) < _tempScore) 
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint2, _tempScore);
+                    break;
+                case 2:
+                    if (PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint3) < _tempScore) 
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint3, _tempScore);
+                    break;
+                case 3:
+                    if (PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint4) < _tempScore) 
+                        PlayerPrefs.SetInt(PlayerPrefsKeys.BestSprint4, _tempScore);
+                    break;
+            }
         }
 
         ui.ScoreUI.UpdateScore(_tempScore, PlayerPrefs.GetInt(PlayerPrefsKeys.HighScore));

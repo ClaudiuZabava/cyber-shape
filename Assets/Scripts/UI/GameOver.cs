@@ -25,14 +25,55 @@ namespace UI
             }
             else
             {
-                if (PlayerPrefs.HasKey(PlayerPrefsKeys.SprintScore))
+                int lastLevel = PlayerPrefs.GetInt(PlayerPrefsKeys.LastLevel);
+                switch(lastLevel)
                 {
-                    scoreText.text = "Round Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.SprintScore);
+                    case 5:
+                        if (PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint1))
+                        {
+                            scoreText.text = "Best Level Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint1);
+                        }
+                        else
+                        {
+                            scoreText.text = "Round Score: 0";
+                        }
+                        break;
+                    case 6:
+                        if (PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint2))
+                        {
+                            scoreText.text = "Best Level Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint2);
+                        }
+                        else
+                        {
+                            scoreText.text = "Round Score: 0";
+                        }
+                        break;
+                    case 7:
+                        if (PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint3))
+                        {
+                            scoreText.text = "Best Level Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint3);
+                        }
+                        else
+                        {
+                            scoreText.text = "Round Score: 0";
+                        }
+                        break;
+                    case 8:
+                        if (PlayerPrefs.HasKey(PlayerPrefsKeys.BestSprint4))
+                        {
+                            scoreText.text = "Best Level Score: " + PlayerPrefs.GetInt(PlayerPrefsKeys.BestSprint4);
+                        }
+                        else
+                        {
+                            scoreText.text = "Round Score: 0";
+                        }
+                        break;
+                    default:
+                        scoreText.text = "Round Score: 0";
+                        break;
+
                 }
-                else
-                {
-                    scoreText.text = "Round Score: 0";
-                }
+                
             }
         }
 
