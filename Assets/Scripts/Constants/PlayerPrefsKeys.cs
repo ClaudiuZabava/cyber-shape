@@ -10,7 +10,10 @@ namespace Constants
         public const string GameMode = "GameMode";
         public const string GameProgress = "GameProgress";
         public const string LastLevel = "LastLevel";
-        public const string SprintScore = "SprintScore";
+        public const string BestSprint1 = "BestSprint1";
+        public const string BestSprint2 = "BestSprint2";
+        public const string BestSprint3 = "BestSprint3";
+        public const string BestSprint4 = "BestSprint4";
         public const string EndlessInProgress = "EndlessInProgress";
     }
 }
