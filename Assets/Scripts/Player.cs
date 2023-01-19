@@ -6,7 +6,6 @@ using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Evolution;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using System.Collections;
 using Scene = Constants.Scene;
 
