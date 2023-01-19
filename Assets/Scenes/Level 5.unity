@@ -4958,7 +4958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5384072540428272855, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8155870428722603895, guid: 202027c59e52e421ab0aafec69ab8e16, type: 3}
       propertyPath: <Stage>k__BackingField
