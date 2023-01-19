@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You didn't unloked this level yet!
+  m_text: You haven't unlocked this level yet!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 538af68e5d0b8094c8f895dda93c89b2, type: 2}
   m_sharedMaterial: {fileID: 9185066501747100959, guid: 538af68e5d0b8094c8f895dda93c89b2, type: 2}
