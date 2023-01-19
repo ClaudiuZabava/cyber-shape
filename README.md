@@ -2,6 +2,10 @@
 
 A low poly top-down shooter.
 
+![GAME-SCREENSHOT-1](https://user-images.githubusercontent.com/24657667/213514014-cfef9d55-249a-4694-b8dd-5f3152f9d873.png)
+![GAME-SCREENSHOT-2](https://user-images.githubusercontent.com/24657667/213514044-262ca04a-3b9e-417d-883f-97d209672487.png)
+
+
 ## For reviewers
 
 Reports are in [`./Reports/`](./Reports/).
